@@ -42,7 +42,7 @@ if(mount&&!prefersReduced){
  for(let i=0;i<10;i++){const d=new THREE.Mesh(dotGeo,dotMat);const a=i/10*Math.PI*2;d.position.set(Math.cos(a)*2.05,Math.sin(a)*2.05,.1*Math.sin(i));group.add(d)}
  const light=new THREE.PointLight(0x746cff,8,8);light.position.set(2,2,3);scene.add(light);
  const fill=new THREE.PointLight(0xd7ff3f,4,7);fill.position.set(-3,-1,2);scene.add(fill);
- let tx=0,ty=0;addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*.35;ty=(e.clientY/innerHeight-.5)*.2});
+ let tx=0,ty=0;addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*.55;ty=(e.clientY/innerHeight-.5)*.32});
  function resize(){const w=mount.clientWidth,h=mount.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}
  addEventListener('resize',resize);
  function loop(){requestAnimationFrame(loop);group.rotation.y+=.002;group.rotation.x+=.0007;group.rotation.y+=(tx-group.rotation.y)*.003;group.rotation.x+=(ty-group.rotation.x)*.003;wire.rotation.y-=.001;ring1.rotation.z+=.006;ring2.rotation.z-=.004;renderer.render(scene,camera)}
