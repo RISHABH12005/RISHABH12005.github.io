@@ -1975,7 +1975,7 @@ body::after{background:radial-gradient(ellipse at center,transparent 58%,rgba(0,
 .grain{z-index:48;opacity:.018!important}
 #scene{
   z-index:-2!important;
-  background:url("./assets/dragon-bg.jpg") center/cover no-repeat!important;
+  background:none center/cover no-repeat!important;
 }
 #scene::before{
   background:
@@ -3263,7 +3263,7 @@ body.command-open,body.project-open{overflow:hidden!important}
     position:absolute!important;
     inset:0!important;
     pointer-events:none!important;
-    background:url("./assets/dragon-bg.jpg") center/cover no-repeat!important;
+    background:none center/cover no-repeat!important;
     opacity:0!important;
   }
   .mobile-glass-root .menu-toggle{
@@ -3421,7 +3421,7 @@ body.command-open,body.project-open{overflow:hidden!important}
     inset:0!important;
     z-index:-2!important;
     pointer-events:none!important;
-    background:url("./assets/dragon-bg.jpg") top right/100vw 100vh no-repeat!important;
+    background:none top right/100vw 100vh no-repeat!important;
   }
   .mobile-glass-link{
     right:max(8px,env(safe-area-inset-right))!important;
@@ -3438,7 +3438,7 @@ body.command-open,body.project-open{overflow:hidden!important}
 @media(max-width:760px){
   /* Match the shader's local scene to the real page background exactly. */
   #scene{
-    background-image:url("./assets/dragon-bg.jpg")!important;
+    background-image:none!important;
     background-position:center center!important;
     background-size:100vw 100vh!important;
     background-repeat:no-repeat!important;
@@ -3641,7 +3641,7 @@ html.liquid-glass-ready .glass-control{
     height:100%!important;
     opacity:1!important;
     pointer-events:none!important;
-    background:url("./assets/dragon-bg.jpg") center/100vw 100vh no-repeat!important;
+    background:none center/100vw 100vh no-repeat!important;
   }
 
   html.liquid-glass-ready .mobile-glass-root.mobile-webgl-root .menu-toggle,
@@ -3814,5 +3814,48 @@ html.liquid-glass-ready .glass-card::before{
     background:
       linear-gradient(135deg,rgba(255,255,255,.038),rgba(255,255,255,.008)),
       rgba(5,8,16,.34)!important;
+  }
+}
+
+
+/* FINAL MOBILE MENU STABILITY
+   Keep the hamburger deterministic while LiquidGlass upgrades the button.
+   The shader canvas stays behind the three real HTML bars. */
+@media (max-width:760px){
+  .mobile-glass-root .menu-toggle{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:5px!important;
+    z-index:20!important;
+    overflow:hidden!important;
+    -webkit-tap-highlight-color:transparent!important;
+  }
+  .mobile-glass-root .menu-toggle canvas{
+    position:absolute!important;
+    inset:0!important;
+    z-index:0!important;
+    pointer-events:none!important;
+  }
+  .mobile-glass-root .menu-toggle span,
+  .mobile-glass-root .menu-toggle[aria-expanded="true"] span{
+    position:relative!important;
+    z-index:5!important;
+    display:block!important;
+    flex:0 0 2px!important;
+    width:18px!important;
+    height:2px!important;
+    min-width:18px!important;
+    min-height:2px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:999px!important;
+    background:#f7f8fc!important;
+    opacity:1!important;
+    visibility:visible!important;
+    transform:none!important;
+    transition:none!important;
   }
 }
