@@ -299,7 +299,14 @@ section[id],
   gap: 18px;
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
   transition: opacity 420ms ease, visibility 420ms ease;
+  animation: loaderFailsafe 1.4s ease forwards;
+}
+
+@keyframes loaderFailsafe {
+  0%, 58% { opacity: 1; visibility: visible; pointer-events: auto; }
+  78%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 
 #loader.is-done {
