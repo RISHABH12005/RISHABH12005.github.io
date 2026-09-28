@@ -3560,3 +3560,79 @@ body.command-open,body.project-open{overflow:hidden!important}
     width:min(196px,calc(100vw - 18px))!important;
   }
 }
+
+
+/* ========================================================================
+   LIQUIDGLASS MATERIAL OVERRIDES
+========================================================================= */
+html.liquid-glass-ready .glass-panel,
+html.liquid-glass-ready .glass-card,
+html.liquid-glass-ready .glass-button,
+html.liquid-glass-ready .glass-control,
+html.liquid-glass-ready .achievement-orbit{
+  background:transparent!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+
+html.liquid-glass-ready .glass-panel::before,
+html.liquid-glass-ready .glass-panel::after,
+html.liquid-glass-ready .glass-card::before,
+html.liquid-glass-ready .glass-card::after,
+html.liquid-glass-ready .glass-button::before,
+html.liquid-glass-ready .glass-button::after{
+  display:none!important;
+}
+
+html.liquid-glass-ready .liquid-dome{
+  overflow:visible!important;
+  border-radius:50%!important;
+  cursor:default!important;
+  will-change:transform;
+}
+
+html.liquid-glass-ready .glass-button,
+html.liquid-glass-ready .glass-control{
+  overflow:visible!important;
+}
+
+@media (max-width:760px){
+  /* Let the WebGL renderer sample the page-sized scene rather than a
+     narrow 180–200px local canvas. */
+  html.liquid-glass-ready .mobile-glass-root.mobile-webgl-root{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    height:100vh!important;
+    z-index:220!important;
+    pointer-events:none!important;
+    background:transparent!important;
+    border:0!important;
+    overflow:visible!important;
+  }
+
+  html.liquid-glass-ready .mobile-glass-root.mobile-webgl-root .mobile-glass-scene{
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    z-index:-2!important;
+    width:100%!important;
+    height:100%!important;
+    opacity:1!important;
+    pointer-events:none!important;
+    background:url("./assets/dragon-bg.jpg") center/100vw 100vh no-repeat!important;
+  }
+
+  html.liquid-glass-ready .mobile-glass-root.mobile-webgl-root .menu-toggle,
+  html.liquid-glass-ready .mobile-glass-root.mobile-webgl-root .mobile-glass-link{
+    background:transparent!important;
+    box-shadow:none!important;
+    border-color:transparent!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  html.liquid-glass-ready .mobile-glass-root.mobile-webgl-root .mobile-glass-link{
+    text-shadow:0 1px 12px rgba(0,0,0,.35)!important;
+  }
+}
