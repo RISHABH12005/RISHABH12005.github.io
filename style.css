@@ -3222,3 +3222,158 @@ body.command-open,body.project-open{overflow:hidden!important}
     min-width:16px!important;
   }
 }
+
+
+/* Mobile navigation: no container/panel — individual LiquidGlass button-mode controls. */
+.mobile-glass-root{display:none}
+
+@media (max-width:760px){
+  .site-header{display:none!important}
+
+  .mobile-glass-root{
+    position:fixed!important;
+    inset:0!important;
+    z-index:200!important;
+    display:block!important;
+    pointer-events:none!important;
+    overflow:visible!important;
+  }
+  .mobile-glass-scene{
+    position:absolute!important;
+    inset:0!important;
+    pointer-events:none!important;
+    background:url("./assets/dragon-bg.jpg") center/cover no-repeat!important;
+    opacity:0!important;
+  }
+  .mobile-glass-root .menu-toggle{
+    position:absolute!important;
+    top:max(10px,env(safe-area-inset-top))!important;
+    right:max(8px,env(safe-area-inset-right))!important;
+    z-index:5!important;
+    display:flex!important;
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-direction:column!important;
+    gap:5px!important;
+    pointer-events:auto!important;
+    appearance:none!important;
+    -webkit-appearance:none!important;
+    border:0!important;
+    border-radius:12px!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:#fff!important;
+    cursor:pointer!important;
+    touch-action:manipulation!important;
+  }
+  .mobile-glass-root .menu-toggle span,
+  .mobile-glass-root .menu-toggle[aria-expanded="true"] span{
+    display:block!important;
+    width:17px!important;
+    height:2px!important;
+    min-width:17px!important;
+    min-height:2px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:2px!important;
+    background:#fff!important;
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+
+  .mobile-glass-link{
+    position:absolute!important;
+    right:max(8px,env(safe-area-inset-right))!important;
+    z-index:4!important;
+    display:block!important;
+    width:min(180px,calc(100vw - 32px))!important;
+    min-height:42px!important;
+    padding:12px 16px!important;
+    box-sizing:border-box!important;
+    pointer-events:none!important;
+    opacity:0!important;
+    transform:translateY(-8px) scale(.96)!important;
+    transform-origin:right top!important;
+    border:0!important;
+    border-radius:14px!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:#f4f6fb!important;
+    font:600 11px/1.2 "Space Grotesk",sans-serif!important;
+    letter-spacing:.08em!important;
+    text-transform:uppercase!important;
+    text-align:left!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    transition:opacity .2s ease,transform .2s ease!important;
+  }
+  body.nav-open .mobile-glass-link{
+    pointer-events:auto!important;
+    opacity:1!important;
+    transform:translateY(0) scale(1)!important;
+  }
+  body.nav-open .mobile-glass-link:nth-of-type(3){transition-delay:.02s}
+  body.nav-open .mobile-glass-link:nth-of-type(4){transition-delay:.04s}
+  body.nav-open .mobile-glass-link:nth-of-type(5){transition-delay:.06s}
+  body.nav-open .mobile-glass-link:nth-of-type(6){transition-delay:.08s}
+  body.nav-open .mobile-glass-link:nth-of-type(7){transition-delay:.10s}
+  body.nav-open .mobile-glass-link:nth-of-type(8){transition-delay:.12s}
+  body.nav-open .mobile-glass-link:nth-of-type(9){transition-delay:.14s}
+
+  /* Seven standalone buttons under the hamburger; no enclosing panel. */
+  .mobile-glass-link:nth-of-type(3){top:64px}
+  .mobile-glass-link:nth-of-type(4){top:112px}
+  .mobile-glass-link:nth-of-type(5){top:160px}
+  .mobile-glass-link:nth-of-type(6){top:208px}
+  .mobile-glass-link:nth-of-type(7){top:256px}
+  .mobile-glass-link:nth-of-type(8){top:304px}
+  .mobile-glass-link:nth-of-type(9){top:352px}
+
+  .mobile-glass-root .liquid-glass-button{
+    cursor:pointer!important;
+  }
+}
+
+@media (max-width:480px){
+  .mobile-glass-root .menu-toggle{
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+    right:max(6px,env(safe-area-inset-right))!important;
+  }
+  .mobile-glass-link{
+    width:min(172px,calc(100vw - 24px))!important;
+    right:max(6px,env(safe-area-inset-right))!important;
+  }
+}
+
+@media (max-width:360px){
+  .mobile-glass-root .menu-toggle{
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    min-height:38px!important;
+    right:5px!important;
+  }
+  .mobile-glass-root .menu-toggle span{
+    width:16px!important;
+    min-width:16px!important;
+  }
+  .mobile-glass-link{
+    width:min(160px,calc(100vw - 20px))!important;
+    right:5px!important;
+    min-height:40px!important;
+    padding:11px 14px!important;
+  }
+}
