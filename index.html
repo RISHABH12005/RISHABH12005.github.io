@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Rishabh Jain — Computer Science and Engineering student building software, systems, robotics, IoT and edge-AI projects.">
-<meta name="theme-color" content="#030408">
+<meta name="theme-color" content="#03040a">
 <meta name="color-scheme" content="dark">
 <meta property="og:title" content="Rishabh Jain — Software & Systems Engineer">
 <meta property="og:description" content="A technical portfolio spanning software, systems, robotics, IoT and edge AI.">
@@ -22,32 +22,108 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="loader" role="status" aria-label="Loading portfolio"><div class="loader-mark">RJ<span>.</span></div><div class="loader-line"><i></i></div></div>
-<div id="scene" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<div id="loader" role="status" aria-label="Loading portfolio"><div class="loader-glass"><span class="loader-orbit"></span><div class="loader-mark">RJ<span>.</span></div><p>INITIALIZING SPACE</p><div class="loader-line"><i></i></div></div></div>
+<div id="scene" aria-hidden="true"></div>
+<div class="space-vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
 <header class="site-header">
-<a class="brand" href="#hero" aria-label="Rishabh Jain home">RISHABH<span>.</span></a>
-<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span><b class="sr-only">Open navigation</b></button>
-<nav id="primary-nav" aria-label="Primary navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#stack">Skills</a><a href="#contact">Contact</a></nav>
-<a class="status" href="mailto:2r10j5@gmail.com" aria-label="Email Rishabh Jain"><span></span> Available for conversations</a>
+  <a class="brand glass-control" href="#hero" aria-label="Rishabh Jain home">RISHABH<span>.</span></a>
+  <nav id="primary-nav" aria-label="Primary navigation">
+    <a href="#about">About</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#stack">Skills</a><a href="#contact">Contact</a>
+  </nav>
+  <a class="status glass-control" href="mailto:2r10j5@gmail.com"><span></span> Available for conversations</a>
+  <button class="menu-toggle glass-control" type="button" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span><b class="sr-only">Open navigation</b></button>
 </header>
+
 <main>
 <section id="hero" class="hero">
-<div class="hero-copy"><div class="eyebrow">COMPUTER SCIENCE & ENGINEERING · SOFTWARE · SYSTEMS</div><h1><span>Build.</span><span class="accent">Connect.</span><span>Deploy.</span></h1><p>I’m Rishabh Jain, a Computer Science and Engineering student building practical software and hardware systems across developer tooling, robotics, IoT and edge AI.</p><div class="hero-actions"><a class="button" href="#work">View selected work <b>↘</b></a><a class="link-arrow" href="mailto:2r10j5@gmail.com">Email me ↗</a><a class="link-arrow" href="https://github.com/RISHABH12005" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
-<div class="hero-meta"><span>INDIA</span><span>JUET · CSE</span><span>2026</span></div><div class="hero-lab" aria-hidden="true"><div class="space-haze"></div><div class="lab-grid"></div><div class="lab-readout"><span>LIVE SPACE</span><b>RJ / FIELD NOTES</b><small>SOFTWARE · SYSTEMS · ROBOTICS</small></div></div>
+  <div class="hero-glass">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="signal"></span> COMPUTER SCIENCE & ENGINEERING · SOFTWARE · SYSTEMS</div>
+      <h1><span>Build.</span><span class="accent">Connect.</span><span>Deploy.</span></h1>
+      <p>I’m Rishabh Jain, a Computer Science and Engineering student building practical software and hardware systems across developer tooling, robotics, IoT and edge AI.</p>
+      <div class="hero-actions">
+        <a class="button glass-button" href="#work">View selected work <b>↘</b></a>
+        <a class="link-arrow glass-link" href="mailto:2r10j5@gmail.com">Email me ↗</a>
+        <a class="link-arrow glass-link" href="https://github.com/RISHABH12005" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="hero-status">
+      <div><span>LOCATION</span><b>INDIA</b></div>
+      <div><span>INSTITUTE</span><b>JUET · CSE</b></div>
+      <div><span>BUILD</span><b>2026</b></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span></span> SCROLL TO EXPLORE</div>
 </section>
-<section id="about" class="section"><div class="section-head"><span>01</span><p>ABOUT / PHILOSOPHY</p><i></i></div><div class="about-grid"><div><h2>Engineering at the boundary of <em>software</em> and the physical world.</h2></div><div class="about-copy"><p>I’m studying Computer Science and Engineering at Jaypee University of Engineering & Technology, Guna. I enjoy understanding systems from the ground up and turning ideas into working prototypes.</p><p>My work connects Python, Linux, networking, embedded systems, Raspberry Pi, OpenROAD and FOSSEE eSim. I learn by building, debugging and improving real systems.</p><div class="facts"><span><b>01</b> Software engineering</span><span><b>02</b> Robotics & IoT</span><span><b>03</b> Linux & networking</span><span><b>04</b> EDA / VLSI</span></div></div></div></section>
-<section id="work" class="section work-section"><div class="section-head"><span>02</span><p>SELECTED WORK</p><i></i></div><div class="section-intro"><h2>Systems built to <em>work.</em></h2><p>Repository-backed projects across software, hardware, open source and autonomous systems.</p></div><div class="projects">
-<article class="project project-featured"><div class="project-visual visual-orb"><div class="orb"></div><span class="project-number">01</span></div><div class="project-body"><div class="project-type">OPEN SOURCE · EDA</div><h3>OpenROAD × eSim</h3><p>Integrated OpenROAD into eSim using Python, a PyQt GUI and an automated RTL-to-GDSII flow.</p><div class="tags"><span>Python</span><span>OpenROAD</span><span>eSim</span><span>PyQt</span></div><a href="https://github.com/RISHABH12005/eSim-OpenROAD-Plugin" target="_blank" rel="noopener noreferrer">View repository <b>↗</b></a></div></article>
-<article class="project"><div class="project-visual visual-grid"><span class="project-number">02</span></div><div class="project-body"><div class="project-type">IOT · ROBOTICS</div><h3>Livestock Monitoring System</h3><p>A Raspberry Pi monitoring system using sensors, camera, motors, Sense HAT and BrickPi for real-time animal monitoring.</p><div class="tags"><span>Raspberry Pi</span><span>Python</span><span>BrickPi</span></div><a href="https://github.com/RISHABH12005/LMS" target="_blank" rel="noopener noreferrer">View repository <b>↗</b></a></div></article>
-<article class="project"><div class="project-visual visual-rings"><span class="project-number">03</span></div><div class="project-body"><div class="project-type">EDGE AI · RASPBERRY PI</div><h3>Bharat AI-SoC</h3><p>An offline, privacy-preserving Hindi voice assistant running on Raspberry Pi 4 with CPU-only inference.</p><div class="tags"><span>Python</span><span>Raspberry Pi 4</span><span>Edge AI</span></div><a href="https://github.com/RISHABH12005/Bharat-AI-SoC" target="_blank" rel="noopener noreferrer">View repository <b>↗</b></a></div></article>
-<article class="project"><div class="project-visual visual-signal"><span class="project-number">04</span></div><div class="project-body"><div class="project-type">ANDROID · SOFTWARE</div><h3>TekTask Pro</h3><p>An Android task management application built during an internship with authentication and real-time synchronization.</p><div class="tags"><span>Kotlin</span><span>Firebase</span><span>Firestore</span></div><a href="https://github.com/RISHABH12005/Android" target="_blank" rel="noopener noreferrer">View GitHub <b>↗</b></a></div></article>
-</div></section>
-<section id="stack" class="section"><div class="section-head"><span>03</span><p>ENGINEERING STACK</p><i></i></div><div class="capabilities"><h2>Tools for turning <em>ideas</em> into systems.</h2><div class="skill-list"><div><b>01</b><strong>Languages</strong><span>Python · C · C++ · Kotlin · MySQL · Bash</span></div><div><b>02</b><strong>Systems & tools</strong><span>Ubuntu · Kali · Arch · Git · Docker · CMake · GitHub Actions</span></div><div><b>03</b><strong>Embedded & IoT</strong><span>ESP32 · Raspberry Pi · MQTT · Embedded robotics</span></div><div><b>04</b><strong>Networking & security</strong><span>TCP/IP · IPv4/IPv6 · VLANs · DHCP · DNS · Cisco Packet Tracer</span></div><div><b>05</b><strong>EDA / VLSI</strong><span>OpenROAD · Yosys · KLayout · FOSSEE eSim</span></div></div></div></section>
-<section id="experience" class="section"><div class="section-head"><span>04</span><p>EXPERIENCE</p><i></i></div><div class="timeline"><article><time>FEB — AUG 2026</time><div><p class="role">Software Developer Intern & Fellow</p><p class="company">FOSSEE eSim · IIT Bombay · Hybrid</p><p class="details">Integrated OpenROAD with eSim using Python, enhanced the PyQt-based GUI, and automated netlist-to-Verilog conversion and RTL-to-GDSII flow.</p></div></article><article><time>JUN — JUL 2025</time><div><p class="role">Android Developer Intern</p><p class="company">Teksoft Labs Private Limited · Remote</p><p class="details">Developed an Android task management application using Kotlin, Firebase Authentication, Cloud Firestore, Git and JIRA, with real-time synchronization and Material Design.</p></div></article><article><time>OCT 2023 — PRESENT</time><div><p class="role">Advisor</p><p class="company">RoSPinoT Club · Development & Innovation Center</p><p class="details">Co-organized the CodeSrijan National Hackathon at JUET, coordinated technical events and workshops, and supported documentation and collaboration.</p></div></article></div></section>
-<section id="education" class="section compact-section"><div class="section-head"><span>05</span><p>EDUCATION</p><i></i></div><div class="education-line"><div><p class="role">B.Tech in Computer Science and Engineering</p><p class="company">Jaypee University of Engineering & Technology · Raghogarh, Guna, MP</p></div><div class="education-meta"><strong>6.1</strong><span>CGPA · 2023 — PRESENT</span></div></div></section>
-<section id="highlights" class="section"><div class="section-head"><span>06</span><p>ACHIEVEMENTS</p><i></i></div><div class="highlights"><div><strong>WINNER</strong><span>Ideathon · IIC & ISD, JUET · 2025</span></div><div><strong>1ST RUNNER-UP</strong><span>Hacksagon · ABV-IIITM Gwalior & IEEE MP · 2025</span></div><div><strong>FINALIST</strong><span>SBI College Youth Ideathon · Top 100 / 2,500+ teams · 2025</span></div><div><strong>FINALIST</strong><span>Bharat AI-SoC Student Challenge · 6th among finalists · 2026</span></div></div></section>
-<section id="contact" class="section contact"><div class="section-head"><span>07</span><p>CONTACT</p><i></i></div><div class="contact-grid"><div><p class="eyebrow">HAVE A PROJECT OR PROBLEM?</p><h2>Let’s build something <em>useful.</em></h2><p class="contact-note">Software, systems, robotics and IoT — I’m always interested in technically meaningful work.</p></div><div class="contact-actions"><a class="contact-button" href="mailto:2r10j5@gmail.com">2r10j5@gmail.com <b>↗</b></a><a class="link-arrow" href="https://www.linkedin.com/in/rishabh12005" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-arrow" href="https://www.youtube.com/@RISHABH12005" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a class="link-arrow" href="https://github.com/RISHABH12005" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div></section>
+
+<section id="about" class="section">
+  <div class="section-head"><span>01</span><p>ABOUT / PHILOSOPHY</p><i></i></div>
+  <div class="about-grid">
+    <div class="glass-panel section-statement"><div class="panel-glow"></div><h2>Engineering at the boundary of <em>software</em> and the physical world.</h2></div>
+    <div class="about-copy glass-panel">
+      <p>I’m studying Computer Science and Engineering at Jaypee University of Engineering & Technology, Guna. I enjoy understanding systems from the ground up and turning ideas into working prototypes.</p>
+      <p>My work connects Python, Linux, networking, embedded systems, Raspberry Pi, OpenROAD and FOSSEE eSim. I learn by building, debugging and improving real systems.</p>
+      <div class="facts">
+        <span><b>01</b> Software engineering</span><span><b>02</b> Robotics & IoT</span><span><b>03</b> Linux & networking</span><span><b>04</b> EDA / VLSI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="section work-section">
+  <div class="section-head"><span>02</span><p>SELECTED WORK</p><i></i></div>
+  <div class="section-intro"><div><div class="eyebrow">REPOSITORY-BACKED BUILDS</div><h2>Systems built to <em>work.</em></h2></div><p>Projects across software, hardware, open source and autonomous systems.</p></div>
+  <div class="projects">
+    <article class="project project-featured glass-card"><div class="project-visual visual-orb"><span class="project-number">01</span><div class="visual-core"></div></div><div class="project-body"><div class="project-type">OPEN SOURCE · EDA</div><h3>OpenROAD × eSim</h3><p>Integrated OpenROAD into eSim using Python, a PyQt GUI and an automated RTL-to-GDSII flow.</p><div class="tags"><span>Python</span><span>OpenROAD</span><span>eSim</span><span>PyQt</span></div><a href="https://github.com/RISHABH12005/eSim-OpenROAD-Plugin" target="_blank" rel="noopener noreferrer">View repository <b>↗</b></a></div></article>
+    <article class="project glass-card"><div class="project-visual visual-grid"><span class="project-number">02</span></div><div class="project-body"><div class="project-type">IOT · ROBOTICS</div><h3>Livestock Monitoring System</h3><p>A Raspberry Pi monitoring system using sensors, camera, motors, Sense HAT and BrickPi for real-time animal monitoring.</p><div class="tags"><span>Raspberry Pi</span><span>Python</span><span>BrickPi</span></div><a href="https://github.com/RISHABH12005/LMS" target="_blank" rel="noopener noreferrer">View repository <b>↗</b></a></div></article>
+    <article class="project glass-card"><div class="project-visual visual-rings"><span class="project-number">03</span></div><div class="project-body"><div class="project-type">EDGE AI · RASPBERRY PI</div><h3>Bharat AI-SoC</h3><p>An offline, privacy-preserving Hindi voice assistant running on Raspberry Pi 4 with CPU-only inference.</p><div class="tags"><span>Python</span><span>Raspberry Pi 4</span><span>Edge AI</span></div><a href="https://github.com/RISHABH12005/Bharat-AI-SoC" target="_blank" rel="noopener noreferrer">View repository <b>↗</b></a></div></article>
+    <article class="project glass-card"><div class="project-visual visual-signal"><span class="project-number">04</span></div><div class="project-body"><div class="project-type">ANDROID · SOFTWARE</div><h3>TekTask Pro</h3><p>An Android task management application built during an internship with authentication and real-time synchronization.</p><div class="tags"><span>Kotlin</span><span>Firebase</span><span>Firestore</span></div><a href="https://github.com/RISHABH12005/Android" target="_blank" rel="noopener noreferrer">View GitHub <b>↗</b></a></div></article>
+  </div>
+</section>
+
+<section id="stack" class="section">
+  <div class="section-head"><span>03</span><p>ENGINEERING STACK</p><i></i></div>
+  <div class="capabilities glass-panel"><div class="capability-heading"><div class="eyebrow">TOOLS / SYSTEMS / DOMAINS</div><h2>Tools for turning <em>ideas</em> into systems.</h2></div><div class="skill-list">
+    <div><b>01</b><strong>Languages</strong><span>Python · C · C++ · Kotlin · MySQL · Bash</span></div>
+    <div><b>02</b><strong>Systems & tools</strong><span>Ubuntu · Kali · Arch · Git · Docker · CMake · GitHub Actions</span></div>
+    <div><b>03</b><strong>Embedded & IoT</strong><span>ESP32 · Raspberry Pi · MQTT · Embedded robotics</span></div>
+    <div><b>04</b><strong>Networking & security</strong><span>TCP/IP · IPv4/IPv6 · VLANs · DHCP · DNS · Cisco Packet Tracer</span></div>
+    <div><b>05</b><strong>EDA / VLSI</strong><span>OpenROAD · Yosys · KLayout · FOSSEE eSim</span></div>
+  </div></div>
+</section>
+
+<section id="experience" class="section">
+  <div class="section-head"><span>04</span><p>EXPERIENCE</p><i></i></div>
+  <div class="timeline">
+    <article class="glass-card"><time>FEB — AUG 2026</time><div><p class="role">Software Developer Intern & Fellow</p><p class="company">FOSSEE eSim · IIT Bombay · Hybrid</p><p class="details">Integrated OpenROAD with eSim using Python, enhanced the PyQt-based GUI, and automated netlist-to-Verilog conversion and RTL-to-GDSII flow.</p></div></article>
+    <article class="glass-card"><time>JUN — JUL 2025</time><div><p class="role">Android Developer Intern</p><p class="company">Teksoft Labs Private Limited · Remote</p><p class="details">Developed an Android task management application using Kotlin, Firebase Authentication, Cloud Firestore, Git and JIRA, with real-time synchronization and Material Design.</p></div></article>
+    <article class="glass-card"><time>OCT 2023 — PRESENT</time><div><p class="role">Advisor</p><p class="company">RoSPinoT Club · Development & Innovation Center</p><p class="details">Co-organized the CodeSrijan National Hackathon at JUET, coordinated technical events and workshops, and supported documentation and collaboration.</p></div></article>
+  </div>
+</section>
+
+<section id="education" class="section compact-section">
+  <div class="section-head"><span>05</span><p>EDUCATION</p><i></i></div>
+  <div class="education-line glass-card"><div><p class="role">B.Tech in Computer Science and Engineering</p><p class="company">Jaypee University of Engineering & Technology · Raghogarh, Guna, MP</p></div><div class="education-meta"><strong>6.1</strong><span>CGPA · 2023 — PRESENT</span></div></div>
+</section>
+
+<section id="highlights" class="section">
+  <div class="section-head"><span>06</span><p>ACHIEVEMENTS</p><i></i></div>
+  <div class="highlights">
+    <div class="glass-card"><strong>WINNER</strong><span>Ideathon · IIC & ISD, JUET · 2025</span></div>
+    <div class="glass-card"><strong>1ST RUNNER-UP</strong><span>Hacksagon · ABV-IIITM Gwalior & IEEE MP · 2025</span></div>
+    <div class="glass-card"><strong>FINALIST</strong><span>SBI College Youth Ideathon · Top 100 / 2,500+ teams · 2025</span></div>
+    <div class="glass-card"><strong>FINALIST</strong><span>Bharat AI-SoC Student Challenge · 6th among finalists · 2026</span></div>
+  </div>
+</section>
+
+<section id="contact" class="section contact">
+  <div class="section-head"><span>07</span><p>CONTACT</p><i></i></div>
+  <div class="contact-grid glass-panel"><div><p class="eyebrow">HAVE A PROJECT OR PROBLEM?</p><h2>Let’s build something <em>useful.</em></h2><p class="contact-note">Software, systems, robotics and IoT — I’m always interested in technically meaningful work.</p></div><div class="contact-actions"><a class="contact-button glass-button" href="mailto:2r10j5@gmail.com">2r10j5@gmail.com <b>↗</b></a><a class="link-arrow glass-link" href="https://www.linkedin.com/in/rishabh12005" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-arrow glass-link" href="https://www.youtube.com/@RISHABH12005" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a class="link-arrow glass-link" href="https://github.com/RISHABH12005" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
+</section>
 </main>
+
 <footer><span>RISHABH JAIN · SOFTWARE / SYSTEMS / ROBOTICS</span><span>© 2026 · <a href="mailto:2r10j5@gmail.com">EMAIL</a></span></footer>
 <script type="module" src="script.js"></script>
 </body>
