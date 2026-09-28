@@ -90,3 +90,19 @@ addEventListener('scroll',()=>document.body.classList.toggle('has-scrolled',scro
 
 const schema={'@context':'https://schema.org','@type':'Person',name:'Rishabh Jain',url:'https://rishabh12005.me/',email:'mailto:2r10j5@gmail.com',sameAs:['https://github.com/RISHABH12005','https://www.linkedin.com/in/rishabh12005','https://www.youtube.com/@RISHABH12005']};
 const schemaScript=document.createElement('script');schemaScript.type='application/ld+json';schemaScript.textContent=JSON.stringify(schema);document.head.appendChild(schemaScript);
+
+
+/* Copy protection */
+(()=>{
+  const blocked=(e)=>{e.preventDefault();e.stopPropagation();return false};
+  document.addEventListener('contextmenu',blocked,{capture:true});
+  document.addEventListener('selectstart',blocked,{capture:true});
+  document.addEventListener('dragstart',blocked,{capture:true});
+  document.addEventListener('copy',blocked,{capture:true});
+  document.addEventListener('cut',blocked,{capture:true});
+  document.addEventListener('keydown',e=>{
+    const key=e.key.toLowerCase();
+    if((e.ctrlKey||e.metaKey)&&['c','x','a','u','s','p'].includes(key))blocked(e);
+    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(key)))blocked(e);
+  },{capture:true});
+})();
