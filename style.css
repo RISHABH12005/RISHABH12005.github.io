@@ -2442,3 +2442,33 @@ body.command-open,body.project-open{overflow:hidden!important}
   #achievements .achievement-shell,#leadership .leadership-shell,#contact .contact-shell{border-radius:22px!important}
   #skills .skill-card,#certificates .certificate-card{border-radius:20px!important}
 }
+
+/* Project and experience video preview links */
+.demo-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+  min-width:0;
+}
+.demo-links a{
+  display:inline-flex;
+  align-items:center;
+  max-width:100%;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+  color:#aeb8c8;
+  font:600 9px/1 "Space Grotesk",sans-serif;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.demo-links a:hover{
+  color:var(--acid);
+  border-color:rgba(215,255,63,.38);
+  background:rgba(215,255,63,.06);
+}
+@media(max-width:480px){
+  .demo-links a{font-size:8px;padding:7px 9px}
+}
