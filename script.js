@@ -101,42 +101,10 @@ render('');
 document.documentElement.classList.add('liquid-glass-fallback');
 document.documentElement.classList.add('liquid-glass-ready');
 
-/* LiquidGlass button mode for the mobile menu and each navigation action. */
+/* Mobile navigation uses stable CSS glass controls. WebGL is intentionally not mounted here: a
+   separate small WebGL root can stretch the shader canvas on mobile and produce opaque/oversized pills. */
 (()=>{
   const root=document.querySelector('#mobile-glass-root');
-  const button=root?.querySelector('.menu-toggle');
-  const links=[...(root?.querySelectorAll('.mobile-glass-link')||[])];
-  if(!root||!button||!links.length||!matchMedia('(max-width:760px)').matches)return;
-  const glasses=[button,...links];
-  const config={
-    button:true,
-    blurAmount:.16,
-    refraction:.72,
-    chromAberration:.035,
-    edgeHighlight:.12,
-    specular:.08,
-    fresnel:1,
-    cornerRadius:14,
-    zRadius:12,
-    shadowOpacity:.22,
-    shadowSpread:7,
-    shadowOffsetY:1,
-    brightness:.02,
-    saturation:.04
-  };
-  glasses.forEach(el=>el.dataset.config=JSON.stringify(config));
-  let instance=null;
-  const start=async()=>{
-    try{
-      const mod=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
-      instance=await mod.LiquidGlass.init({root,glassElements:glasses});
-      root.classList.add('liquid-glass-active');
-      window.__mobileLiquidGlass=instance;
-    }catch(err){
-      root.classList.add('liquid-glass-fallback');
-      console.warn('Mobile LiquidGlass fallback:',err);
-    }
-  };
-  if(document.readyState==='complete') start();
-  else addEventListener('load',start,{once:true});
+  if(!root)return;
+  root.classList.add('mobile-css-glass');
 })();
