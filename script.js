@@ -2,10 +2,28 @@ const prefersReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch=matchMedia('(pointer: coarse)').matches;
 const loader=document.querySelector('#loader');
 const loaderBar=loader?.querySelector('.loader-glass i b');
-requestAnimationFrame(()=>loaderBar?.classList.add('is-loaded'));
-const finishLoader=()=>loader?.classList.add('is-done');
-setTimeout(finishLoader,prefersReduced?180:900);
-window.addEventListener('load',finishLoader,{once:true});
+
+loaderBar?.classList.add('is-started');
+
+/* The loader is tied to the actual LiquidGlass bootstrap instead of an
+   arbitrary timer. A hard timeout prevents a broken CDN/WebGL environment
+   from trapping the page behind the loader forever. */
+let loaderFinished=false;
+const loaderTimeout=setTimeout(()=>{
+  if(!loaderFinished)finishLoader('fallback');
+},6500);
+
+function finishLoader(mode='ready'){
+  if(loaderFinished)return;
+  loaderFinished=true;
+  clearTimeout(loaderTimeout);
+  document.documentElement.classList.remove('liquid-glass-loading');
+  document.documentElement.classList.toggle('liquid-glass-ready',mode==='ready');
+  document.documentElement.classList.toggle('liquid-glass-fallback',mode!=='ready');
+  loaderBar?.classList.remove('is-started');
+  loaderBar?.classList.add('is-loaded');
+  requestAnimationFrame(()=>loader?.classList.add('is-done'));
+}
 
 const menu=document.querySelector('.mobile-glass-root .menu-toggle');
 const nav=document.querySelector('#primary-nav');
@@ -275,28 +293,30 @@ render('');
 (async()=>{
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const instances=[];
+  /* Final materials are applied BEFORE init so the first WebGL frame already
+     uses the final optical settings. No post-load mutation or visual jump. */
   const frosted={
-    blurAmount:.18,refraction:.62,chromAberration:.025,edgeHighlight:.09,
-    specular:.10,fresnel:.88,distortion:.004,opacity:.56,saturation:.015,
-    tintStrength:.012,brightness:-.12,shadowOpacity:.34,shadowSpread:12,
-    shadowOffsetY:2,floating:false,button:false,bevelMode:0
-  };
-  const dark={
-    blurAmount:.24,refraction:.66,chromAberration:.028,edgeHighlight:.11,
-    specular:.12,fresnel:1.0,distortion:.005,opacity:.62,saturation:.01,
-    tintStrength:.016,brightness:-.20,shadowOpacity:.42,shadowSpread:16,
+    blurAmount:.20,refraction:.68,chromAberration:.020,edgeHighlight:.085,
+    specular:.085,fresnel:.86,distortion:.0025,opacity:.42,saturation:.00,
+    tintStrength:.009,brightness:-.24,shadowOpacity:.40,shadowSpread:14,
     shadowOffsetY:3,floating:false,button:false,bevelMode:0
   };
+  const dark={
+    blurAmount:.22,refraction:.70,chromAberration:.018,edgeHighlight:.075,
+    specular:.075,fresnel:.82,distortion:.002,opacity:.46,saturation:-.01,
+    tintStrength:.010,brightness:-.30,shadowOpacity:.48,shadowSpread:18,
+    shadowOffsetY:4,floating:false,button:false,bevelMode:0
+  };
   const control={
-    blurAmount:.14,refraction:.68,chromAberration:.025,edgeHighlight:.10,
-    specular:.14,fresnel:.95,distortion:.004,opacity:.72,saturation:.02,
-    tintStrength:.012,brightness:-.06,shadowOpacity:.30,shadowSpread:9,
+    blurAmount:.16,refraction:.76,chromAberration:.018,edgeHighlight:.11,
+    specular:.13,fresnel:.94,distortion:.003,opacity:.58,saturation:.015,
+    tintStrength:.012,brightness:-.16,shadowOpacity:.34,shadowSpread:10,
     shadowOffsetY:2,floating:false,button:true,bevelMode:0
   };
   const dome={
-    blurAmount:.04,refraction:1.08,chromAberration:.045,edgeHighlight:.16,
-    specular:.22,fresnel:1.18,distortion:.008,opacity:.88,saturation:.04,
-    tintStrength:.018,brightness:-.02,shadowOpacity:.32,shadowSpread:12,
+    blurAmount:.10,refraction:1.12,chromAberration:.018,edgeHighlight:.16,
+    specular:.20,fresnel:1.10,distortion:.003,opacity:.70,saturation:.015,
+    tintStrength:.012,brightness:-.08,shadowOpacity:.34,shadowSpread:10,
     shadowOffsetY:2,floating:false,button:false,bevelMode:1
   };
 
@@ -314,7 +334,7 @@ render('');
     };
 
     document.querySelectorAll('.glass-panel,.glass-card').forEach(el=>{
-      const darkMode=el.matches('.achievement-shell,.leadership-shell,.contact-shell,.project-modal-card');
+      const darkMode=el.matches('.education-shell,.achievement-shell,.leadership-shell,.contact-shell,.command-panel,.project-modal-card');
       add(el,darkMode?dark:frosted);
     });
 
@@ -362,8 +382,9 @@ render('');
     }
 
     window.__liquidGlassInstances=instances;
-    document.documentElement.classList.add('liquid-glass-ready');
     document.documentElement.classList.remove('liquid-glass-fallback');
+    document.documentElement.classList.add('liquid-glass-ready');
+    finishLoader('ready');
 
     if(!reduce){
       const pointer={x:0,y:0};
@@ -381,6 +402,6 @@ render('');
     }
   }catch(error){
     console.warn('LiquidGlass WebGL enhancement unavailable; CSS fallback retained.',error);
-    document.documentElement.classList.add('liquid-glass-fallback');
+    finishLoader('fallback');
   }
 })();
