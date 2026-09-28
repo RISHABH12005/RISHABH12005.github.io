@@ -276,27 +276,27 @@ render('');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const instances=[];
   const frosted={
-    blurAmount:.22,refraction:.78,chromAberration:.045,edgeHighlight:.13,
-    specular:.18,fresnel:1.05,distortion:.008,opacity:.93,saturation:.05,
-    tintStrength:.018,brightness:.015,shadowOpacity:.28,shadowSpread:12,
+    blurAmount:.18,refraction:.62,chromAberration:.025,edgeHighlight:.09,
+    specular:.10,fresnel:.88,distortion:.004,opacity:.56,saturation:.015,
+    tintStrength:.012,brightness:-.12,shadowOpacity:.34,shadowSpread:12,
     shadowOffsetY:2,floating:false,button:false,bevelMode:0
   };
   const dark={
-    blurAmount:.27,refraction:.82,chromAberration:.05,edgeHighlight:.16,
-    specular:.22,fresnel:1.18,distortion:.01,opacity:.91,saturation:.02,
-    tintStrength:.028,brightness:-.06,shadowOpacity:.38,shadowSpread:16,
+    blurAmount:.24,refraction:.66,chromAberration:.028,edgeHighlight:.11,
+    specular:.12,fresnel:1.0,distortion:.005,opacity:.62,saturation:.01,
+    tintStrength:.016,brightness:-.20,shadowOpacity:.42,shadowSpread:16,
     shadowOffsetY:3,floating:false,button:false,bevelMode:0
   };
   const control={
-    blurAmount:.16,refraction:.74,chromAberration:.035,edgeHighlight:.14,
-    specular:.2,fresnel:1.08,distortion:.006,opacity:.96,saturation:.04,
-    tintStrength:.02,brightness:.025,shadowOpacity:.25,shadowSpread:9,
+    blurAmount:.14,refraction:.68,chromAberration:.025,edgeHighlight:.10,
+    specular:.14,fresnel:.95,distortion:.004,opacity:.72,saturation:.02,
+    tintStrength:.012,brightness:-.06,shadowOpacity:.30,shadowSpread:9,
     shadowOffsetY:2,floating:false,button:true,bevelMode:0
   };
   const dome={
-    blurAmount:.08,refraction:1.12,chromAberration:.065,edgeHighlight:.22,
-    specular:.3,fresnel:1.3,distortion:.012,opacity:.98,saturation:.08,
-    tintStrength:.025,brightness:.02,shadowOpacity:.32,shadowSpread:12,
+    blurAmount:.04,refraction:1.08,chromAberration:.045,edgeHighlight:.16,
+    specular:.22,fresnel:1.18,distortion:.008,opacity:.88,saturation:.04,
+    tintStrength:.018,brightness:-.02,shadowOpacity:.32,shadowSpread:12,
     shadowOffsetY:2,floating:false,button:false,bevelMode:1
   };
 
