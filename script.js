@@ -55,9 +55,6 @@ addEventListener('scroll',()=>document.body.classList.toggle('has-scrolled',scro
 
 const schema={'@context':'https://schema.org','@type':'Person',name:'Rishabh Jain',url:'https://rishabh12005.me/',email:'mailto:2r10j5@gmail.com',sameAs:['https://github.com/RISHABH12005','https://www.linkedin.com/in/rishabh12005','https://www.youtube.com/@RISHABH12005']};const schemaScript=document.createElement('script');schemaScript.type='application/ld+json';schemaScript.textContent=JSON.stringify(schema);document.head.appendChild(schemaScript);
 
-/* Copy protection */
-(()=>{const blocked=e=>{e.preventDefault();e.stopPropagation();return false};['contextmenu','selectstart','dragstart','copy','cut'].forEach(t=>document.addEventListener(t,blocked,{capture:true}));document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if((e.ctrlKey||e.metaKey)&&['c','x','a','u','s','p'].includes(k))blocked(e);if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(k)))blocked(e)},{capture:true})})();
-
 /* Advanced command center, project intelligence and public GitHub telemetry */
 (()=>{
 const hud=document.querySelector('#command-hud'),trigger=document.querySelector('#command-trigger'),input=document.querySelector('#command-input'),results=document.querySelector('#command-results');
@@ -79,8 +76,8 @@ document.querySelectorAll('[data-command-close]').forEach(x=>x.addEventListener(
 function openProject(key){const p=projects[key];if(!p||!modalContent)return;modalContent.innerHTML='<span class="modal-kicker">'+p.k+'</span><h2 class="modal-title">'+p.t+'</h2><p class="modal-copy">'+p.d+'</p><div class="modal-layout">'+p.blocks.map(b=>'<div class="modal-block"><strong>'+b[0]+'</strong><p>'+b[1]+'</p></div>').join('')+'</div><div class="modal-actions"><a href="'+p.url+'" target="_blank" rel="noopener noreferrer">VIEW GITHUB ↗</a>'+(p.demo?'<a href="'+p.demo+'" target="_blank" rel="noopener noreferrer">WATCH DEMO ↗</a>':'')+'</div>';modal.classList.add('open');modal.setAttribute('aria-hidden','false')}
 function closeProject(){modal?.classList.remove('open');modal?.setAttribute('aria-hidden','true')}document.querySelectorAll('.project-open').forEach(b=>b.addEventListener('click',()=>openProject(b.dataset.project)));document.querySelectorAll('[data-project-close]').forEach(x=>x.addEventListener('click',closeProject));
 function showToast(t){if(!toast)return;toast.textContent=t;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),2200)}
-const sync=document.querySelector('#github-sync');fetch('https://api.github.com/users/RISHABH12005').then(r=>r.ok?r.json():Promise.reject()).then(u=>{document.querySelector('#follower-count').textContent=u.followers;sync.textContent='CONNECTED'}).catch(()=>{sync.textContent='OFFLINE'});
-fetch('https://api.github.com/users/RISHABH12005/repos?per_page=100').then(r=>r.ok?r.json():Promise.reject()).then(rs=>{document.querySelector('#repo-count').textContent=rs.length;document.querySelector('#star-count').textContent=rs.reduce((n,r)=>n+r.stargazers_count,0)}).catch(()=>{document.querySelector('#repo-count').textContent='—';document.querySelector('#star-count').textContent='—'});
+const sync=document.querySelector('#github-sync');
+if(sync) sync.textContent='AVAILABLE';
 render('');
 })();
 
