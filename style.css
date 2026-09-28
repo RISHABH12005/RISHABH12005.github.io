@@ -40,3 +40,17 @@ html,body,body *{-webkit-user-select:none;-moz-user-select:none;user-select:none
 .hud-toast{position:fixed;left:50%;bottom:28px;z-index:150;transform:translate(-50%,15px);opacity:0;padding:10px 14px;border:1px solid var(--stroke);border-radius:999px;background:rgba(7,9,17,.8);backdrop-filter:blur(20px);color:#b8c1cf;font:600 8px "Space Grotesk";letter-spacing:.08em;pointer-events:none;transition:.3s}.hud-toast.show{opacity:1;transform:translate(-50%,0)}
 @media(min-width:1001px){.system-status{display:flex}.command-trigger{order:4}}
 @media(max-width:760px){.command-trigger{display:flex;margin-left:auto}.system-status{display:none}.console-grid{grid-template-columns:repeat(2,1fr)}.command-panel{padding:19px}.modal-layout{grid-template-columns:1fr}.project-modal-card{padding:28px 22px}}
+
+/* YouTube video lab */
+.video-lab-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.8fr);gap:18px}
+.video-preview,.video-channel{overflow:hidden}
+.video-frame{position:relative;aspect-ratio:16/9;background:#000}
+.video-frame iframe{display:block;width:100%;height:100%;border:0}
+.video-meta{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px}
+.video-meta h3,.video-channel h3{margin:6px 0 0;font-size:clamp(1.2rem,2vw,1.6rem)}
+.video-meta a,.video-channel>a{color:inherit;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.12em}
+.video-channel{padding:28px;display:flex;flex-direction:column;justify-content:center;min-height:100%}
+.video-channel-mark{display:grid;place-items:center;width:46px;height:32px;border-radius:9px;background:#fff;color:#05060a;font-weight:800;margin-bottom:22px}
+.video-channel p:not(.mini-label){color:var(--muted);line-height:1.75}
+.video-channel>a{margin-top:22px;align-self:flex-start;padding:12px 15px}
+@media (max-width:850px){.video-lab-grid{grid-template-columns:1fr}.video-meta{align-items:flex-start;flex-direction:column}.video-meta a{padding-bottom:2px}}
