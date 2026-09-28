@@ -1750,3 +1750,112 @@ main, body, section, .section, .first-section,
   .achievement-item { padding: 16px; }
   .certificate-grid .glass-card { min-height: 150px; }
 }
+
+/* Final content pass: every section keeps its text inside the same measured glass surface. */
+.achievement-shell,
+.video-lab-grid,
+.leadership-shell,
+.certificate-grid,
+.contact-shell {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+}
+
+.achievement-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+  gap: 0;
+  align-items: stretch;
+  padding: 0 !important;
+}
+
+.achievement-metric,
+.achievement-list {
+  min-width: 0;
+  padding: clamp(28px, 4vw, 56px);
+}
+
+.achievement-list {
+  display: grid;
+  gap: 0;
+  border-left: 1px solid rgba(255,255,255,.13);
+}
+
+.achievement-item {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 18px;
+  min-width: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.achievement-item:first-child { padding-top: 0; }
+.achievement-item:last-child { padding-bottom: 0; border-bottom: 0; }
+.achievement-item > div { min-width: 0; }
+.achievement-item h3 { margin: 8px 0 12px; }
+.achievement-item p { margin: 0; overflow-wrap: anywhere; }
+.achievement-item > b { color: var(--acid); font: 700 10px/1 "Space Grotesk", sans-serif; white-space: nowrap; }
+
+.video-lab-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.video-preview,
+.video-channel,
+.certificate-card { min-width: 0; height: 100%; }
+.video-preview { display: grid; grid-template-rows: minmax(260px, 1fr) auto; }
+.video-meta { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-width: 0; padding: 24px; }
+.video-meta > div { min-width: 0; }
+.video-meta h3 { margin: 8px 0 0; }
+.video-channel { display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: clamp(28px, 4vw, 48px); }
+.video-channel p { margin: 0; }
+.video-channel .glass-button { align-self: flex-start; }
+
+.leadership-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr);
+  gap: 0;
+  padding: 0 !important;
+}
+
+.leadership-copy,
+.leadership-list { min-width: 0; padding: clamp(28px, 4vw, 56px); }
+.leadership-list { border-left: 1px solid rgba(255,255,255,.13); }
+.leadership-list > div { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+.leadership-list > div strong,
+.leadership-list > div span { min-width: 0; overflow-wrap: anywhere; }
+.leadership-list > div span { grid-column: 2; color: #aab3c2; }
+.leadership-list > a { display: inline-block; margin-top: 22px; }
+
+.certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.certificate-card { display: flex; flex-direction: column; justify-content: flex-start; min-height: 210px; padding: clamp(24px, 3vw, 40px); }
+.certificate-card h3 { margin: 24px 0 12px; }
+.certificate-card p { margin: 0; overflow-wrap: anywhere; }
+.certificate-card .card-index { order: -1; }
+
+.contact-shell { padding: clamp(28px, 4vw, 56px); }
+.contact-shell > div { min-width: 0; }
+
+@media (max-width: 760px) {
+  .achievement-shell,
+  .video-lab-grid,
+  .leadership-shell,
+  .certificate-grid { grid-template-columns: 1fr; }
+  .achievement-list,
+  .leadership-list { border-left: 0; border-top: 1px solid rgba(255,255,255,.13); }
+  .achievement-metric,
+  .achievement-list,
+  .leadership-copy,
+  .leadership-list { padding: 24px !important; }
+  .achievement-item { grid-template-columns: 28px minmax(0, 1fr); gap: 12px; }
+  .achievement-item > b { grid-column: 2; }
+  .video-preview { grid-template-rows: auto auto; }
+  .video-meta { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .certificate-grid { gap: 12px; }
+}
