@@ -151,3 +151,14 @@ html,body,body *{-webkit-user-select:none;-moz-user-select:none;user-select:none
   .glass-panel,.glass-card,.site-header,.glass-control,.glass-button{transform:none!important;will-change:auto}
   .liquid-ripple{display:none}
 }
+
+
+.channel-video-frame{display:grid;place-items:center;background:
+  radial-gradient(circle at 50% 35%,rgba(215,255,82,.08),transparent 30%),
+  radial-gradient(circle at 80% 80%,rgba(120,145,255,.07),transparent 34%),#03050b;
+}
+.channel-video-placeholder{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:24px}
+.channel-video-placeholder .channel-preview-mark{margin-bottom:8px}
+.channel-video-placeholder h3{font:600 clamp(1.4rem,3vw,2rem)/1.05 "Space Grotesk";letter-spacing:-.04em;margin:4px 0}
+.channel-video-placeholder>p:not(.mini-label){color:#818b9c;font-size:12px;margin:0 0 8px}
+.channel-video-placeholder .glass-button{padding:11px 15px;font:600 9px "Space Grotesk";letter-spacing:.1em}
