@@ -2573,3 +2573,359 @@ body.command-open,body.project-open{overflow:hidden!important}
     right:8px!important;
   }
 }
+
+
+/* ============================================================================
+   MOBILE OPTIMIZATION — 360–480px
+   Keep the desktop composition intact; on phones prioritize hierarchy,
+   readable type, compact glass surfaces and touch-safe spacing.
+============================================================================ */
+@media (max-width: 760px){
+  :root{
+    --mobile-gutter: 16px;
+    --mobile-radius: 22px;
+  }
+
+  body{
+    font-size: 15px;
+  }
+
+  .site-header{
+    z-index: 120!important;
+  }
+
+  .section{
+    width:100%;
+    padding: 78px var(--mobile-gutter) 76px;
+  }
+
+  .first-section{
+    padding-top: 84px;
+  }
+
+  .section-kicker{
+    gap:10px!important;
+    margin-bottom:26px!important;
+    padding:0 4px!important;
+    font-size:10px!important;
+  }
+
+  .section-kicker b{
+    min-width:34px!important;
+  }
+
+  .section-kicker em{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* Education / profile: one compact glass composition. */
+  .education-shell{
+    border-radius:var(--mobile-radius)!important;
+    padding:22px 16px!important;
+  }
+
+  .education-shell .section-intro{
+    display:block!important;
+    margin-bottom:22px!important;
+  }
+
+  .education-shell .eyebrow{
+    margin-bottom:12px!important;
+    font-size:9px!important;
+    line-height:1.45!important;
+    letter-spacing:.08em!important;
+  }
+
+  .education-shell h1{
+    font-size:clamp(4rem,19vw,5.7rem)!important;
+    line-height:.78!important;
+    letter-spacing:-.085em!important;
+    margin:0 0 24px!important;
+  }
+
+  .education-shell .intro-copy{
+    max-width:100%!important;
+    margin:0!important;
+    font-size:15px!important;
+    line-height:1.62!important;
+    color:#aab2bf!important;
+  }
+
+  .education-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:12px!important;
+  }
+
+  .education-card,
+  .profile-card{
+    min-height:0!important;
+    padding:22px 18px!important;
+    border-radius:20px!important;
+  }
+
+  .education-card h2,
+  .profile-card h2{
+    font-size:clamp(1.65rem,8vw,2.25rem)!important;
+    line-height:.98!important;
+    letter-spacing:-.055em!important;
+    margin:12px 0 18px!important;
+  }
+
+  .education-card>p:not(.mini-label),
+  .profile-card>p:not(.mini-label){
+    font-size:14px!important;
+    line-height:1.68!important;
+    color:#aab2bf!important;
+  }
+
+  .education-card .meta-row{
+    margin-top:24px!important;
+    gap:12px!important;
+    font-size:8px!important;
+    letter-spacing:.07em!important;
+  }
+
+  .card-index{
+    font-size:10px!important;
+  }
+
+  .profile-card p:last-child{
+    margin-bottom:0!important;
+  }
+
+  /* Reduce the huge desktop section rhythm on phones. */
+  .section-title{
+    margin-bottom:34px!important;
+  }
+
+  .section-title h2,
+  .section-intro h2,
+  .about-grid > div:first-child h2{
+    font-size:clamp(2.8rem,14vw,4.4rem)!important;
+    line-height:.9!important;
+    letter-spacing:-.07em!important;
+  }
+
+  .section-title p:not(.eyebrow){
+    font-size:14px!important;
+    line-height:1.65!important;
+  }
+
+  /* Cards: content determines height rather than desktop min-heights. */
+  .experience-grid,
+  .project-grid,
+  .skills-grid,
+  .certificate-grid{
+    grid-template-columns:1fr!important;
+    gap:12px!important;
+  }
+
+  .experience-card,
+  .project-card,
+  .skill-card,
+  .certificate-card{
+    min-height:0!important;
+  }
+
+  .project-card{
+    border-radius:20px!important;
+  }
+
+  .project-content{
+    padding:22px 18px!important;
+  }
+
+  .project-content h3{
+    font-size:clamp(1.7rem,8vw,2.3rem)!important;
+    line-height:1!important;
+  }
+
+  .project-content>p:not(.mini-label){
+    font-size:14px!important;
+    line-height:1.65!important;
+  }
+
+  .project-media{
+    min-height:210px!important;
+  }
+
+  .tags{
+    gap:6px!important;
+  }
+
+  .tags span{
+    padding:6px 9px!important;
+    font-size:8px!important;
+  }
+
+  .demo-links{
+    gap:6px!important;
+  }
+
+  .demo-links a{
+    font-size:8px!important;
+  }
+
+  .experience-card{
+    padding:20px 18px!important;
+    border-radius:20px!important;
+  }
+
+  .experience-top{
+    margin-bottom:18px!important;
+  }
+
+  .experience-card .role{
+    font-size:18px!important;
+    line-height:1.1!important;
+  }
+
+  .experience-card .details{
+    font-size:14px!important;
+    line-height:1.65!important;
+  }
+
+  .achievement-shell,
+  .leadership-shell,
+  .contact-shell{
+    border-radius:22px!important;
+  }
+
+  /* Avoid horizontal overflow from long technical labels. */
+  .achievement-shell,
+  .leadership-shell,
+  .contact-shell,
+  .skill-card,
+  .certificate-card{
+    min-width:0!important;
+  }
+
+  .achievement-item{
+    grid-template-columns:28px minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+
+  .achievement-item>b{
+    grid-column:2!important;
+    justify-self:start!important;
+  }
+
+  .leadership-shell,
+  .contact-shell{
+    padding:22px 18px!important;
+  }
+
+  .leadership-copy h2,
+  .contact-shell h2{
+    font-size:clamp(2.5rem,12vw,4rem)!important;
+    line-height:.92!important;
+  }
+
+  .contact-links{
+    gap:10px!important;
+  }
+
+  .contact-links a{
+    min-height:44px!important;
+  }
+}
+
+@media (max-width: 480px){
+  .section{
+    padding-left:14px;
+    padding-right:14px;
+    padding-top:66px;
+    padding-bottom:66px;
+  }
+
+  .first-section{
+    padding-top:78px;
+  }
+
+  .education-shell{
+    padding:20px 14px!important;
+  }
+
+  .education-shell h1{
+    font-size:clamp(3.7rem,20vw,5rem)!important;
+    margin-bottom:22px!important;
+  }
+
+  .education-card,
+  .profile-card{
+    padding:20px 16px!important;
+  }
+
+  .education-card h2,
+  .profile-card h2{
+    font-size:clamp(1.55rem,8.3vw,2rem)!important;
+  }
+
+  .section-kicker{
+    margin-bottom:22px!important;
+  }
+
+  .section-title{
+    margin-bottom:28px!important;
+  }
+
+  .project-media{
+    min-height:190px!important;
+  }
+
+  .project-content{
+    padding:20px 16px!important;
+  }
+
+  .experience-card{
+    padding:18px 16px!important;
+  }
+
+  .skill-card,
+  .certificate-card{
+    padding:20px 16px!important;
+  }
+}
+
+@media (max-width: 360px){
+  .section{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .education-shell{
+    padding:18px 12px!important;
+  }
+
+  .education-shell h1{
+    font-size:3.55rem!important;
+  }
+
+  .education-card,
+  .profile-card,
+  .project-content,
+  .experience-card,
+  .skill-card,
+  .certificate-card{
+    padding-left:14px!important;
+    padding-right:14px!important;
+  }
+}
+
+/* WebGL glass should retain a visible optical edge on small displays. */
+@media (max-width:760px){
+  html.liquid-glass-ready .glass-panel,
+  html.liquid-glass-ready .glass-card,
+  html.liquid-glass-ready .glass-control{
+    border-color:rgba(255,255,255,.13)!important;
+  }
+
+  html.liquid-glass-ready .education-shell,
+  html.liquid-glass-ready .education-card,
+  html.liquid-glass-ready .profile-card{
+    box-shadow:0 18px 50px rgba(0,0,0,.22)!important;
+  }
+}
