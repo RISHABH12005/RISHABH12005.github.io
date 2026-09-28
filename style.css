@@ -20,7 +20,7 @@ html {
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 75% 10%, #171436 0, transparent 28%), var(--bg);
+  background: var(--bg);
   color: var(--fg);
   font-family: Inter, system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
@@ -311,6 +311,22 @@ a:hover {
   position: relative;
   z-index: 5;
   max-width: 720px;
+  padding: clamp(28px, 5vw, 64px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018));
+  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  overflow: hidden;
+}
+
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), transparent 22%, transparent 72%, rgba(117, 107, 255, 0.08));
+  opacity: 0.65;
 }
 
 .eyebrow {
