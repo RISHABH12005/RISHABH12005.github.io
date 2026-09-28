@@ -3737,3 +3737,61 @@ html.liquid-glass-ready .glass-control{
     transition:none!important;
   }
 }
+
+
+/* ========================================================================
+   GLASS CONTRAST / OPTICAL BALANCE
+   Prevent WebGL glass from washing the content to white while preserving
+   the refraction, blur and edge-lighting characteristics.
+========================================================================= */
+html.liquid-glass-ready .glass-panel,
+html.liquid-glass-ready .glass-card{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.012) 48%,rgba(75,92,160,.025)),
+    rgba(5,8,16,.30)!important;
+  border-color:rgba(255,255,255,.11)!important;
+  box-shadow:
+    0 24px 80px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.20)!important;
+}
+
+html.liquid-glass-ready .education-shell,
+html.liquid-glass-ready .profile-card{
+  color:#edf1f7!important;
+}
+
+html.liquid-glass-ready .education-shell .intro-copy,
+html.liquid-glass-ready .education-card>p:not(.mini-label),
+html.liquid-glass-ready .profile-card>p:not(.mini-label){
+  color:rgba(218,225,238,.76)!important;
+}
+
+html.liquid-glass-ready .education-card h2,
+html.liquid-glass-ready .profile-card h2{
+  color:#f2f5fa!important;
+  text-shadow:0 2px 18px rgba(0,0,0,.22);
+}
+
+html.liquid-glass-ready .eyebrow,
+html.liquid-glass-ready .mini-label{
+  color:rgba(192,202,219,.72)!important;
+}
+
+html.liquid-glass-ready .meta-row{
+  color:rgba(191,203,220,.72)!important;
+}
+
+html.liquid-glass-ready .glass-panel::before,
+html.liquid-glass-ready .glass-card::before{
+  display:none!important;
+}
+
+@media(max-width:760px){
+  html.liquid-glass-ready .glass-panel,
+  html.liquid-glass-ready .glass-card{
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.038),rgba(255,255,255,.008)),
+      rgba(5,8,16,.34)!important;
+  }
+}
