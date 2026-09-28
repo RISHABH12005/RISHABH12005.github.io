@@ -3322,22 +3322,22 @@ body.command-open,body.project-open{overflow:hidden!important}
     opacity:1!important;
     transform:translateY(0) scale(1)!important;
   }
-  body.nav-open .mobile-glass-link:nth-of-type(3){transition-delay:.02s}
-  body.nav-open .mobile-glass-link:nth-of-type(4){transition-delay:.04s}
-  body.nav-open .mobile-glass-link:nth-of-type(5){transition-delay:.06s}
-  body.nav-open .mobile-glass-link:nth-of-type(6){transition-delay:.08s}
-  body.nav-open .mobile-glass-link:nth-of-type(7){transition-delay:.10s}
-  body.nav-open .mobile-glass-link:nth-of-type(8){transition-delay:.12s}
-  body.nav-open .mobile-glass-link:nth-of-type(9){transition-delay:.14s}
+  body.nav-open .mobile-glass-link:nth-of-type(1){transition-delay:.02s}
+  body.nav-open .mobile-glass-link:nth-of-type(2){transition-delay:.04s}
+  body.nav-open .mobile-glass-link:nth-of-type(3){transition-delay:.06s}
+  body.nav-open .mobile-glass-link:nth-of-type(4){transition-delay:.08s}
+  body.nav-open .mobile-glass-link:nth-of-type(5){transition-delay:.10s}
+  body.nav-open .mobile-glass-link:nth-of-type(6){transition-delay:.12s}
+  body.nav-open .mobile-glass-link:nth-of-type(7){transition-delay:.14s}
 
   /* Seven standalone buttons under the hamburger; no enclosing panel. */
-  .mobile-glass-link:nth-of-type(3){top:64px}
-  .mobile-glass-link:nth-of-type(4){top:112px}
-  .mobile-glass-link:nth-of-type(5){top:160px}
-  .mobile-glass-link:nth-of-type(6){top:208px}
-  .mobile-glass-link:nth-of-type(7){top:256px}
-  .mobile-glass-link:nth-of-type(8){top:304px}
-  .mobile-glass-link:nth-of-type(9){top:352px}
+  .mobile-glass-link:nth-of-type(1){top:64px}
+  .mobile-glass-link:nth-of-type(2){top:112px}
+  .mobile-glass-link:nth-of-type(3){top:160px}
+  .mobile-glass-link:nth-of-type(4){top:208px}
+  .mobile-glass-link:nth-of-type(5){top:256px}
+  .mobile-glass-link:nth-of-type(6){top:304px}
+  .mobile-glass-link:nth-of-type(7){top:352px}
 
   .mobile-glass-root .liquid-glass-button{
     cursor:pointer!important;
@@ -3376,4 +3376,39 @@ body.command-open,body.project-open{overflow:hidden!important}
     min-height:40px!important;
     padding:11px 14px!important;
   }
+}
+
+
+/* LiquidGlass mobile root: transparent to the page, used only as a local shader scene. */
+@media(max-width:760px){
+  .mobile-glass-root{
+    position:fixed!important;
+    top:0!important;
+    right:0!important;
+    left:auto!important;
+    width:min(200px,calc(100vw - 16px))!important;
+    height:416px!important;
+    display:block!important;
+    z-index:220!important;
+    pointer-events:none!important;
+    overflow:visible!important;
+    background:transparent!important;
+    border:0!important;
+  }
+  .mobile-glass-scene{
+    position:absolute!important;
+    inset:0!important;
+    z-index:-2!important;
+    pointer-events:none!important;
+    background:url("./assets/dragon-bg.jpg") top right/100vw 100vh no-repeat!important;
+  }
+  .mobile-glass-link{
+    right:max(8px,env(safe-area-inset-right))!important;
+  }
+}
+@media(max-width:480px){
+  .mobile-glass-root{width:min(188px,calc(100vw - 12px))!important;height:416px!important}
+}
+@media(max-width:360px){
+  .mobile-glass-root{width:min(176px,calc(100vw - 10px))!important}
 }
