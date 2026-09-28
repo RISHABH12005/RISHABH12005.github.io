@@ -24,32 +24,23 @@ if(mount){
  const stars=[],meteors=[];
  const makeStars=()=>{
    stars.length=0;
-   const count=isTouch?220:Math.min(950,Math.max(420,Math.floor(innerWidth*innerHeight/1700)));
+   const count=isTouch?260:Math.min(1200,Math.max(520,Math.floor(innerWidth*innerHeight/1450)));
    for(let i=0;i<count;i++)stars.push({
-     x:Math.random(),y:Math.random(),z:.18+Math.random()*.82,
-     r:.25+Math.random()*1.35,a:.18+Math.random()*.72,
-     phase:Math.random()*Math.PI*2,twinkle:.4+Math.random()*1.5,
-     drift:(Math.random()-.5)*.000025
+     x:Math.random(),y:Math.random(),z:.12+Math.random()*.88,
+     r:.22+Math.random()*1.25,a:.2+Math.random()*.72,
+     phase:Math.random()*Math.PI*2,twinkle:.35+Math.random()*1.8,
+     drift:(Math.random()-.5)*.000018
    });
  };
- const resize=()=>{
-   w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio,isTouch?1.25:1.7);
-   canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);
-   canvas.style.width=w+'px';canvas.style.height=h+'px';
-   ctx.setTransform(dpr,0,0,dpr,0,0);makeStars();
- };
  const meteor=()=>{
-   if(prefersReduced||isTouch||meteors.length>1||Math.random()>.0015)return;
+   if(prefersReduced||isTouch||meteors.length>1||Math.random()>.0012)return;
    meteors.push({x:Math.random()*w*.9,y:Math.random()*h*.35,v:8+Math.random()*7,life:0,max:55+Math.random()*45});
  };
  const frame=time=>{
    requestAnimationFrame(frame);
    if(!visible||time-last<(isTouch?45:28))return;
    last=time;ctx.fillStyle='#02030a';ctx.fillRect(0,0,w,h);
-   const g=ctx.createRadialGradient(w*.72,h*.16,0,w*.72,h*.16,Math.max(w,h)*.72);
-   g.addColorStop(0,'rgba(72,91,175,.095)');g.addColorStop(.45,'rgba(35,43,105,.025)');g.addColorStop(1,'rgba(2,3,10,0)');
-   ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-   const px=pointer.x*15,py=pointer.y*10;
+      const px=pointer.x*12,py=pointer.y*8;
    for(const s of stars){
      s.x=(s.x+s.drift)%1;if(s.x<0)s.x=1;
      const x=s.x*w+px*s.z,y=s.y*h+py*s.z;
@@ -61,7 +52,7 @@ if(mount){
    meteor();
    for(let i=meteors.length-1;i>=0;i--){
      const m=meteors[i];m.life++;m.x+=m.v;m.y+=m.v*.55;
-     const fade=1-Math.abs(m.life-m.max/2)/(m.max/2);
+     const fade=Math.max(0,1-m.life/m.max);
      const grad=ctx.createLinearGradient(m.x-100,m.y-55,m.x,m.y);
      grad.addColorStop(0,'rgba(205,221,255,0)');grad.addColorStop(1,'rgba(220,232,255,'+Math.max(0,fade*.65)+')');
      ctx.strokeStyle=grad;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(m.x-100,m.y-55);ctx.lineTo(m.x,m.y);ctx.stroke();
