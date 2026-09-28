@@ -2929,3 +2929,153 @@ body.command-open,body.project-open{overflow:hidden!important}
     box-shadow:0 18px 50px rgba(0,0,0,.22)!important;
   }
 }
+
+
+/* ============================================================================
+   MOBILE VISUAL REPAIR
+   Reference: supplied mobile screenshot.
+============================================================================ */
+.mobile-brand{
+  display:none;
+  color:#f4f6fb;
+  font:700 17px/1 "Space Grotesk",sans-serif;
+  letter-spacing:-.07em;
+  padding:10px 12px;
+  border-radius:12px;
+}
+.mobile-brand span{color:var(--acid)}
+
+@media(max-width:760px){
+  /* The header is a navigation control, not a blank glass ornament. */
+  .site-header{
+    left:12px!important;
+    right:12px!important;
+    top:10px!important;
+    width:auto!important;
+    transform:none!important;
+    height:52px!important;
+    min-height:52px!important;
+    padding:4px 5px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    border-radius:18px!important;
+    background:rgba(10,14,22,.62)!important;
+    border:1px solid rgba(255,255,255,.16)!important;
+    box-shadow:0 16px 48px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.14)!important;
+    backdrop-filter:blur(22px) saturate(150%)!important;
+    -webkit-backdrop-filter:blur(22px) saturate(150%)!important;
+  }
+
+  .mobile-brand{
+    display:inline-flex!important;
+    align-items:center;
+    height:42px;
+  }
+
+  .site-header .menu-toggle{
+    z-index:5!important;
+    display:flex!important;
+    flex:0 0 42px!important;
+    width:42px!important;
+    height:40px!important;
+    margin:0!important;
+    padding:0!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-direction:column!important;
+    gap:5px!important;
+    border:1px solid rgba(255,255,255,.14)!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.06)!important;
+    color:#fff!important;
+  }
+
+  .site-header .menu-toggle span{
+    display:block!important;
+    width:17px!important;
+    height:1.5px!important;
+    margin:0!important;
+    background:#fff!important;
+    opacity:1!important;
+  }
+
+  .site-header nav{
+    top:62px!important;
+    left:0!important;
+    right:0!important;
+    width:100%!important;
+    border-radius:18px!important;
+    background:rgba(8,12,20,.92)!important;
+    box-shadow:0 24px 70px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.1)!important;
+    backdrop-filter:blur(26px) saturate(155%)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(155%)!important;
+  }
+
+  /* The first section should arrive sooner after the browser chrome. */
+  .first-section{
+    padding-top:64px!important;
+  }
+
+  .first-section .section-kicker{
+    margin-bottom:22px!important;
+  }
+
+  .education-shell{
+    padding:20px 14px!important;
+    border-radius:24px!important;
+    background:rgba(9,13,22,.18)!important;
+  }
+
+  .education-shell .section-intro{
+    margin-bottom:18px!important;
+  }
+
+  .education-shell .intro-copy{
+    line-height:1.58!important;
+  }
+
+  .education-grid{
+    gap:10px!important;
+  }
+
+  .education-card,
+  .profile-card{
+    padding:20px 16px!important;
+    border-radius:19px!important;
+    background:rgba(255,255,255,.055)!important;
+  }
+
+  .education-card h2,
+  .profile-card h2{
+    margin:12px 0 16px!important;
+  }
+
+  .education-card>p:not(.mini-label),
+  .profile-card>p:not(.mini-label){
+    line-height:1.58!important;
+  }
+}
+
+@media(max-width:480px){
+  .first-section{
+    padding-top:60px!important;
+  }
+
+  .education-shell{
+    padding:18px 12px!important;
+  }
+
+  .education-shell h1{
+    margin-bottom:18px!important;
+  }
+
+  .education-shell .intro-copy{
+    font-size:14px!important;
+  }
+
+  .education-card,
+  .profile-card{
+    padding:18px 14px!important;
+  }
+}
