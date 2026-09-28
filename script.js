@@ -99,133 +99,80 @@ render('');
 
 /* ========================================================================
    REAL YBOUANE LIQUID GLASS
-   Four tuned material families:
-   - Frosted Panel: broad structural surfaces
-   - Dark Glass: dark information shells
-   - Button Mode: interactive controls
-   - Dome Bevel: magnifier treatment for the achievement marker
-   Each LiquidGlass root contains only direct-child glass elements, matching
-   the library's rendering model.
+   Frosted Panel + Dark Glass + Button Mode + Dome Bevel/Magnifier.
+   One LiquidGlass instance is created per immediate parent root so glass
+   elements remain direct children and WebGL contexts stay bounded.
 ========================================================================= */
 (async()=>{
-  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mobile=window.matchMedia('(max-width:760px)').matches;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const instances=[];
-
   const frosted={
-    blurAmount:.22, refraction:.78, chromAberration:.045,
-    edgeHighlight:.13, specular:.18, fresnel:1.05, distortion:.008,
-    opacity:.93, saturation:.05, tintStrength:.018, brightness:.015,
-    shadowOpacity:.28, shadowSpread:12, shadowOffsetY:2,
-    floating:false, button:false, bevelMode:0
+    blurAmount:.22,refraction:.78,chromAberration:.045,edgeHighlight:.13,
+    specular:.18,fresnel:1.05,distortion:.008,opacity:.93,saturation:.05,
+    tintStrength:.018,brightness:.015,shadowOpacity:.28,shadowSpread:12,
+    shadowOffsetY:2,floating:false,button:false,bevelMode:0
   };
   const dark={
-    blurAmount:.27, refraction:.82, chromAberration:.05,
-    edgeHighlight:.16, specular:.22, fresnel:1.18, distortion:.01,
-    opacity:.91, saturation:.02, tintStrength:.028, brightness:-.06,
-    shadowOpacity:.38, shadowSpread:16, shadowOffsetY:3,
-    floating:false, button:false, bevelMode:0
+    blurAmount:.27,refraction:.82,chromAberration:.05,edgeHighlight:.16,
+    specular:.22,fresnel:1.18,distortion:.01,opacity:.91,saturation:.02,
+    tintStrength:.028,brightness:-.06,shadowOpacity:.38,shadowSpread:16,
+    shadowOffsetY:3,floating:false,button:false,bevelMode:0
   };
   const control={
-    blurAmount:.16, refraction:.74, chromAberration:.035,
-    edgeHighlight:.14, specular:.2, fresnel:1.08, distortion:.006,
-    opacity:.96, saturation:.04, tintStrength:.02, brightness:.025,
-    shadowOpacity:.25, shadowSpread:9, shadowOffsetY:2,
-    floating:false, button:true, bevelMode:0
+    blurAmount:.16,refraction:.74,chromAberration:.035,edgeHighlight:.14,
+    specular:.2,fresnel:1.08,distortion:.006,opacity:.96,saturation:.04,
+    tintStrength:.02,brightness:.025,shadowOpacity:.25,shadowSpread:9,
+    shadowOffsetY:2,floating:false,button:true,bevelMode:0
   };
   const dome={
-    blurAmount:.08, refraction:1.12, chromAberration:.065,
-    edgeHighlight:.22, specular:.3, fresnel:1.3, distortion:.012,
-    opacity:.98, saturation:.08, tintStrength:.025, brightness:.02,
-    shadowOpacity:.32, shadowSpread:12, shadowOffsetY:2,
-    floating:false, button:false, bevelMode:1,
-    cornerRadius:50, zRadius:50
-  };
-
-  const setConfig=(el,cfg,extra={})=>{
-    el.dataset.config=JSON.stringify({...cfg,...extra});
+    blurAmount:.08,refraction:1.12,chromAberration:.065,edgeHighlight:.22,
+    specular:.3,fresnel:1.3,distortion:.012,opacity:.98,saturation:.08,
+    tintStrength:.025,brightness:.02,shadowOpacity:.32,shadowSpread:12,
+    shadowOffsetY:2,floating:false,button:false,bevelMode:1
   };
 
   try{
     const {LiquidGlass}=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
+    const groups=new Map();
 
-    const initRoot=async(root,elements,defaults)=>{
-      if(!root||!elements.length)return;
-      if(getComputedStyle(root).position==='static')root.style.position='relative';
-      const clean=[...new Set(elements)].filter(el=>el.parentElement===root);
-      if(!clean.length)return;
-      const instance=await LiquidGlass.init({
-        root,
-        glassElements:clean,
-        defaults
-      });
-      instances.push(instance);
+    const add=(el,cfg)=>{
+      if(!el||el.closest('#mobile-glass-root'))return;
+      const root=el.parentElement;
+      if(!root)return;
+      if(!groups.has(root))groups.set(root,[]);
+      groups.get(root).push({el,cfg});
+      el.dataset.config=JSON.stringify(cfg);
     };
 
-    /* Structural glass: one renderer per immediate parent avoids invalid
-       nested-glass relationships and avoids opening dozens of WebGL contexts. */
-    const structural=[
-      ['.glass-panel',frosted],
-      ['.glass-card',frosted]
-    ];
-
-    for(const [selector,cfg] of structural){
-      const groups=new Map();
-      document.querySelectorAll(selector).forEach(el=>{
-        if(el.closest('#mobile-glass-root'))return;
-        const root=el.parentElement;
-        if(!root)return;
-        if(!groups.has(root))groups.set(root,[]);
-        groups.get(root).push(el);
-        setConfig(el,cfg);
-      });
-      for(const [root,elements] of groups){
-        await initRoot(root,elements,{...frosted});
-      }
-    }
-
-    /* Re-tune selected information shells as Dark Glass. */
-    const darkSelectors='.achievement-shell,.leadership-shell,.contact-shell,.project-modal-card';
-    const darkGroups=new Map();
-    document.querySelectorAll(darkSelectors).forEach(el=>{
-      if(el.closest('#mobile-glass-root'))return;
-      const root=el.parentElement;
-      if(!root)return;
-      setConfig(el,dark);
-      if(!darkGroups.has(root))darkGroups.set(root,[]);
-      darkGroups.get(root).push(el);
+    document.querySelectorAll('.glass-panel,.glass-card').forEach(el=>{
+      const darkMode=el.matches('.achievement-shell,.leadership-shell,.contact-shell,.project-modal-card');
+      add(el,darkMode?dark:frosted);
     });
-    for(const [root,elements] of darkGroups){
-      await initRoot(root,elements,{...dark});
-    }
 
-    /* Button mode: interactive actions get their own small roots so they
-       remain valid direct children and preserve hover/press shader state. */
-    const buttons=[...document.querySelectorAll('.glass-button')];
-    const buttonGroups=new Map();
-    buttons.forEach(el=>{
-      if(el.closest('#mobile-glass-root'))return;
-      const root=el.parentElement;
-      if(!root)return;
-      setConfig(el,control);
-      if(!buttonGroups.has(root))buttonGroups.set(root,[]);
-      buttonGroups.get(root).push(el);
+    document.querySelectorAll('.glass-button,.glass-control').forEach(el=>{
+      add(el,control);
     });
-    for(const [root,elements] of buttonGroups){
-      await initRoot(root,elements,{...control});
-    }
 
-    /* Dome / magnifier: the achievement index becomes a small optical lens. */
     const orbit=document.querySelector('.achievement-orbit');
     if(orbit){
-      const root=orbit.parentElement;
-      setConfig(orbit,dome,{cornerRadius:Math.min(50,Math.max(24,orbit.offsetHeight/2)),zRadius:Math.min(50,Math.max(24,orbit.offsetHeight/2))});
-      await initRoot(root,[orbit],{...dome});
+      const radius=Math.min(50,Math.max(24,orbit.offsetHeight/2||32));
+      add(orbit,{...dome,cornerRadius:radius,zRadius:radius});
       orbit.classList.add('liquid-dome');
     }
 
-    /* Mobile menu is one compact WebGL root. The scene is a sibling child,
-       so the renderer can sample it; the root itself remains uncaptured. */
+    for(const [root,items] of groups){
+      if(getComputedStyle(root).position==='static')root.style.position='relative';
+      const elements=[...new Set(items.map(x=>x.el))];
+      const instance=await LiquidGlass.init({
+        root,
+        glassElements:elements,
+        defaults:{...frosted}
+      });
+      instances.push(instance);
+    }
+
+    /* Mobile navigation: one local WebGL root. The scene is a sibling child,
+       which is required because LiquidGlass never captures the root itself. */
     const mobileRoot=document.querySelector('#mobile-glass-root');
     const mobileScene=mobileRoot?.querySelector('.mobile-glass-scene');
     const mobileButton=mobileRoot?.querySelector('.menu-toggle');
@@ -233,9 +180,16 @@ render('');
     if(mobileRoot&&mobileScene&&mobileButton&&mobileLinks.length){
       mobileRoot.classList.add('mobile-webgl-root');
       mobileScene.style.opacity='1';
-      setConfig(mobileButton,{...control,cornerRadius:15,zRadius:15});
-      mobileLinks.forEach(link=>setConfig(link,{...control,cornerRadius:16,zRadius:16}));
-      await initRoot(mobileRoot,[mobileButton,...mobileLinks],{...control});
+      mobileScene.style.backgroundImage='url("./assets/dragon-bg.jpg")';
+      const menuCfg={...control,cornerRadius:15,zRadius:15};
+      mobileButton.dataset.config=JSON.stringify(menuCfg);
+      mobileLinks.forEach(link=>link.dataset.config=JSON.stringify({...control,cornerRadius:16,zRadius:16}));
+      const instance=await LiquidGlass.init({
+        root:mobileRoot,
+        glassElements:[mobileButton,...mobileLinks],
+        defaults:{...control}
+      });
+      instances.push(instance);
     }
 
     window.__liquidGlassInstances=instances;
