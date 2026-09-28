@@ -1314,6 +1314,28 @@ a:focus-visible {
   border: 0;
 }
 
+/* Stable portfolio layout and centered liquid-glass navigation. */
+.section-kicker { display:grid; grid-template-columns:auto minmax(40px,1fr) auto; align-items:center; gap:16px; margin:0 0 42px; color:var(--acid); font:700 12px/1 "Space Grotesk",sans-serif; letter-spacing:.06em; }
+.section-kicker b { height:1px; background:rgba(255,255,255,.16); }
+.section-kicker em { color:#8791a4; font-style:normal; font-size:10px; letter-spacing:.14em; }
+.education-shell { width:100%; box-sizing:border-box; border-radius:34px; }
+.section-intro { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr); align-items:end; gap:clamp(32px,7vw,120px); margin-bottom:54px; }
+.section-intro h1 { margin:0; font-size:clamp(4.2rem,10vw,9rem); line-height:.84; letter-spacing:-.08em; }
+.section-intro h1 span { display:block; color:var(--acid); }
+.intro-copy { margin:0; max-width:420px; color:#9ba5b6; line-height:1.7; }
+.education-grid,.experience-grid,.project-grid,.skills-grid,.achievement-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.education-card,.profile-card,.experience-card,.project-card,.skill-card,.achievement-card { min-width:0; padding:clamp(24px,3vw,38px); border-radius:24px; }
+.education-card h2,.profile-card h2 { margin:22px 0; font-size:clamp(2rem,4vw,3.2rem); line-height:.98; letter-spacing:-.055em; }
+.card-index { float:right; color:var(--acid); font:700 11px/1 "Space Grotesk",sans-serif; }
+.meta-row { display:flex; justify-content:space-between; gap:16px; margin-top:28px; color:#8994a7; font-size:12px; }
+.site-header { top:18px; left:50%; right:auto; width:min(calc(100% - 32px),760px); min-height:54px; height:auto; transform:translateX(-50%); padding:6px 10px; display:block; border-radius:999px; background:rgba(8,12,24,.42); border:1px solid rgba(255,255,255,.16); box-shadow:0 18px 70px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.12); }
+.site-header nav { width:100%; min-height:40px; justify-content:center; align-items:center; gap:clamp(14px,2.1vw,28px); margin:0; }
+.site-header nav a { padding:10px 8px; white-space:nowrap; }
+main,body,section,.section,.first-section,.education-shell { background:transparent !important; }
+.education-shell,.contact-grid,.glass-panel,.glass-card,.project-card,.experience-card { background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 55%,rgba(86,104,190,.025)) !important; border:1px solid rgba(255,255,255,.13) !important; box-shadow:0 24px 90px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.11) !important; backdrop-filter:blur(18px) saturate(145%); -webkit-backdrop-filter:blur(18px) saturate(145%); }
+@media (max-width:760px) { .section-intro,.education-grid,.experience-grid,.project-grid,.skills-grid,.achievement-grid { grid-template-columns:1fr; } .section-intro { gap:24px; } .site-header { top:12px; width:calc(100% - 24px); border-radius:22px; } .site-header nav { gap:4px; justify-content:space-between; overflow:auto; } .site-header nav a { padding:13px 8px; } }
+
+
 .menu-toggle {
   display: none;
   border: 0;
