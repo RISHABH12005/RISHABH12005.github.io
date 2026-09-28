@@ -62,23 +62,37 @@ render('');
 (async()=>{
   try{
     const {LiquidGlass}=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
-    const elements=[...document.querySelectorAll('.glass-panel,.glass-card,.glass-control,.site-header')];
+    const elements=[...document.querySelectorAll('.glass-panel,.glass-card,.glass-control')];
     const groups=new Map();
+
+    /* Give every local LiquidGlass root a real black scene behind its glass. */
+    const prepareRoot=(root)=>{
+      if(getComputedStyle(root).position==='static')root.style.position='relative';
+      root.classList.add('liquid-glass-root');
+      if(!root.querySelector(':scope > .liquid-glass-underlay')){
+        const underlay=document.createElement('div');
+        underlay.className='liquid-glass-underlay';
+        underlay.setAttribute('aria-hidden','true');
+        root.insertBefore(underlay,root.firstChild);
+      }
+    };
+
     for(const el of elements){
       const root=el.parentElement;
       if(!root)continue;
       if(!groups.has(root))groups.set(root,[]);
       groups.get(root).push(el);
     }
+
     const instances=[];
     for(const [root,glassElements] of groups){
       if(!glassElements.length)continue;
-      if(getComputedStyle(root).position==='static')root.style.position='relative';
+      prepareRoot(root);
       for(const el of glassElements){
-        const isControl=el.classList.contains('glass-control')||el.classList.contains('site-header');
+        const isControl=el.classList.contains('glass-control');
         const isPanel=el.classList.contains('glass-panel');
         el.dataset.config=JSON.stringify({
-          blurAmount:isPanel?.valueOf?0.22:0.16,
+          blurAmount:isPanel?0.22:0.16,
           refraction:isPanel?0.82:0.72,
           chromAberration:0.075,
           edgeHighlight:0.16,
