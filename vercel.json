@@ -1,5 +1,6 @@
 {
-  "buildCommand": null,
+  "buildCommand": "printf 'Static site build complete\\n'",
   "outputDirectory": ".",
+  "framework": null,
   "cleanUrls": true
 }
