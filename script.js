@@ -36,59 +36,55 @@ if (!prefersReduced && !isTouch) {
   });
 }
 
-const mount = document.querySelector('#hero-3d');
-if (mount && !prefersReduced && !isTouch && 'WebGLRenderingContext' in window) {
+const sceneMount = document.querySelector('#scene');
+if (sceneMount && 'WebGLRenderingContext' in window) {
   try {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-    camera.position.z = 7.2;
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.35));
-    renderer.setSize(mount.clientWidth, mount.clientHeight);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    mount.appendChild(renderer.domElement);
+    const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
+    camera.position.z = 8;
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25));
+    renderer.setSize(innerWidth, innerHeight);
+    sceneMount.appendChild(renderer.domElement);
 
-    const world = new THREE.Group();
-    world.rotation.z = -0.48;
-    scene.add(world);
-    const geometry = new THREE.IcosahedronGeometry(1.18, 2);
-    world.add(new THREE.LineSegments(new THREE.EdgesGeometry(geometry, 18), new THREE.LineBasicMaterial({ color: 0xd6d0c8, transparent: true, opacity: 0.72 })));
-    world.add(new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xe8e3dc, transparent: true, opacity: 0.055, side: THREE.DoubleSide })));
-    for (let i = 0; i < 3; i += 1) {
-      const points = [];
-      for (let j = 0; j < 65; j += 1) {
-        const angle = (j / 64) * Math.PI * 2;
-        const radius = 1.45 + i * 0.28;
-        points.push(Math.cos(angle) * radius, Math.sin(angle) * radius * 0.5, Math.sin(angle) * radius * 0.3);
-      }
-      const ringGeo = new THREE.BufferGeometry().setFromPoints(points.reduce((acc, _, index) => index % 3 === 0 ? [...acc, new THREE.Vector3(points[index], points[index + 1], points[index + 2])] : acc, []));
-      const ring = new THREE.Line(ringGeo, new THREE.LineBasicMaterial({ color: 0x756bff, transparent: true, opacity: 0.34 - i * 0.07 }));
-      ring.rotation.x = i * Math.PI / 6;
-      world.add(ring);
+    const count = isTouch ? 520 : 1050;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i += 1) {
+      const radius = 3 + Math.random() * 15;
+      const angle = Math.random() * Math.PI * 2;
+      positions[i * 3] = Math.cos(angle) * radius;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 13;
+      positions[i * 3 + 2] = -Math.random() * 20;
     }
+    const stars = new THREE.BufferGeometry();
+    stars.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const starField = new THREE.Points(stars, new THREE.PointsMaterial({ color: 0xcbd6ff, size: isTouch ? 0.025 : 0.035, transparent: true, opacity: 0.7, sizeAttenuation: true }));
+    scene.add(starField);
+
     let targetX = 0, targetY = 0, active = true;
-    window.addEventListener('pointermove', event => { targetX = (event.clientY / innerHeight - 0.5) * 0.18; targetY = (event.clientX / innerWidth - 0.5) * 0.28; }, { passive: true });
-    const resize = () => { const width = mount.clientWidth; const height = mount.clientHeight; camera.aspect = width / height; camera.updateProjectionMatrix(); renderer.setSize(width, height); };
+    window.addEventListener('pointermove', event => { targetX = (event.clientX / innerWidth - 0.5) * 0.22; targetY = (event.clientY / innerHeight - 0.5) * 0.12; }, { passive: true });
+    const resize = () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); };
     window.addEventListener('resize', resize, { passive: true });
     document.addEventListener('visibilitychange', () => { active = !document.hidden; });
     const clock = new THREE.Clock();
     const animate = () => {
-      if (active) {
+      if (active && !prefersReduced) {
         const time = clock.getElapsedTime();
-        world.rotation.x += (targetX - world.rotation.x) * 0.018;
-        world.rotation.y += (targetY - world.rotation.y) * 0.018;
-        world.rotation.z = -0.48 + Math.sin(time * 0.18) * 0.08;
-        world.position.y = Math.sin(time * 0.45) * 0.045;
+        starField.rotation.y += 0.00012;
+        starField.rotation.x = (starField.rotation.x * 0.98) + targetY * 0.02;
+        camera.position.x += (targetX - camera.position.x) * 0.012;
+        camera.position.y += (-targetY - camera.position.y) * 0.012;
+        camera.lookAt(0, 0, -5);
         renderer.render(scene, camera);
-      }
+      } else if (active) renderer.render(scene, camera);
       requestAnimationFrame(animate);
     };
     resize();
     animate();
   } catch (error) {
-    mount.classList.add('is-fallback');
+    sceneMount.classList.add('is-fallback');
   }
-} else if (mount) mount.classList.add('is-fallback');
+} else if (sceneMount) sceneMount.classList.add('is-fallback');
 
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
