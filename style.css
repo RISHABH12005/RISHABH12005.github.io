@@ -54,3 +54,25 @@ html,body,body *{-webkit-user-select:none;-moz-user-select:none;user-select:none
 .video-channel p:not(.mini-label){color:var(--muted);line-height:1.75}
 .video-channel>a{margin-top:22px;align-self:flex-start;padding:12px 15px}
 @media (max-width:850px){.video-lab-grid{grid-template-columns:1fr}.video-meta{align-items:flex-start;flex-direction:column}.video-meta a{padding-bottom:2px}}
+
+
+/* Achievement intelligence board */
+.achievements-section .section-title{max-width:860px}
+.achievement-shell{display:grid;grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);gap:1px;padding:1px;border-radius:32px;background:rgba(255,255,255,.11)}
+.achievement-shell:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(215,255,82,.09),transparent 30%),radial-gradient(circle at 90% 80%,rgba(174,190,255,.09),transparent 30%)}
+.achievement-metric,.achievement-list{position:relative;z-index:1;padding:34px;background:rgba(8,11,20,.62)}
+.achievement-metric{border-radius:31px 0 0 31px;display:flex;flex-direction:column;justify-content:center}
+.achievement-metric h3{font:600 clamp(25px,3vw,40px)/1.08 "Space Grotesk";letter-spacing:-.045em;margin:8px 0 14px;max-width:470px}
+.achievement-metric p:not(.mini-label){color:var(--muted);max-width:520px;margin:0 0 24px}
+.achievement-orbit{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(215,255,82,.4);box-shadow:0 0 0 10px rgba(215,255,82,.035),0 0 70px rgba(215,255,82,.08);font:700 28px/1 "Space Grotesk";color:var(--accent);margin-bottom:22px}
+.achievement-list{border-radius:0 31px 31px 0;padding:14px}
+.achievement-item{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:16px;align-items:center;padding:22px 20px;border-bottom:1px solid var(--stroke2);transition:.3s}
+.achievement-item:last-child{border-bottom:0}
+.achievement-item:hover{background:rgba(255,255,255,.035);transform:translateX(4px)}
+.achievement-item>span{font:600 12px/1 "Space Grotesk";color:var(--dim)}
+.achievement-item h3{margin:2px 0 3px;font:600 18px/1.2 "Space Grotesk";letter-spacing:-.02em}
+.achievement-item p:not(.mini-label){margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.achievement-item>b{font:600 9px/1 "Space Grotesk";letter-spacing:.12em;color:var(--accent);border:1px solid rgba(215,255,82,.2);border-radius:999px;padding:8px 9px;white-space:nowrap}
+.channel-url{display:block;margin-top:10px;color:var(--dim);font:500 10px/1.4 "Space Grotesk";letter-spacing:.08em}
+@media(max-width:900px){.achievement-shell{grid-template-columns:1fr}.achievement-metric{border-radius:31px 31px 0 0}.achievement-list{border-radius:0 0 31px 31px}}
+@media(max-width:560px){.achievement-metric{padding:26px}.achievement-list{padding:7px}.achievement-item{grid-template-columns:28px 1fr;gap:11px;padding:17px 13px}.achievement-item>b{grid-column:2;justify-self:start}.achievement-item h3{font-size:16px}}
