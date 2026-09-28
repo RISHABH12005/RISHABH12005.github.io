@@ -7,11 +7,26 @@ const finishLoader=()=>loader?.classList.add('is-done');
 setTimeout(finishLoader,prefersReduced?180:900);
 window.addEventListener('load',finishLoader,{once:true});
 
-const menu=document.querySelector('.menu-toggle');
+const menu=document.querySelector('.mobile-glass-root .menu-toggle');
 const nav=document.querySelector('#primary-nav');
-const closeMenu=()=>{menu?.setAttribute('aria-expanded','false');document.body.classList.remove('nav-open');nav?.setAttribute('aria-hidden','true')};
-menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));document.body.classList.toggle('nav-open',!open);nav?.setAttribute('aria-hidden',String(open))});
+const mobileNavLinks=[...document.querySelectorAll('.mobile-glass-link')];
+const closeMenu=()=>{
+  menu?.setAttribute('aria-expanded','false');
+  menu?.setAttribute('aria-label','Open navigation');
+  document.body.classList.remove('nav-open');
+  nav?.setAttribute('aria-hidden','true');
+  document.querySelector('.mobile-glass-root')?.setAttribute('aria-hidden','true');
+};
+menu?.addEventListener('click',()=>{
+  const open=menu.getAttribute('aria-expanded')==='true';
+  menu.setAttribute('aria-expanded',String(!open));
+  menu.setAttribute('aria-label',open?'Open navigation':'Close navigation');
+  document.body.classList.toggle('nav-open',!open);
+  nav?.setAttribute('aria-hidden',String(open));
+  document.querySelector('.mobile-glass-root')?.setAttribute('aria-hidden',String(open));
+});
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+mobileNavLinks.forEach(a=>a.addEventListener('click',closeMenu));
 /* Sliding glass navigation */
 (()=>{
   const nav=document.querySelector('#primary-nav');
@@ -49,7 +64,7 @@ if(mount){
  addEventListener('resize',resize,{passive:true});addEventListener('pointermove',e=>{pointer.x=e.clientX/innerWidth-.5;pointer.y=e.clientY/innerHeight-.5},{passive:true});document.addEventListener('visibilitychange',()=>visible=!document.hidden);resize();requestAnimationFrame(frame);
 }
 if(!prefersReduced&&!isTouch)document.querySelectorAll('.glass-card,.glass-panel').forEach(card=>card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%')},{passive:true}));
-if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.section-kicker,.section-title,.education-grid,.experience-grid,.project-grid,.achievement-shell,.leadership-shell,.skills-grid,.video-lab-grid,.certificate-grid,.contact-shell').forEach(el=>{el.classList.add('reveal');if(prefersReduced)el.classList.add('is-visible');else observer.observe(el)});const links=[...document.querySelectorAll('#primary-nav a')],sections=[...document.querySelectorAll('main section[id]')];const active=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('is-active',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-38% 0px -52% 0px'});sections.forEach(s=>active.observe(s))}
+if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.section-kicker,.section-title,.education-grid,.experience-grid,.project-grid,.achievement-shell,.leadership-shell,.skills-grid,.video-lab-grid,.certificate-grid,.contact-shell').forEach(el=>{el.classList.add('reveal');if(prefersReduced)el.classList.add('is-visible');else observer.observe(el)});const links=[...document.querySelectorAll('#primary-nav a,.mobile-glass-link')],sections=[...document.querySelectorAll('main section[id]')];const active=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('is-active',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-38% 0px -52% 0px'});sections.forEach(s=>active.observe(s))}
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(!target)return;e.preventDefault();target.scrollIntoView({behavior:prefersReduced?'auto':'smooth',block:'start'})}));
 addEventListener('scroll',()=>document.body.classList.toggle('has-scrolled',scrollY>24),{passive:true});
 
@@ -85,3 +100,43 @@ render('');
 /* CSS-only liquid glass: the space canvas stays visible behind every surface. */
 document.documentElement.classList.add('liquid-glass-fallback');
 document.documentElement.classList.add('liquid-glass-ready');
+
+/* LiquidGlass button mode for the mobile menu and each navigation action. */
+(()=>{
+  const root=document.querySelector('#mobile-glass-root');
+  const button=root?.querySelector('.menu-toggle');
+  const links=[...(root?.querySelectorAll('.mobile-glass-link')||[])];
+  if(!root||!button||!links.length||!matchMedia('(max-width:760px)').matches)return;
+  const glasses=[button,...links];
+  const config={
+    button:true,
+    blurAmount:.16,
+    refraction:.72,
+    chromAberration:.035,
+    edgeHighlight:.12,
+    specular:.08,
+    fresnel:1,
+    cornerRadius:14,
+    zRadius:12,
+    shadowOpacity:.22,
+    shadowSpread:7,
+    shadowOffsetY:1,
+    brightness:.02,
+    saturation:.04
+  };
+  glasses.forEach(el=>el.dataset.config=JSON.stringify(config));
+  let instance=null;
+  const start=async()=>{
+    try{
+      const mod=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
+      instance=await mod.LiquidGlass.init({root,glassElements:glasses});
+      root.classList.add('liquid-glass-active');
+      window.__mobileLiquidGlass=instance;
+    }catch(err){
+      root.classList.add('liquid-glass-fallback');
+      console.warn('Mobile LiquidGlass fallback:',err);
+    }
+  };
+  if(document.readyState==='complete') start();
+  else addEventListener('load',start,{once:true});
+})();
