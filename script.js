@@ -58,60 +58,67 @@ render('');
 })();
 
 
-/* Spring-driven liquid glass interaction */
-(()=>{
-  if(prefersReduced||isTouch)return;
-  const targets=document.querySelectorAll('.glass-card,.glass-panel,.glass-control,.glass-button');
-  const states=new WeakMap();
-  let active=null;
-  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
-  const makeState=()=>({x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0,running:false});
-  const animate=(el,s)=>{
-    const k=.105;
-    s.vx+=(s.tx-s.x)*k; s.vy+=(s.ty-s.y)*k;
-    s.vrx+=(s.trx-s.rx)*k; s.vry+=(s.try-s.ry)*k;
-    s.x+=s.vx; s.y+=s.vy; s.rx+=s.vrx; s.ry+=s.vry;
-    s.vx*=.76; s.vy*=.76; s.vrx*=.72; s.vry*=.72;
-    el.style.setProperty('--glass-tx',s.x.toFixed(2)+'px');
-    el.style.setProperty('--glass-ty',s.y.toFixed(2)+'px');
-    el.style.setProperty('--glass-rx',s.rx.toFixed(2)+'deg');
-    el.style.setProperty('--glass-ry',s.ry.toFixed(2)+'deg');
-    el.style.setProperty('--glass-scale',(1+s.scale).toFixed(4));
-    const moving=active===el || Math.abs(s.x)+Math.abs(s.y)+Math.abs(s.rx)+Math.abs(s.ry)+Math.abs(s.vx)+Math.abs(s.vy)>.03;
-    if(moving) requestAnimationFrame(()=>animate(el,s));
-    else {s.running=false;s.x=s.y=s.rx=s.ry=0;s.vx=s.vy=s.vrx=s.vry=0}
-  };
-  const wake=(el,s)=>{
-    if(s.running)return;
-    s.running=true;
-    requestAnimationFrame(()=>animate(el,s));
-  };
-  targets.forEach(el=>{
-    const s=makeState();states.set(el,s);
-    el.addEventListener('pointermove',e=>{
-      const r=el.getBoundingClientRect();
-      const nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
-      s.tx=clamp(nx*5.5,-5.5,5.5); s.ty=clamp(ny*4.5,-4.5,4.5);
-      s.trx=clamp(-ny*4.2,-4.2,4.2); s.try=clamp(nx*5.2,-5.2,5.2); s.scale=.008;
-      el.style.setProperty('--glass-x',(nx*50+50).toFixed(1)+'%');
-      el.style.setProperty('--glass-y',(ny*50+50).toFixed(1)+'%');
-      active=el;wake(el,s);
-    },{passive:true});
-    el.addEventListener('pointerenter',()=>{
-      active=el;s.scale=.008;wake(el,s);
-    });
-    el.addEventListener('pointerleave',()=>{
-      s.tx=s.ty=s.trx=s.try=0;s.scale=0;
-      el.style.setProperty('--glass-x','50%');el.style.setProperty('--glass-y','18%');
-      setTimeout(()=>{if(active===el)active=null;wake(el,s)},70);
-    });
-    el.addEventListener('pointerdown',e=>{
-      const r=el.getBoundingClientRect();
-      const ripple=document.createElement('i');ripple.className='liquid-ripple';
-      ripple.style.left=(e.clientX-r.left)+'px';ripple.style.top=(e.clientY-r.top)+'px';
-      el.appendChild(ripple);setTimeout(()=>ripple.remove(),760);
-      s.scale=-.018;s.tx*=.72;s.ty*=.72;wake(el,s);
-    });
-    el.addEventListener('pointerup',()=>{s.scale=.008;wake(el,s)});
-  });
+/* Real WebGL Liquid Glass */
+(async()=>{
+  try{
+    const {LiquidGlass}=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
+    const elements=[...document.querySelectorAll('.glass-panel,.glass-card,.glass-control,.site-header')];
+    const groups=new Map();
+    for(const el of elements){
+      const root=el.parentElement;
+      if(!root)continue;
+      if(!groups.has(root))groups.set(root,[]);
+      groups.get(root).push(el);
+    }
+    const instances=[];
+    for(const [root,glassElements] of groups){
+      if(!glassElements.length)continue;
+      if(getComputedStyle(root).position==='static')root.style.position='relative';
+      for(const el of glassElements){
+        const isControl=el.classList.contains('glass-control')||el.classList.contains('site-header');
+        const isPanel=el.classList.contains('glass-panel');
+        el.dataset.config=JSON.stringify({
+          blurAmount:isPanel?.valueOf?0.22:0.16,
+          refraction:isPanel?0.82:0.72,
+          chromAberration:0.075,
+          edgeHighlight:0.16,
+          specular:0.24,
+          fresnel:1.15,
+          distortion:0.012,
+          cornerRadius:isControl?24:Math.min(42,Math.max(20,parseFloat(getComputedStyle(el).borderTopLeftRadius)||28)),
+          zRadius:isControl?24:36,
+          opacity:isControl?0.98:0.94,
+          saturation:0.06,
+          tintStrength:0.035,
+          brightness:0.015,
+          shadowOpacity:isControl?0.2:0.34,
+          shadowSpread:isControl?8:14,
+          shadowOffsetY:2,
+          floating:false,
+          button:isControl,
+          bevelMode:0
+        });
+      }
+      const instance=await LiquidGlass.init({
+        root,
+        glassElements,
+        defaults:{
+          blurAmount:.18,
+          refraction:.78,
+          chromAberration:.07,
+          edgeHighlight:.14,
+          specular:.2,
+          fresnel:1.1,
+          distortion:.01,
+          shadowOpacity:.3
+        }
+      });
+      instances.push(instance);
+    }
+    window.__liquidGlassInstances=instances;
+    document.documentElement.classList.add('liquid-glass-ready');
+  }catch(error){
+    console.warn('LiquidGlass WebGL enhancement unavailable; retaining CSS fallback.',error);
+    document.documentElement.classList.add('liquid-glass-fallback');
+  }
 })();
