@@ -85,3 +85,4 @@ render('');
 
 /* CSS-only liquid glass: the space canvas stays visible behind every surface. */
 document.documentElement.classList.add('liquid-glass-fallback');
+document.documentElement.classList.add('liquid-glass-ready');
