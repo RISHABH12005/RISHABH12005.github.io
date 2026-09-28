@@ -3,7 +3,9 @@ const isTouch=matchMedia('(pointer: coarse)').matches;
 const loader=document.querySelector('#loader');
 const loaderBar=loader?.querySelector('.loader-glass i b');
 requestAnimationFrame(()=>loaderBar?.classList.add('is-loaded'));
-setTimeout(()=>loader?.classList.add('is-done'),prefersReduced?180:850);
+const finishLoader=()=>loader?.classList.add('is-done');
+setTimeout(finishLoader,prefersReduced?180:900);
+window.addEventListener('load',finishLoader,{once:true});
 
 const menu=document.querySelector('.menu-toggle');
 const nav=document.querySelector('#primary-nav');
