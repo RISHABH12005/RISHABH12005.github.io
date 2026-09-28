@@ -37,7 +37,7 @@ const hud=document.querySelector('#command-hud'),trigger=document.querySelector(
 const modal=document.querySelector('#project-modal'),modalContent=document.querySelector('#modal-content');
 const toast=document.querySelector('#hud-toast');
 const projects={
-bharat:{k:'EDGE AI · RASPBERRY PI',t:'Bharat AI-SoC',d:'Offline Hindi voice assistant built for ARM edge deployment. Streaming Vosk ASR feeds a hybrid intent layer, state manager and offline eSpeak-NG TTS.',blocks:[['Pipeline','Microphone → Vosk ASR → NLP → State Manager → Action Layer → TTS'],['Engineering','Streaming inference, TF-IDF cosine fallback, wake-word activation and ARM-friendly execution']],url:'https://github.com/RISHABH12005/Bharat-AI-SoC',demo:'https://youtu.be/ryDRLKcCcr8'},
+bharat:{k:'EDGE AI · RASPBERRY PI',t:'Bharat AI-SoC',d:'Offline Hindi voice assistant built for ARM edge deployment. Streaming Vosk ASR feeds a hybrid intent layer, state manager and offline eSpeak-NG TTS.',blocks:[['Pipeline','Microphone → Vosk ASR → NLP → State Manager → Action Layer → TTS'],['Engineering','Streaming inference, TF-IDF cosine fallback, wake-word activation and ARM-friendly execution']],url:'https://github.com/RISHABH12005/Bharat-AI-SoC'},
 ids:{k:'IOT · SECURITY',t:'Intrusion Detection System',d:'ESP32-C5 security platform combining RFID identity, Wi-Fi client monitoring, MQTT events and Telegram control.',blocks:[['Detection','RC522 UID mapping, unknown-card alerts, replay detection and blocking logic'],['Network','Station + access-point mode, MQTT topics for scans, alerts and connected clients']],url:'https://github.com/RISHABH12005/Minor-II'},
 robot:{k:'ROBOTICS · MINOR I',t:'Industrial Inspection Robot',d:'Robotic inspection and maintenance platform designed for industrial environments, anomaly detection and reporting.',blocks:[['Mission','Autonomous or semi-autonomous navigation with inspection and maintenance tasks'],['Documentation','Project report, SRS, presentations and robot test references are maintained in GitHub']],url:'https://github.com/RISHABH12005/Minor-I'},
 lms:{k:'IOT · ROBOTICS',t:'Livestock Monitoring System',d:'Raspberry Pi prototype combining environmental sensing, camera monitoring, obstacle detection and motorized automation.',blocks:[['Hardware','Raspberry Pi 4B, Sense HAT, BrickPi, 5MP camera, ultrasonic sensors and speed motors'],['Software','FastAPI, WebSockets, OpenCV, Picamera2 and remote monitoring/control']],url:'https://github.com/RISHABH12005/LMS'},
@@ -55,4 +55,61 @@ function showToast(t){if(!toast)return;toast.textContent=t;toast.classList.add('
 const sync=document.querySelector('#github-sync');fetch('https://api.github.com/users/RISHABH12005').then(r=>r.ok?r.json():Promise.reject()).then(u=>{document.querySelector('#follower-count').textContent=u.followers;sync.textContent='CONNECTED'}).catch(()=>{sync.textContent='OFFLINE'});
 fetch('https://api.github.com/users/RISHABH12005/repos?per_page=100').then(r=>r.ok?r.json():Promise.reject()).then(rs=>{document.querySelector('#repo-count').textContent=rs.length;document.querySelector('#star-count').textContent=rs.reduce((n,r)=>n+r.stargazers_count,0)}).catch(()=>{document.querySelector('#repo-count').textContent='—';document.querySelector('#star-count').textContent='—'});
 render('');
+})();
+
+
+/* Spring-driven liquid glass interaction */
+(()=>{
+  if(prefersReduced||isTouch)return;
+  const targets=document.querySelectorAll('.glass-card,.glass-panel,.glass-control,.glass-button');
+  const states=new WeakMap();
+  let active=null;
+  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+  const animate=(el,s)=>{
+    const k=.105;
+    s.vx+=(s.tx-s.x)*k; s.vy+=(s.ty-s.y)*k;
+    s.vrx+=(s.trx-s.rx)*k; s.vry+=(s.try-s.ry)*k;
+    s.x+=s.vx; s.y+=s.vy; s.rx+=s.vrx; s.ry+=s.vry;
+    s.vx*=.76; s.vy*=.76; s.vrx*=.72; s.vry*=.72;
+    el.style.setProperty('--glass-tx',s.x.toFixed(2)+'px');
+    el.style.setProperty('--glass-ty',s.y.toFixed(2)+'px');
+    el.style.setProperty('--glass-rx',s.rx.toFixed(2)+'deg');
+    el.style.setProperty('--glass-ry',s.ry.toFixed(2)+'deg');
+    el.style.setProperty('--glass-scale',(1+s.scale).toFixed(4));
+    if(active===el || Math.abs(s.x)+Math.abs(s.y)+Math.abs(s.rx)+Math.abs(s.ry)>.03){
+      requestAnimationFrame(()=>animate(el,s));
+    }else{s.x=s.y=s.rx=s.ry=0;s.vx=s.vy=s.vrx=s.vry=0}
+  };
+  const wake=(el)=>{
+    if(!states.has(el))states.set(el,{x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0});
+    requestAnimationFrame(()=>animate(el,states.get(el)));
+  };
+  targets.forEach(el=>{
+    el.addEventListener('pointermove',e=>{
+      const r=el.getBoundingClientRect();
+      const nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
+      const s=states.get(el)||{x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0};
+      states.set(el,s);
+      s.tx=clamp(nx*5.5,-5.5,5.5); s.ty=clamp(ny*4.5,-4.5,4.5);
+      s.trx=clamp(-ny*4.2,-4.2,4.2); s.try=clamp(nx*5.2,-5.2,5.2); s.scale=.008;
+      el.style.setProperty('--glass-x',(nx*50+50).toFixed(1)+'%');
+      el.style.setProperty('--glass-y',(ny*50+50).toFixed(1)+'%');
+      active=el; wake(el);
+    },{passive:true});
+    el.addEventListener('pointerenter',()=>{active=el;const s=states.get(el)||{x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0};s.scale=.008;states.set(el,s);wake(el)});
+    el.addEventListener('pointerleave',()=>{
+      const s=states.get(el);if(!s)return;
+      s.tx=s.ty=s.trx=s.try=0;s.scale=0;
+      el.style.setProperty('--glass-x','50%');el.style.setProperty('--glass-y','18%');
+      setTimeout(()=>{if(active===el)active=null},90);
+    });
+    el.addEventListener('pointerdown',e=>{
+      const r=el.getBoundingClientRect();
+      const ripple=document.createElement('i');ripple.className='liquid-ripple';
+      ripple.style.left=(e.clientX-r.left)+'px';ripple.style.top=(e.clientY-r.top)+'px';
+      el.appendChild(ripple);setTimeout(()=>ripple.remove(),760);
+      const s=states.get(el);if(s){s.scale=-.018;s.tx*=.72;s.ty*=.72}
+    });
+    el.addEventListener('pointerup',()=>{const s=states.get(el);if(s)s.scale=.008});
+  });
 })();
