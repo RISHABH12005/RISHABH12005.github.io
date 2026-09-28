@@ -3428,3 +3428,135 @@ body.command-open,body.project-open{overflow:hidden!important}
     background-repeat:no-repeat!important;
   }
 }
+
+
+/* ========================================================================
+   FINAL MOBILE NAV FIX
+   Keep the mobile navigation lightweight and deterministic. The WebGL
+   renderer is intentionally not used for this tiny fixed menu because its
+   local canvas can scale incorrectly on mobile browsers.
+========================================================================= */
+@media (max-width:760px){
+  .mobile-glass-root.mobile-css-glass{
+    width:100vw!important;
+    height:430px!important;
+    top:0!important;
+    right:0!important;
+    left:0!important;
+    background:transparent!important;
+    pointer-events:none!important;
+    overflow:visible!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass::before{
+    display:none!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .menu-toggle{
+    position:absolute!important;
+    top:max(10px,env(safe-area-inset-top))!important;
+    right:max(8px,env(safe-area-inset-right))!important;
+    width:46px!important;
+    height:46px!important;
+    min-width:46px!important;
+    min-height:46px!important;
+    padding:0!important;
+    border:1px solid rgba(255,255,255,.18)!important;
+    border-radius:15px!important;
+    background:rgba(12,16,27,.72)!important;
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.34),
+      inset 0 1px 0 rgba(255,255,255,.13),
+      inset 0 -1px 0 rgba(0,0,0,.35)!important;
+    backdrop-filter:blur(18px) saturate(150%)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(150%)!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .menu-toggle span{
+    width:18px!important;
+    height:2px!important;
+    min-width:18px!important;
+    min-height:2px!important;
+    background:#f7f8fc!important;
+    border-radius:3px!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link{
+    right:max(8px,env(safe-area-inset-right))!important;
+    width:min(220px,calc(100vw - 24px))!important;
+    min-height:46px!important;
+    padding:0 18px!important;
+    display:flex!important;
+    align-items:center!important;
+    box-sizing:border-box!important;
+    border:1px solid rgba(255,255,255,.13)!important;
+    border-radius:16px!important;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.095),rgba(255,255,255,.045))!important;
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.28),
+      inset 0 1px 0 rgba(255,255,255,.11),
+      inset 0 -1px 0 rgba(0,0,0,.24)!important;
+    backdrop-filter:blur(18px) saturate(145%)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(145%)!important;
+    color:#f4f6fb!important;
+    text-shadow:0 1px 10px rgba(0,0,0,.28)!important;
+    font-size:11px!important;
+    letter-spacing:.1em!important;
+    font-weight:700!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link::after{
+    content:"↗";
+    margin-left:auto;
+    opacity:.55;
+    font-size:13px;
+  }
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(1){top:68px!important}
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(2){top:120px!important}
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(3){top:172px!important}
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(4){top:224px!important}
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(5){top:276px!important}
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(6){top:328px!important}
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:nth-of-type(7){top:380px!important}
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link:active{
+    transform:translateY(1px) scale(.985)!important;
+    background:rgba(255,255,255,.11)!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-scene{
+    display:none!important;
+  }
+}
+
+@media (max-width:480px){
+  .mobile-glass-root.mobile-css-glass .menu-toggle{
+    right:7px!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link{
+    right:7px!important;
+    width:min(210px,calc(100vw - 20px))!important;
+  }
+}
+
+@media (max-width:360px){
+  .mobile-glass-root.mobile-css-glass .menu-toggle{
+    right:6px!important;
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+  }
+
+  .mobile-glass-root.mobile-css-glass .mobile-glass-link{
+    right:6px!important;
+    width:min(196px,calc(100vw - 18px))!important;
+  }
+}
