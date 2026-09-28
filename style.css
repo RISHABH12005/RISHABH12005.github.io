@@ -3412,3 +3412,19 @@ body.command-open,body.project-open{overflow:hidden!important}
 @media(max-width:360px){
   .mobile-glass-root{width:min(176px,calc(100vw - 10px))!important}
 }
+
+
+@media(max-width:760px){
+  /* Match the shader's local scene to the real page background exactly. */
+  #scene{
+    background-image:url("./assets/dragon-bg.jpg")!important;
+    background-position:center center!important;
+    background-size:100vw 100vh!important;
+    background-repeat:no-repeat!important;
+  }
+  .mobile-glass-scene{
+    background-position:center center!important;
+    background-size:100vw 100vh!important;
+    background-repeat:no-repeat!important;
+  }
+}
