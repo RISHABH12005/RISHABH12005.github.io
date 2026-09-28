@@ -664,14 +664,14 @@ em {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2px;
-  background: #0a0d13;
+  background: rgba(10, 13, 19, 0.22);
   padding: 2px;
   border-radius: 2px;
 }
 
 .project {
   border: 1px solid #ffffff0a;
-  background: #080b10;
+  background: rgba(8, 11, 16, 0.42);
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s, background 0.5s, box-shadow 0.5s;
   min-height: 520px;
   display: flex;
@@ -682,7 +682,7 @@ em {
 
 .project:hover {
   border-color: #d7ff3f35;
-  background: #0b0f15;
+  background: rgba(11, 15, 21, 0.58);
   transform: translateY(-10px);
   box-shadow: 0 20px 60px #d7ff3f08;
 }
@@ -699,12 +699,12 @@ em {
 
 .project-featured > div {
   border: 1px solid #ffffff0a;
-  background: #080b10;
+  background: rgba(8, 11, 16, 0.42);
 }
 
 .project-featured:hover > div {
   border-color: #d7ff3f35;
-  background: #0b0f15;
+  background: rgba(11, 15, 21, 0.58);
 }
 
 .project-visual {
@@ -888,7 +888,7 @@ em {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1px;
-  background: #0a0d13;
+  background: rgba(10, 13, 19, 0.22);
   padding: 1px;
   border-radius: 2px;
 }
@@ -896,7 +896,7 @@ em {
 .skill-list > div {
   padding: 32px;
   border-color: #ffffff10;
-  background: #080b10;
+  background: rgba(8, 11, 16, 0.42);
   border: 1px solid #ffffff10;
   transition: padding 0.4s ease, border-color 0.4s ease, background 0.4s ease;
   cursor: pointer;
@@ -905,7 +905,7 @@ em {
 .skill-list > div:hover {
   padding-left: 50px;
   border-color: #d7ff3f55;
-  background: #0b0f15;
+  background: rgba(11, 15, 21, 0.58);
 }
 
 .skill-list b {
@@ -935,7 +935,7 @@ em {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1px;
-  background: #0a0d13;
+  background: rgba(10, 13, 19, 0.22);
   padding: 1px;
   border-radius: 2px;
 }
@@ -943,7 +943,7 @@ em {
 .timeline article {
   padding: 40px;
   border: 1px solid #ffffff0d;
-  background: #080b10;
+  background: rgba(8, 11, 16, 0.42);
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 40px;
@@ -952,7 +952,7 @@ em {
 
 .timeline article:hover {
   border-color: #d7ff3f35;
-  background: #0b0f15;
+  background: rgba(11, 15, 21, 0.58);
 }
 
 .timeline time {
@@ -986,14 +986,14 @@ em {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2px;
-  background: #0a0d13;
+  background: rgba(10, 13, 19, 0.22);
   padding: 2px;
   border-radius: 2px;
 }
 
 .highlights > div {
   min-height: 180px;
-  background: #080b10;
+  background: rgba(8, 11, 16, 0.42);
   border: 1px solid #ffffff0b;
   padding: 32px;
   display: flex;
@@ -1006,7 +1006,7 @@ em {
 .highlights > div:hover {
   transform: translateY(-8px);
   border-color: #d7ff3f44;
-  background: #0b0f15;
+  background: rgba(11, 15, 21, 0.58);
   box-shadow: 0 20px 50px #d7ff3f08;
 }
 
@@ -1336,7 +1336,7 @@ a:focus-visible {
 .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .menu-toggle[aria-expanded="true"] span:last-of-type { transform: translateY(-6px) rotate(-45deg); }
 .site-header nav a.is-active { color: var(--acid); }
-.education-line { display: flex; justify-content: space-between; gap: 32px; align-items: center; padding: 36px; border: 1px solid #ffffff0d; background: #080b10; }
+.education-line { display: flex; justify-content: space-between; gap: 32px; align-items: center; padding: 36px; border: 1px solid #ffffff0d; background: rgba(8, 11, 16, 0.42); }
 .education-line .role, .education-line .company { margin: 0; }
 .education-meta { text-align: right; display: grid; gap: 4px; }
 .education-meta strong { color: var(--acid); font: 700 32px "Space Grotesk"; letter-spacing: -0.07em; }
@@ -1347,7 +1347,7 @@ a:focus-visible {
 
 @media (max-width: 640px) {
   .menu-toggle { display: block; }
-  .site-header nav { position: absolute; top: 60px; left: 12px; right: 12px; display: grid; gap: 0; padding: 8px; background: #080b11ee; border: 1px solid #ffffff12; backdrop-filter: blur(20px); transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+  .site-header nav { position: absolute; top: 60px; left: 12px; right: 12px; display: grid; gap: 0; padding: 8px; background: rgba(8, 11, 17, 0.72); border: 1px solid #ffffff12; backdrop-filter: blur(20px); transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
   .site-header nav a { padding: 14px 12px; border-bottom: 1px solid #ffffff08; }
   .site-header nav a:last-child { border-bottom: 0; }
   .nav-open .site-header nav { transform: translateY(0); opacity: 1; pointer-events: auto; }
