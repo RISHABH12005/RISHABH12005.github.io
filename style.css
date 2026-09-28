@@ -2472,3 +2472,104 @@ body.command-open,body.project-open{overflow:hidden!important}
 @media(max-width:480px){
   .demo-links a{font-size:8px;padding:7px 9px}
 }
+
+
+/* Mobile navigation repair: keep the menu button visible and move links into a real drawer. */
+@media (max-width:760px){
+  .site-header{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    top:10px!important;
+    width:calc(100% - 20px)!important;
+    min-height:52px!important;
+    height:52px!important;
+    padding:5px!important;
+    border:1px solid rgba(255,255,255,.16)!important;
+    border-radius:18px!important;
+    background:rgba(10,14,22,.28)!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.16),0 16px 50px rgba(0,0,0,.22)!important;
+    backdrop-filter:blur(24px) saturate(170%)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(170%)!important;
+  }
+  .site-header nav{
+    position:fixed!important;
+    top:68px!important;
+    left:10px!important;
+    right:10px!important;
+    width:auto!important;
+    max-width:none!important;
+    min-height:0!important;
+    display:none!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:3px!important;
+    padding:8px!important;
+    border:1px solid rgba(255,255,255,.14)!important;
+    border-radius:18px!important;
+    background:rgba(10,14,22,.84)!important;
+    box-shadow:0 24px 70px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12)!important;
+    backdrop-filter:blur(26px) saturate(160%)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(160%)!important;
+  }
+  body.nav-open .site-header nav{
+    display:flex!important;
+  }
+  .site-header nav>a{
+    display:block!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:13px 14px!important;
+    text-align:left!important;
+    border-radius:11px!important;
+    font-size:10px!important;
+    letter-spacing:.07em!important;
+    color:rgba(245,247,251,.78)!important;
+    background:transparent!important;
+  }
+  .site-header nav>a:hover,
+  .site-header nav>a.is-active{
+    color:#fff!important;
+    background:rgba(255,255,255,.07)!important;
+  }
+  .site-header nav .nav-slider{display:none!important}
+  .menu-toggle{
+    display:flex!important;
+    position:relative!important;
+    width:42px!important;
+    height:40px!important;
+    margin:0!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-direction:column!important;
+    gap:5px!important;
+    padding:0!important;
+    border:1px solid rgba(255,255,255,.14)!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.05)!important;
+    color:#fff!important;
+    cursor:pointer!important;
+  }
+  .menu-toggle span{
+    display:block!important;
+    width:16px!important;
+    height:1px!important;
+    margin:0!important;
+    background:currentColor!important;
+  }
+  body.nav-open .menu-toggle{
+    background:rgba(255,255,255,.10)!important;
+  }
+}
+@media (max-width:420px){
+  .site-header{
+    width:calc(100% - 16px)!important;
+    top:8px!important;
+  }
+  .site-header nav{
+    top:64px!important;
+    left:8px!important;
+    right:8px!important;
+  }
+}
