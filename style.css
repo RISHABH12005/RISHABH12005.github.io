@@ -160,6 +160,46 @@ a:hover {
   #scene::before { animation: none; }
 }
 
+/* Space-first surface treatment: keep the animated field visible through the page. */
+body,
+main,
+.site-main,
+.page-shell {
+  background: transparent !important;
+}
+
+.work-section,
+section.work-section,
+section[id],
+.project-grid,
+.experience-grid,
+.skills-grid,
+.achievement-grid,
+.education-grid,
+.contact-grid {
+  background: transparent !important;
+}
+
+.hero-panel,
+.hero-content,
+.project,
+.project-featured > div,
+.experience-item,
+.skill-card,
+.achievement-card,
+.education-card,
+.contact-panel {
+  background: rgba(9, 13, 25, 0.24) !important;
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+}
+
+/* Keep only a soft vignette; never paint an opaque black page layer. */
+.space-vignette,
+.background-vignette {
+  background: radial-gradient(ellipse at center, transparent 36%, rgba(2, 3, 10, 0.22) 100%) !important;
+}
+
 @media (max-width: 760px) {
   .site-header { background: rgba(5, 7, 17, 0.78); }
   .star-canvas { opacity: 0.72; }
