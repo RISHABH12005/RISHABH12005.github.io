@@ -28,7 +28,7 @@ nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
   links.forEach(link=>{
     link.addEventListener('mouseenter',()=>move(link));
     link.addEventListener('focus',()=>move(link));
-    link.addEventListener('click',()=>setTimeout(active,80));
+    link.addEventListener('click',()=>move(link));
   });
   nav.addEventListener('mouseleave',active);
   addEventListener('resize',active,{passive:true});
