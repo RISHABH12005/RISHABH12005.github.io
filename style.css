@@ -2194,3 +2194,251 @@ img,video,iframe,canvas{max-width:100%}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+/* ============================================================================
+   COMMAND CENTER / MODAL REPAIR
+   ============================================================================ */
+
+/* The advanced GUI is opt-in and must never occupy document flow when closed. */
+.command-hud,
+.project-modal{
+  position:fixed!important;
+  inset:0!important;
+  z-index:120!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:24px!important;
+  pointer-events:none!important;
+}
+.command-hud.open,
+.project-modal.open{
+  display:flex!important;
+  pointer-events:auto!important;
+}
+.command-backdrop{
+  position:absolute!important;
+  inset:0!important;
+  background:rgba(3,6,14,.58)!important;
+  backdrop-filter:blur(10px) saturate(120%)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+}
+.command-panel,
+.project-modal-card{
+  position:relative!important;
+  z-index:1!important;
+  width:min(100%,820px)!important;
+  max-height:min(82svh,760px)!important;
+  overflow:hidden!important;
+  margin:0!important;
+  border-radius:28px!important;
+  background:linear-gradient(145deg,rgba(20,27,44,.78),rgba(8,12,22,.64))!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 32px 120px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.14)!important;
+  backdrop-filter:blur(30px) saturate(155%)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(155%)!important;
+}
+.command-panel{padding:28px!important}
+.command-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:20px!important;
+  margin-bottom:20px!important;
+}
+.command-head .eyebrow{margin:0 0 8px!important}
+.command-head h2{
+  margin:0!important;
+  font:700 clamp(1.8rem,4vw,2.7rem)/1 "Space Grotesk",sans-serif!important;
+  letter-spacing:-.055em!important;
+}
+.command-head>kbd{
+  padding:7px 9px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:8px!important;
+  background:rgba(255,255,255,.045)!important;
+  color:#aab3c2!important;
+  font:600 9px/1 "Space Grotesk",sans-serif!important;
+}
+.command-search{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  padding:12px 14px!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.055)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.08)!important;
+}
+.command-search>span{color:#8f9aab!important;font-size:18px!important;line-height:1!important}
+.command-search input{
+  min-width:0!important;
+  flex:1!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:#f4f6fb!important;
+  font:500 13px/1.4 Inter,sans-serif!important;
+}
+.command-search input::placeholder{color:#7f899a!important}
+.command-search>kbd{
+  flex:none!important;
+  color:#8f9aab!important;
+  font:600 9px/1 "Space Grotesk",sans-serif!important;
+}
+.command-results{
+  display:grid!important;
+  gap:7px!important;
+  margin-top:12px!important;
+  max-height:52svh!important;
+  overflow:auto!important;
+  padding-right:3px!important;
+}
+.command-item{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:34px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+  padding:12px 13px!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.035)!important;
+  color:#eef1f5!important;
+  text-align:left!important;
+  cursor:pointer!important;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease!important;
+}
+.command-item:hover{
+  background:rgba(215,255,63,.07)!important;
+  border-color:rgba(215,255,63,.28)!important;
+  transform:translateX(2px)!important;
+}
+.command-item>b{
+  color:var(--acid)!important;
+  font:700 10px/1 "Space Grotesk",sans-serif!important;
+}
+.command-item span{min-width:0!important;display:flex!important;flex-direction:column!important;gap:2px!important}
+.command-item strong{font:600 12px/1.2 "Space Grotesk",sans-serif!important;color:#f4f6fb!important}
+.command-item small{font:500 9px/1.2 Inter,sans-serif!important;color:#7f899a!important;text-transform:uppercase!important;letter-spacing:.08em!important}
+.command-item em{font:700 12px/1 "Space Grotesk",sans-serif!important;color:#9aa5b6!important;font-style:normal!important}
+
+.project-modal-card{
+  width:min(100%,760px)!important;
+  overflow:auto!important;
+  padding:clamp(28px,5vw,52px)!important;
+}
+.modal-close{
+  position:absolute!important;
+  top:16px!important;
+  right:16px!important;
+  z-index:3!important;
+  width:36px!important;
+  height:36px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:50%!important;
+  font:400 22px/1 Inter,sans-serif!important;
+  color:#eef1f5!important;
+  background:rgba(255,255,255,.06)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  cursor:pointer!important;
+}
+.modal-close:hover{background:rgba(215,255,63,.10)!important;color:var(--acid)!important}
+.modal-kicker{
+  display:block!important;
+  margin-bottom:12px!important;
+  color:var(--acid)!important;
+  font:700 10px/1 "Space Grotesk",sans-serif!important;
+  letter-spacing:.12em!important;
+}
+.modal-title{
+  margin:0 42px 14px 0!important;
+  font:700 clamp(2rem,5vw,3.6rem)/.95 "Space Grotesk",sans-serif!important;
+  letter-spacing:-.06em!important;
+}
+.modal-copy{color:#aab3c2!important;line-height:1.75!important}
+.modal-layout{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin-top:24px!important;
+}
+.modal-block{
+  min-width:0!important;
+  padding:18px!important;
+  border:1px solid rgba(255,255,255,.1)!important;
+  border-radius:16px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.modal-block strong{display:block!important;color:#f4f6fb!important;font:600 11px/1.2 "Space Grotesk",sans-serif!important;text-transform:uppercase!important;letter-spacing:.08em!important}
+.modal-block p{margin:9px 0 0!important;color:#9da8b8!important;line-height:1.65!important}
+.modal-actions{display:flex!important;flex-wrap:wrap!important;gap:10px!important;margin-top:20px!important}
+.modal-actions a{
+  display:inline-flex!important;
+  padding:10px 14px!important;
+  border:1px solid rgba(215,255,63,.35)!important;
+  border-radius:999px!important;
+  color:var(--acid)!important;
+  background:rgba(215,255,63,.045)!important;
+  font:600 10px/1 "Space Grotesk",sans-serif!important;
+  letter-spacing:.06em!important;
+}
+.hud-toast{
+  position:fixed!important;
+  left:50%!important;
+  bottom:24px!important;
+  z-index:150!important;
+  transform:translate(-50%,20px)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  padding:10px 14px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:999px!important;
+  background:rgba(10,15,25,.76)!important;
+  color:#eef1f5!important;
+  backdrop-filter:blur(18px)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  font:600 10px/1 "Space Grotesk",sans-serif!important;
+  transition:opacity .25s ease,transform .25s ease!important;
+}
+.hud-toast.show{opacity:1!important;transform:translate(-50%,0)!important}
+body.command-open,body.project-open{overflow:hidden!important}
+
+/* Consistent rounded corners for sections 04–08 and their cards. */
+#achievements .achievement-shell,
+#leadership .leadership-shell,
+#skills .skill-card,
+#certificates .certificate-card,
+#contact .contact-shell{
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+#achievements .achievement-shell,
+#leadership .leadership-shell,
+#contact .contact-shell{
+  clip-path:inset(0 round 28px);
+}
+#skills .skills-grid,
+#certificates .certificate-grid{
+  border-radius:28px;
+}
+#skills .skill-card,
+#certificates .certificate-card{
+  border-radius:24px!important;
+}
+#achievements .achievement-shell > *,
+#leadership .leadership-shell > *{min-width:0}
+
+@media(max-width:760px){
+  .command-hud,.project-modal{padding:12px!important}
+  .command-panel,.project-modal-card{width:100%!important;max-height:88svh!important;border-radius:22px!important}
+  .command-panel{padding:20px!important}
+  .command-results{max-height:58svh!important}
+  .command-item{grid-template-columns:28px minmax(0,1fr) auto!important}
+  .modal-layout{grid-template-columns:1fr!important}
+  #achievements .achievement-shell,#leadership .leadership-shell,#contact .contact-shell{border-radius:22px!important}
+  #skills .skill-card,#certificates .certificate-card{border-radius:20px!important}
+}
