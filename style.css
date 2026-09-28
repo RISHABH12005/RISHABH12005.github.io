@@ -3079,3 +3079,69 @@ body.command-open,body.project-open{overflow:hidden!important}
     padding:18px 14px!important;
   }
 }
+
+
+/* Final mobile header cleanup: no RJ label, fluid width on every phone. */
+.mobile-brand{display:none!important}
+
+@media (max-width:760px){
+  .site-header{
+    left:max(8px,env(safe-area-inset-left))!important;
+    right:max(8px,env(safe-area-inset-right))!important;
+    width:auto!important;
+    max-width:none!important;
+    min-width:0!important;
+    height:52px!important;
+    min-height:52px!important;
+    padding:5px!important;
+    box-sizing:border-box!important;
+    overflow:visible!important;
+  }
+  .site-header .menu-toggle{
+    display:flex!important;
+    flex:0 0 42px!important;
+    width:42px!important;
+    max-width:42px!important;
+  }
+  .site-header nav{
+    box-sizing:border-box!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  body.nav-open .site-header nav{
+    left:0!important;
+    right:0!important;
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+
+@media (max-width:480px){
+  .site-header{
+    left:max(6px,env(safe-area-inset-left))!important;
+    right:max(6px,env(safe-area-inset-right))!important;
+    width:auto!important;
+  }
+  .site-header .menu-toggle{
+    flex-basis:40px!important;
+    width:40px!important;
+    height:38px!important;
+  }
+}
+
+@media (max-width:360px){
+  .site-header{
+    left:5px!important;
+    right:5px!important;
+    height:50px!important;
+    min-height:50px!important;
+  }
+  .site-header .menu-toggle{
+    flex-basis:38px!important;
+    width:38px!important;
+    height:36px!important;
+  }
+  body.nav-open .site-header nav{
+    top:62px!important;
+  }
+}
