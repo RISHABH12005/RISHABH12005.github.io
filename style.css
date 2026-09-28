@@ -3145,3 +3145,80 @@ body.command-open,body.project-open{overflow:hidden!important}
     top:62px!important;
   }
 }
+
+
+/* Final mobile hamburger: three stable lines, centered and touch-friendly. */
+@media (max-width:760px){
+  .site-header .menu-toggle{
+    appearance:none!important;
+    -webkit-appearance:none!important;
+    display:flex!important;
+    flex:0 0 42px!important;
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    position:relative!important;
+    z-index:20!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-direction:column!important;
+    gap:5px!important;
+    overflow:hidden!important;
+    border:1px solid rgba(255,255,255,.20)!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.07)!important;
+    color:#fff!important;
+    cursor:pointer!important;
+    line-height:0!important;
+  }
+  .site-header .menu-toggle span,
+  .site-header .menu-toggle[aria-expanded="true"] span{
+    display:block!important;
+    flex:0 0 auto!important;
+    width:17px!important;
+    height:2px!important;
+    min-width:17px!important;
+    min-height:2px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:2px!important;
+    background:#fff!important;
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+  .site-header .menu-toggle:hover{
+    background:rgba(255,255,255,.12)!important;
+    border-color:rgba(255,255,255,.28)!important;
+  }
+  .site-header .menu-toggle:active{
+    transform:scale(.96)!important;
+  }
+}
+
+@media (max-width:480px){
+  .site-header .menu-toggle{
+    flex-basis:40px!important;
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+  }
+}
+
+@media (max-width:360px){
+  .site-header .menu-toggle{
+    flex-basis:38px!important;
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+  }
+  .site-header .menu-toggle span{
+    width:16px!important;
+    min-width:16px!important;
+  }
+}
