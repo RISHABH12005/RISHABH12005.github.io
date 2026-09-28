@@ -162,3 +162,29 @@ html,body,body *{-webkit-user-select:none;-moz-user-select:none;user-select:none
 .channel-video-placeholder h3{font:600 clamp(1.4rem,3vw,2rem)/1.05 "Space Grotesk";letter-spacing:-.04em;margin:4px 0}
 .channel-video-placeholder>p:not(.mini-label){color:#818b9c;font-size:12px;margin:0 0 8px}
 .channel-video-placeholder .glass-button{padding:11px 15px;font:600 9px "Space Grotesk";letter-spacing:.1em}
+
+
+/* WebGL LiquidGlass takes over the visual surface. */
+.glass-panel,.glass-card,.glass-control,.site-header{
+  background:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  box-shadow:none !important;
+}
+.glass-panel:before,.glass-panel:after,
+.glass-card:before,.glass-card:after{
+  display:none !important;
+}
+.glass-panel,.glass-card,.site-header,.glass-control{
+  transform:none !important;
+  transition:none;
+}
+.glass-panel,.glass-card{
+  overflow:visible !important;
+}
+html.liquid-glass-ready .glass-panel,
+html.liquid-glass-ready .glass-card,
+html.liquid-glass-ready .site-header,
+html.liquid-glass-ready .glass-control{
+  border-color:rgba(255,255,255,.09);
+}
