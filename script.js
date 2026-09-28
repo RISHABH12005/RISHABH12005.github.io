@@ -65,6 +65,7 @@ render('');
   const states=new WeakMap();
   let active=null;
   const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+  const makeState=()=>({x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0,running:false});
   const animate=(el,s)=>{
     const k=.105;
     s.vx+=(s.tx-s.x)*k; s.vy+=(s.ty-s.y)*k;
@@ -76,40 +77,41 @@ render('');
     el.style.setProperty('--glass-rx',s.rx.toFixed(2)+'deg');
     el.style.setProperty('--glass-ry',s.ry.toFixed(2)+'deg');
     el.style.setProperty('--glass-scale',(1+s.scale).toFixed(4));
-    if(active===el || Math.abs(s.x)+Math.abs(s.y)+Math.abs(s.rx)+Math.abs(s.ry)>.03){
-      requestAnimationFrame(()=>animate(el,s));
-    }else{s.x=s.y=s.rx=s.ry=0;s.vx=s.vy=s.vrx=s.vry=0}
+    const moving=active===el || Math.abs(s.x)+Math.abs(s.y)+Math.abs(s.rx)+Math.abs(s.ry)+Math.abs(s.vx)+Math.abs(s.vy)>.03;
+    if(moving) requestAnimationFrame(()=>animate(el,s));
+    else {s.running=false;s.x=s.y=s.rx=s.ry=0;s.vx=s.vy=s.vrx=s.vry=0}
   };
-  const wake=(el)=>{
-    if(!states.has(el))states.set(el,{x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0});
-    requestAnimationFrame(()=>animate(el,states.get(el)));
+  const wake=(el,s)=>{
+    if(s.running)return;
+    s.running=true;
+    requestAnimationFrame(()=>animate(el,s));
   };
   targets.forEach(el=>{
+    const s=makeState();states.set(el,s);
     el.addEventListener('pointermove',e=>{
       const r=el.getBoundingClientRect();
       const nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
-      const s=states.get(el)||{x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0};
-      states.set(el,s);
       s.tx=clamp(nx*5.5,-5.5,5.5); s.ty=clamp(ny*4.5,-4.5,4.5);
       s.trx=clamp(-ny*4.2,-4.2,4.2); s.try=clamp(nx*5.2,-5.2,5.2); s.scale=.008;
       el.style.setProperty('--glass-x',(nx*50+50).toFixed(1)+'%');
       el.style.setProperty('--glass-y',(ny*50+50).toFixed(1)+'%');
-      active=el; wake(el);
+      active=el;wake(el,s);
     },{passive:true});
-    el.addEventListener('pointerenter',()=>{active=el;const s=states.get(el)||{x:0,y:0,rx:0,ry:0,vx:0,vy:0,vrx:0,vry:0,tx:0,ty:0,trx:0,try:0,scale:0};s.scale=.008;states.set(el,s);wake(el)});
+    el.addEventListener('pointerenter',()=>{
+      active=el;s.scale=.008;wake(el,s);
+    });
     el.addEventListener('pointerleave',()=>{
-      const s=states.get(el);if(!s)return;
       s.tx=s.ty=s.trx=s.try=0;s.scale=0;
       el.style.setProperty('--glass-x','50%');el.style.setProperty('--glass-y','18%');
-      setTimeout(()=>{if(active===el)active=null},90);
+      setTimeout(()=>{if(active===el)active=null;wake(el,s)},70);
     });
     el.addEventListener('pointerdown',e=>{
       const r=el.getBoundingClientRect();
       const ripple=document.createElement('i');ripple.className='liquid-ripple';
       ripple.style.left=(e.clientX-r.left)+'px';ripple.style.top=(e.clientY-r.top)+'px';
       el.appendChild(ripple);setTimeout(()=>ripple.remove(),760);
-      const s=states.get(el);if(s){s.scale=-.018;s.tx*=.72;s.ty*=.72}
+      s.scale=-.018;s.tx*=.72;s.ty*=.72;wake(el,s);
     });
-    el.addEventListener('pointerup',()=>{const s=states.get(el);if(s)s.scale=.008});
+    el.addEventListener('pointerup',()=>{s.scale=.008;wake(el,s)});
   });
 })();
