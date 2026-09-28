@@ -1431,8 +1431,8 @@ a:focus-visible {
 }
 .liquid-glass-root > .liquid-glass-underlay{
   z-index:-1;
-  background:url("./assets/dragon-bg.jpg") center center/cover no-repeat !important;
-  opacity:1;
+  background:transparent !important;
+  opacity:0 !important;
 }
 .liquid-glass-root > canvas:not(.star-canvas){
   background:transparent !important;
