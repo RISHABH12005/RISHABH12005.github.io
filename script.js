@@ -1,51 +1,15 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 
 const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = matchMedia('(pointer: coarse)').matches;
 const loader = document.querySelector('#loader');
 const bar = loader?.querySelector('i');
 
-/* ============================================================================ INTRO ANIMATION */
-
-function intro() {
-  if (!window.anime) {
-    loader?.remove();
-    return;
-  }
-
-  window.anime({
-    targets: bar,
-    scaleX: 1,
-    duration: 800,
-    easing: 'easeInOutQuart',
-    complete: () => {
-      window.anime({
-        targets: loader,
-        opacity: 0,
-        duration: 320,
-        complete: () => loader?.remove()
-      });
-    }
-  });
-
-  window.anime({
-    targets: '.hero h1 span',
-    translateY: [65, 0],
-    opacity: [0, 1],
-    delay: window.anime.stagger(110, { start: 220 }),
-    duration: 1000,
-    easing: 'easeOutExpo'
-  });
+/* The intro uses CSS and a single timer so it does not add a second animation library. */
+if (bar && loader) {
+  requestAnimationFrame(() => bar.classList.add('is-loaded'));
+  window.setTimeout(() => loader.remove(), prefersReduced ? 120 : 980);
 }
-
-function loadAnime() {
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/animejs@4.0.2/dist/bundles/anime.umd.min.js';
-  script.onload = intro;
-  script.onerror = () => loader?.remove();
-  document.head.appendChild(script);
-}
-
-loadAnime();
 
 /* ============================================================================ PROJECT CARD INTERACTIONS */
 
@@ -69,13 +33,14 @@ document.querySelectorAll('.project').forEach(card => {
 
 const mount = document.querySelector('#hero-3d');
 
-if (mount && !prefersReduced) {
+if (mount && !prefersReduced && !isTouch) {
+  try {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
       camera.position.set(0, 0, 7.2);
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
       renderer.setSize(mount.clientWidth, mount.clientHeight);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -91,7 +56,7 @@ if (mount && !prefersReduced) {
         const group = new THREE.Group();
 
         // Create icosahedron wireframe
-        const geometry = new THREE.IcosahedronGeometry(1.2, 4);
+          const geometry = new THREE.IcosahedronGeometry(1.2, 2);
         const edges = new THREE.EdgesGeometry(geometry, 12);
         const wireframe = new THREE.LineSegments(
           edges,
@@ -184,9 +149,11 @@ if (mount && !prefersReduced) {
       }
 
       animate();
-    }
+  } catch (error) {
+    mount.classList.add('is-fallback');
+  }
 } else if (mount) {
-  // Reduced motion or no WebGL support - keep static background
+  mount.classList.add('is-fallback');
 }
 
 /* ============================================================================ SCROLL REVEAL */
@@ -196,20 +163,16 @@ if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
 
   // Observe section content
-  document.querySelectorAll('.section > div').forEach(el => {
-    el.style.opacity = '0.7';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    if (!prefersReduced) {
-      observer.observe(el);
-    }
+  document.querySelectorAll('.section-head, .about-grid, .section-intro, .projects, .capabilities, .timeline, .highlights, .contact-grid').forEach(el => {
+    el.classList.add('reveal');
+    if (!prefersReduced) observer.observe(el);
   });
 }
 
@@ -226,11 +189,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
-});
-
-/* ============================================================================ KEYBOARD NAVIGATION */
-
-// Ensure all interactive elements are keyboard accessible
-document.querySelectorAll('a, button').forEach(el => {
-  el.setAttribute('tabindex', '0');
 });
