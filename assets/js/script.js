@@ -11,7 +11,7 @@ loaderBar?.classList.add('is-started');
 let loaderFinished=false;
 const loaderTimeout=setTimeout(()=>{
   if(!loaderFinished)finishLoader('fallback');
-},6500);
+},1200);
 
 function finishLoader(mode='ready'){
   if(loaderFinished)return;
@@ -24,6 +24,11 @@ function finishLoader(mode='ready'){
   loaderBar?.classList.add('is-loaded');
   requestAnimationFrame(()=>loader?.classList.add('is-done'));
 }
+
+/* Show the CSS glass immediately. WebGL LiquidGlass is an enhancement, not a
+   render-blocking dependency. This removes the blank-page/box latency while
+   the CDN module and WebGL contexts initialize in the background. */
+finishLoader('fallback');
 
 const menu=document.querySelector('.mobile-glass-root .menu-toggle');
 const nav=document.querySelector('#primary-nav');
@@ -321,6 +326,13 @@ render('');
   };
 
   try{
+    /* Let first paint, layout and interaction settle before creating WebGL
+       contexts. The page is already usable through the CSS glass fallback. */
+    await new Promise(resolve=>{
+      const run=()=>requestAnimationFrame(()=>requestAnimationFrame(resolve));
+      if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:900});
+      else setTimeout(run,350);
+    });
     const {LiquidGlass}=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
     const groups=new Map();
 
@@ -384,7 +396,8 @@ render('');
     window.__liquidGlassInstances=instances;
     document.documentElement.classList.remove('liquid-glass-fallback');
     document.documentElement.classList.add('liquid-glass-ready');
-    finishLoader('ready');
+    document.documentElement.classList.remove('liquid-glass-fallback');
+    document.documentElement.classList.add('liquid-glass-ready');
 
     if(!reduce){
       const pointer={x:0,y:0};
@@ -402,6 +415,6 @@ render('');
     }
   }catch(error){
     console.warn('LiquidGlass WebGL enhancement unavailable; CSS fallback retained.',error);
-    finishLoader('fallback');
+    document.documentElement.classList.add('liquid-glass-fallback');
   }
 })();
