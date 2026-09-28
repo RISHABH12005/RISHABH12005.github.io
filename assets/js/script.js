@@ -361,7 +361,10 @@ render('');
       orbit.classList.add('liquid-dome');
     }
 
-    for(const [root,items] of groups){
+    /* Initialize independent glass roots concurrently. The previous
+       sequential await made every mobile box wait for the box before it,
+       producing visible cascading latency. */
+    await Promise.all([...groups].map(async([root,items])=>{
       if(getComputedStyle(root).position==='static')root.style.position='relative';
       const elements=[...new Set(items.map(x=>x.el))];
       const instance=await LiquidGlass.init({
@@ -370,7 +373,7 @@ render('');
         defaults:{...frosted}
       });
       instances.push(instance);
-    }
+    }));
 
     /* Mobile navigation: one local WebGL root. The scene is a sibling child,
        which is required because LiquidGlass never captures the root itself. */
