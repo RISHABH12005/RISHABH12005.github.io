@@ -26,14 +26,11 @@ html.liquid-glass-loading body{
   overflow:hidden;
 }
 
+/* The document is never hidden while LiquidGlass loads. CSS glass paints
+   immediately; WebGL upgrades each box after first paint. */
 html.liquid-glass-loading main,
 html.liquid-glass-loading .site-header,
-html.liquid-glass-loading .mobile-glass-root{
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-}
-
+html.liquid-glass-loading .mobile-glass-root,
 html.liquid-glass-ready main,
 html.liquid-glass-ready .site-header,
 html.liquid-glass-ready .mobile-glass-root,
@@ -43,7 +40,6 @@ html.liquid-glass-fallback .mobile-glass-root{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
-  transition:opacity .45s ease;
 }
 
 body {
