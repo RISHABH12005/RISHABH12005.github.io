@@ -1,145 +1,101 @@
-const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isTouch = matchMedia('(pointer: coarse)').matches;
-const loader = document.querySelector('#loader');
-const bar = loader?.querySelector('i');
+const prefersReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch=matchMedia('(pointer: coarse)').matches;
+const loader=document.querySelector('#loader');
+const loaderBar=loader?.querySelector('.loader-line i');
 
-if (bar && loader) {
-  requestAnimationFrame(() => bar.classList.add('is-loaded'));
-  window.setTimeout(() => loader.remove(), prefersReduced ? 120 : 760);
+requestAnimationFrame(()=>loaderBar?.classList.add('is-loaded'));
+window.setTimeout(()=>loader?.classList.add('is-done'),prefersReduced?180:900);
+
+const menu=document.querySelector('.menu-toggle');
+const nav=document.querySelector('#primary-nav');
+const closeMenu=()=>{menu?.setAttribute('aria-expanded','false');document.body.classList.remove('nav-open');nav?.setAttribute('aria-hidden','true')};
+menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));document.body.classList.toggle('nav-open',!open);nav?.setAttribute('aria-hidden',String(open))});
+nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+
+const mount=document.querySelector('#scene');
+if(mount){
+ const canvas=document.createElement('canvas');
+ canvas.className='star-canvas';
+ mount.append(canvas);
+ const ctx=canvas.getContext('2d',{alpha:false});
+ let w=0,h=0,dpr=1,last=0,visible=true;
+ let pointer={x:0,y:0};
+ const stars=[],meteors=[];
+ const makeStars=()=>{
+   stars.length=0;
+   const count=isTouch?220:Math.min(950,Math.max(420,Math.floor(innerWidth*innerHeight/1700)));
+   for(let i=0;i<count;i++)stars.push({
+     x:Math.random(),y:Math.random(),z:.18+Math.random()*.82,
+     r:.25+Math.random()*1.35,a:.18+Math.random()*.72,
+     phase:Math.random()*Math.PI*2,twinkle:.4+Math.random()*1.5,
+     drift:(Math.random()-.5)*.000025
+   });
+ };
+ const resize=()=>{
+   w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio,isTouch?1.25:1.7);
+   canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);
+   canvas.style.width=w+'px';canvas.style.height=h+'px';
+   ctx.setTransform(dpr,0,0,dpr,0,0);makeStars();
+ };
+ const meteor=()=>{
+   if(prefersReduced||isTouch||meteors.length>1||Math.random()>.0015)return;
+   meteors.push({x:Math.random()*w*.9,y:Math.random()*h*.35,v:8+Math.random()*7,life:0,max:55+Math.random()*45});
+ };
+ const frame=time=>{
+   requestAnimationFrame(frame);
+   if(!visible||time-last<(isTouch?45:28))return;
+   last=time;ctx.fillStyle='#02030a';ctx.fillRect(0,0,w,h);
+   const g=ctx.createRadialGradient(w*.72,h*.16,0,w*.72,h*.16,Math.max(w,h)*.72);
+   g.addColorStop(0,'rgba(72,91,175,.095)');g.addColorStop(.45,'rgba(35,43,105,.025)');g.addColorStop(1,'rgba(2,3,10,0)');
+   ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+   const px=pointer.x*15,py=pointer.y*10;
+   for(const s of stars){
+     s.x=(s.x+s.drift)%1;if(s.x<0)s.x=1;
+     const x=s.x*w+px*s.z,y=s.y*h+py*s.z;
+     const tw=prefersReduced?1:.78+.22*Math.sin(time*.001*s.twinkle+s.phase);
+     const alpha=s.a*tw*(.45+.55*s.z);
+     ctx.beginPath();ctx.fillStyle='rgba(218,228,255,'+alpha+')';ctx.arc(x,y,s.r*(.55+.75*s.z),0,Math.PI*2);ctx.fill();
+     if(s.z>.78&&!prefersReduced){ctx.beginPath();ctx.fillStyle='rgba(255,255,255,'+(alpha*.12)+')';ctx.arc(x,y,s.r*3,0,Math.PI*2);ctx.fill();}
+   }
+   meteor();
+   for(let i=meteors.length-1;i>=0;i--){
+     const m=meteors[i];m.life++;m.x+=m.v;m.y+=m.v*.55;
+     const fade=1-Math.abs(m.life-m.max/2)/(m.max/2);
+     const grad=ctx.createLinearGradient(m.x-100,m.y-55,m.x,m.y);
+     grad.addColorStop(0,'rgba(205,221,255,0)');grad.addColorStop(1,'rgba(220,232,255,'+Math.max(0,fade*.65)+')');
+     ctx.strokeStyle=grad;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(m.x-100,m.y-55);ctx.lineTo(m.x,m.y);ctx.stroke();
+     if(m.life>m.max||m.x>w+120||m.y>h+80)meteors.splice(i,1);
+   }
+ };
+ addEventListener('resize',resize,{passive:true});
+ addEventListener('pointermove',e=>{pointer.x=e.clientX/innerWidth-.5;pointer.y=e.clientY/innerHeight-.5},{passive:true});
+ document.addEventListener('visibilitychange',()=>visible=!document.hidden);
+ resize();requestAnimationFrame(frame);
 }
 
-const menu = document.querySelector('.menu-toggle');
-const nav = document.querySelector('#primary-nav');
-menu?.addEventListener('click', () => {
-  const open = menu.getAttribute('aria-expanded') === 'true';
-  menu.setAttribute('aria-expanded', String(!open));
-  document.body.classList.toggle('nav-open', !open);
-});
-nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  menu?.setAttribute('aria-expanded', 'false');
-  document.body.classList.remove('nav-open');
+if(!prefersReduced&&!isTouch){
+ document.querySelectorAll('.glass-card,.glass-panel').forEach(card=>{
+   card.addEventListener('pointermove',e=>{
+     const r=card.getBoundingClientRect();
+     card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+     card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+   },{passive:true});
+ });
+}
+
+if('IntersectionObserver'in window){
+ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -8% 0px'});
+ document.querySelectorAll('.section-head,.about-grid,.section-intro,.projects,.capabilities,.timeline,.education-line,.highlights,.contact-grid').forEach(el=>{el.classList.add('reveal');if(prefersReduced)el.classList.add('is-visible');else observer.observe(el)});
+ const links=[...document.querySelectorAll('#primary-nav a')];
+ const sections=[...document.querySelectorAll('main section[id]')];
+ const active=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('is-active',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-38% 0px -52% 0px'});
+ sections.forEach(s=>active.observe(s));
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+ const target=document.querySelector(a.getAttribute('href'));if(!target)return;e.preventDefault();target.scrollIntoView({behavior:prefersReduced?'auto':'smooth',block:'start'});
 }));
+addEventListener('scroll',()=>document.body.classList.toggle('has-scrolled',scrollY>24),{passive:true});
 
-const sceneMount = document.querySelector('#scene');
-if (sceneMount) {
-  const canvas = document.createElement('canvas');
-  canvas.className = 'star-canvas';
-  canvas.setAttribute('aria-hidden', 'true');
-  sceneMount.append(canvas);
-  const context = canvas.getContext('2d', { alpha: false });
-  const stars = [];
-  const shootingStars = [];
-  let width = 0;
-  let height = 0;
-  let pixelRatio = 1;
-  let pointerX = 0;
-  let pointerY = 0;
-  let active = true;
-  let lastFrame = 0;
-
-  const createStars = () => {
-    stars.length = 0;
-    const count = isTouch ? 260 : Math.min(720, Math.floor((innerWidth * innerHeight) / 2100));
-    for (let index = 0; index < count; index += 1) {
-      stars.push({
-        x: Math.random(), y: Math.random(), z: 0.25 + Math.random() * 0.75,
-        size: 0.35 + Math.random() * 1.35, alpha: 0.25 + Math.random() * 0.6,
-        drift: (Math.random() - 0.5) * 0.000035
-      });
-    }
-  };
-
-  const resize = () => {
-    width = innerWidth; height = innerHeight; pixelRatio = Math.min(devicePixelRatio, isTouch ? 1.25 : 1.75);
-    canvas.width = width * pixelRatio; canvas.height = height * pixelRatio;
-    canvas.style.width = `${width}px`; canvas.style.height = `${height}px`;
-    context?.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    createStars();
-  };
-
-  const draw = (time = 0) => {
-    if (!context) return;
-    if (active && time - lastFrame > (isTouch ? 42 : 28)) {
-      lastFrame = time;
-      const reduced = prefersReduced ? 0.12 : 1;
-      context.fillStyle = '#02030a'; context.fillRect(0, 0, width, height);
-      const haze = context.createRadialGradient(width * 0.7, height * 0.18, 0, width * 0.7, height * 0.18, width * 0.7);
-      haze.addColorStop(0, 'rgba(55, 67, 130, 0.12)'); haze.addColorStop(0.48, 'rgba(25, 30, 78, 0.035)'); haze.addColorStop(1, 'rgba(2, 3, 10, 0)');
-      context.fillStyle = haze; context.fillRect(0, 0, width, height);
-      const offsetX = pointerX * 16; const offsetY = pointerY * 10;
-      stars.forEach(star => {
-        star.x = (star.x + star.drift * reduced + 1) % 1;
-        const x = star.x * width + offsetX * star.z;
-        const y = star.y * height + offsetY * star.z;
-        const twinkle = prefersReduced ? 1 : 0.82 + Math.sin(time * 0.0012 * star.z + star.x * 20) * 0.18;
-        context.beginPath(); context.fillStyle = `rgba(211, 224, 255, ${star.alpha * twinkle})`;
-        context.arc(x, y, star.size * star.z, 0, Math.PI * 2); context.fill();
-      });
-      if (!prefersReduced && !isTouch && Math.random() < 0.002 && shootingStars.length < 1) shootingStars.push({ x: Math.random() * width, y: Math.random() * height * 0.45, life: 0 });
-      shootingStars.forEach((star, index) => {
-        star.life += 0.018; const x = star.x + star.life * 210; const y = star.y + star.life * 120;
-        const trail = context.createLinearGradient(x - 90, y - 50, x, y); trail.addColorStop(0, 'rgba(184, 207, 255, 0)'); trail.addColorStop(1, 'rgba(218, 231, 255, 0.6)');
-        context.strokeStyle = trail; context.lineWidth = 1; context.beginPath(); context.moveTo(x - 90, y - 50); context.lineTo(x, y); context.stroke();
-        if (star.life > 1) shootingStars.splice(index, 1);
-      });
-    }
-    requestAnimationFrame(draw);
-  };
-  window.addEventListener('resize', resize, { passive: true });
-  window.addEventListener('pointermove', event => { pointerX = event.clientX / innerWidth - 0.5; pointerY = event.clientY / innerHeight - 0.5; }, { passive: true });
-  document.addEventListener('visibilitychange', () => { active = !document.hidden; });
-  resize(); requestAnimationFrame(draw);
-}
-
-if (!prefersReduced && !isTouch) {
-  document.querySelectorAll('.project').forEach(card => {
-    card.addEventListener('pointermove', event => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${((event.clientX - rect.left) / rect.width) * 100}%`);
-      card.style.setProperty('--my', `${((event.clientY - rect.top) / rect.height) * 100}%`);
-      card.style.transform = 'translateY(-3px)';
-    });
-    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-  });
-}
-
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
-  }), { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.section-head, .about-grid, .section-intro, .projects, .capabilities, .timeline, .education-line, .highlights, .contact-grid').forEach(el => { el.classList.add('reveal'); if (!prefersReduced) observer.observe(el); else el.classList.add('is-visible'); });
-  const sections = [...document.querySelectorAll('main section[id]')];
-  const links = [...document.querySelectorAll('.site-header nav a')];
-  const activeObserver = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) links.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`)); }), { rootMargin: '-35% 0px -55% 0px' });
-  sections.forEach(section => activeObserver.observe(section));
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', event => {
-  const target = document.querySelector(anchor.getAttribute('href'));
-  if (target) { event.preventDefault(); target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' }); }
-}));
-
-const schema = { '@context': 'https://schema.org', '@type': 'Person', name: 'Rishabh Jain', url: 'https://rishabh12005.me/', email: 'mailto:2r10j5@gmail.com', sameAs: ['https://github.com/RISHABH12005', 'https://www.linkedin.com/in/rishabh12005', 'https://www.youtube.com/@RISHABH12005'] };
-const schemaScript = document.createElement('script'); schemaScript.type = 'application/ld+json'; schemaScript.textContent = JSON.stringify(schema); document.head.appendChild(schemaScript);
-if (prefersReduced) document.documentElement.classList.add('reduced-motion');
-
-window.addEventListener('scroll', () => document.body.classList.toggle('has-scrolled', scrollY > 24), { passive: true });
-window.dispatchEvent(new Event('scroll'));
-
-if (typeof document.startViewTransition === 'function') document.documentElement.classList.add('supports-view-transition');
-
-// Keep keyboard users informed when the mobile menu opens.
-menu?.addEventListener('keydown', event => { if (event.key === 'Escape') { menu.click(); menu.focus(); } });
-
-// Prevent accidental focus on the hidden mobile menu while it is closed.
-const syncNav = () => nav?.setAttribute('aria-hidden', String(menu?.getAttribute('aria-expanded') !== 'true' && innerWidth < 760));
-window.addEventListener('resize', syncNav, { passive: true }); syncNav();
-
-// Ensure external links never inherit a stale opener relationship.
-document.querySelectorAll('a[target="_blank"]').forEach(link => link.rel = 'noopener noreferrer');
-
-// Keep the opening copy calm for reduced-motion users.
-if (prefersReduced) document.documentElement.style.setProperty('--motion-duration', '0ms');
-
-// Hide the loader if a slow device stalls the first paint.
-window.setTimeout(() => loader?.remove(), 1800);
+const schema={'@context':'https://schema.org','@type':'Person',name:'Rishabh Jain',url:'https://rishabh12005.me/',email:'mailto:2r10j5@gmail.com',sameAs:['https://github.com/RISHABH12005','https://www.linkedin.com/in/rishabh12005','https://www.youtube.com/@RISHABH12005']};
+const schemaScript=document.createElement('script');schemaScript.type='application/ld+json';schemaScript.textContent=JSON.stringify(schema);document.head.appendChild(schemaScript);
