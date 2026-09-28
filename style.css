@@ -995,17 +995,27 @@ em {
   gap: 1px;
   background: rgba(10, 13, 19, 0.22);
   padding: 1px;
-  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 24px;
+  overflow: hidden;
 }
 
 .skill-list > div {
+  min-width: 0;
   padding: 32px;
   border-color: #ffffff10;
   background: rgba(8, 11, 16, 0.42);
-  border: 1px solid #ffffff10;
+  border: 0;
+  border-right: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
   transition: padding 0.4s ease, border-color 0.4s ease, background 0.4s ease;
   cursor: pointer;
 }
+
+.skill-list > div:nth-child(2n) { border-right: 0; }
+.skill-list > div:nth-last-child(-n+2) { border-bottom: 0; }
+.skill-list strong,
+.skill-list span { overflow-wrap: anywhere; }
 
 .skill-list > div:hover {
   padding-left: 50px;
@@ -1749,6 +1759,21 @@ main, body, section, .section, .first-section,
   .achievement-list { gap: 10px; }
   .achievement-item { padding: 16px; }
   .certificate-grid .glass-card { min-height: 150px; }
+}
+
+/* Corner and content safeguards for compound glass surfaces. */
+.github-console,
+.github-console.glass-card,
+.skill-list,
+.command-panel,
+.command-results,
+.command-results > * {
+  min-width: 0;
+}
+
+.github-console {
+  overflow: hidden;
+  border-radius: 24px;
 }
 
 /* Final content pass: every section keeps its text inside the same measured glass surface. */
