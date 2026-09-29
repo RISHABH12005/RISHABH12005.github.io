@@ -37,6 +37,8 @@ const closeMenu=()=>{
   menu?.setAttribute('aria-expanded','false');
   menu?.setAttribute('aria-label','Open navigation');
   document.body.classList.remove('nav-open');
+  document.body.style.removeProperty('overflow');
+  document.body.style.removeProperty('touch-action');
   nav?.setAttribute('aria-hidden','true');
   document.querySelector('.mobile-glass-root')?.setAttribute('aria-hidden','true');
 };
@@ -44,12 +46,26 @@ menu?.addEventListener('click',()=>{
   const open=menu.getAttribute('aria-expanded')==='true';
   menu.setAttribute('aria-expanded',String(!open));
   menu.setAttribute('aria-label',open?'Open navigation':'Close navigation');
-  document.body.classList.toggle('nav-open',!open);
+  const nextOpen=!open;
+  document.body.classList.toggle('nav-open',nextOpen);
+  if(nextOpen){
+    document.body.style.overflow='hidden';
+    document.body.style.touchAction='none';
+  }else{
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('touch-action');
+  }
   nav?.setAttribute('aria-hidden',String(open));
   document.querySelector('.mobile-glass-root')?.setAttribute('aria-hidden',String(open));
 });
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
-mobileNavLinks.forEach(a=>a.addEventListener('click',closeMenu));
+mobileNavLinks.forEach(a=>a.addEventListener('click',()=>{
+  if(matchMedia('(max-width:760px)').matches) closeMenu();
+}));
+document.querySelector('.mobile-nav-backdrop')?.addEventListener('click',closeMenu);
+addEventListener('keydown',e=>{
+  if(e.key==='Escape' && matchMedia('(max-width:760px)').matches) closeMenu();
+});
 /* Sliding glass navigation */
 (()=>{
   const nav=document.querySelector('#primary-nav');
@@ -375,26 +391,11 @@ render('');
       instances.push(instance);
     }));
 
-    /* Mobile navigation: one local WebGL root. The scene is a sibling child,
-       which is required because LiquidGlass never captures the root itself. */
+    /* Mobile navigation deliberately stays CSS-rendered.
+       A page-sized WebGL root is not used here because mobile browsers can
+       resize its backing canvas independently from the visual viewport. */
     const mobileRoot=document.querySelector('#mobile-glass-root');
-    const mobileScene=mobileRoot?.querySelector('.mobile-glass-scene');
-    const mobileButton=mobileRoot?.querySelector('.menu-toggle');
-    const mobileLinks=[...(mobileRoot?.querySelectorAll('.mobile-glass-link')||[])];
-    if(mobileRoot&&mobileScene&&mobileButton&&mobileLinks.length){
-      mobileRoot.classList.add('mobile-webgl-root');
-      mobileScene.style.opacity='1';
-      mobileScene.style.backgroundImage='none';
-      const menuCfg={...control,cornerRadius:15,zRadius:15};
-      mobileButton.dataset.config=JSON.stringify(menuCfg);
-      mobileLinks.forEach(link=>link.dataset.config=JSON.stringify({...control,cornerRadius:16,zRadius:16}));
-      const instance=await LiquidGlass.init({
-        root:mobileRoot,
-        glassElements:[mobileButton,...mobileLinks],
-        defaults:{...control}
-      });
-      instances.push(instance);
-    }
+    if(mobileRoot) mobileRoot.classList.add('mobile-css-glass');
 
     window.__liquidGlassInstances=instances;
     document.documentElement.classList.remove('liquid-glass-fallback');
