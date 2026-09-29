@@ -4137,3 +4137,140 @@ html.liquid-glass-ready .glass-card::before{
     }
   }
 }
+
+
+/* Correct reduced-motion override for the mobile navigation. */
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  .mobile-glass-root .mobile-nav-panel,
+  .mobile-glass-root .mobile-glass-link,
+  .mobile-glass-root .mobile-nav-backdrop{
+    transition:none!important;
+  }
+}
+
+/* ========================================================================
+   CONTACT SECTION — balanced on desktop and compact on mobile
+========================================================================= */
+.contact-shell{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr)!important;
+  align-items:end!important;
+  gap:clamp(32px,6vw,90px)!important;
+  padding:clamp(34px,5vw,68px)!important;
+  min-height:0!important;
+}
+
+.contact-shell h2{
+  max-width:760px!important;
+  margin:16px 0 24px!important;
+  font-size:clamp(4rem,7.8vw,8rem)!important;
+  line-height:.88!important;
+  letter-spacing:-.075em!important;
+}
+
+.contact-shell > div:first-child > p:last-child{
+  max-width:620px!important;
+  margin:0!important;
+  color:rgba(211,219,232,.68)!important;
+  font-size:clamp(15px,1.35vw,19px)!important;
+  line-height:1.55!important;
+}
+
+.contact-links{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+  align-content:end!important;
+  min-width:0!important;
+}
+
+.contact-links a{
+  min-height:54px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  box-sizing:border-box!important;
+  padding:0 16px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  border-radius:15px!important;
+  color:#eef2f8!important;
+  background:rgba(255,255,255,.035)!important;
+  text-decoration:none!important;
+  font:650 11px/1 "Space Grotesk",sans-serif!important;
+  letter-spacing:.055em!important;
+  text-transform:none!important;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease!important;
+}
+
+.contact-links a:hover{
+  background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.17)!important;
+  transform:translateY(-2px)!important;
+}
+
+.contact-links .contact-button{
+  grid-column:1 / -1!important;
+  justify-content:center!important;
+  color:var(--acid)!important;
+  font-size:clamp(11px,1vw,13px)!important;
+  letter-spacing:.08em!important;
+  background:rgba(215,255,63,.055)!important;
+  border-color:rgba(215,255,63,.20)!important;
+}
+
+@media(max-width:900px){
+  .contact-shell{
+    grid-template-columns:1fr!important;
+    gap:28px!important;
+  }
+  .contact-links{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+
+@media(max-width:760px){
+  .contact-shell{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:26px!important;
+    padding:28px 20px!important;
+    align-items:start!important;
+  }
+
+  .contact-shell h2{
+    max-width:100%!important;
+    margin:14px 0 18px!important;
+    font-size:clamp(3rem,14vw,5.4rem)!important;
+    line-height:.9!important;
+  }
+
+  .contact-shell > div:first-child > p:last-child{
+    font-size:14px!important;
+    line-height:1.55!important;
+  }
+
+  .contact-links{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+  }
+
+  .contact-links .contact-button{
+    min-height:52px!important;
+  }
+
+  .contact-links a{
+    min-height:48px!important;
+    border-radius:14px!important;
+  }
+}
+
+@media(max-width:480px){
+  .contact-shell{
+    padding:24px 16px!important;
+    border-radius:22px!important;
+  }
+
+  .contact-shell h2{
+    font-size:clamp(2.8rem,14.5vw,4.5rem)!important;
+  }
+}
