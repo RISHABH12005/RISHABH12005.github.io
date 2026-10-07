@@ -5677,3 +5677,77 @@ html.liquid-glass-ready .certificate-card{
     padding:24px!important;
   }
 }
+
+
+/* ========================================================================
+   PROJECT VIDEO FIX — keep the thumbnail proportional
+   The first project previously used a full-height two-column layout. That
+   made the 16:9 YouTube preview stretch to the height of the whole card and
+   pushed the Bharat AI-SoC content out of view. All projects now use the
+   same predictable media → content flow.
+========================================================================= */
+#projects .project-card:first-child{
+  grid-column:1/-1!important;
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:0!important;
+}
+
+#projects .project-card:first-child .project-media{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:16/9!important;
+  flex:0 0 auto!important;
+}
+
+#projects .project-card:first-child .project-content{
+  display:block!important;
+  min-width:0!important;
+  padding:28px 30px 30px!important;
+}
+
+#projects .project-card:first-child .project-content > *{
+  position:relative!important;
+  z-index:2!important;
+}
+
+#projects .project-card:first-child .video-thumbnail-link{
+  position:absolute!important;
+  inset:0!important;
+}
+
+#projects .project-card:first-child .video-thumbnail-link img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+
+/* Keep the video compact on desktop while preserving a useful preview. */
+#projects .project-card:first-child .video-thumbnail{
+  max-height:min(420px,42vw)!important;
+}
+
+/* The remaining project cards keep their normal media height. */
+#projects .project-card:not(:first-child) .project-media{
+  min-height:190px!important;
+}
+
+@media(max-width:760px){
+  #projects .project-card:first-child{
+    grid-column:auto!important;
+  }
+
+  #projects .project-card:first-child .project-media{
+    aspect-ratio:16/9!important;
+    max-height:none!important;
+  }
+
+  #projects .project-card:first-child .project-content{
+    padding:24px!important;
+  }
+
+  #projects .project-card:not(:first-child) .project-media{
+    min-height:160px!important;
+  }
+}
