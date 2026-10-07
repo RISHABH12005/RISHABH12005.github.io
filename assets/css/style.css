@@ -4893,3 +4893,83 @@ html.liquid-glass-ready .certificate-card{
     border-radius:20px!important;
   }
 }
+
+
+/* ========================================================================
+   GLOBAL SECTION-SHELL CLEANUP
+   Large shells are layout containers, not visual panels. Their child cards
+   carry the frosted treatment. This removes the recurring "big gray box"
+   around Education, Experience, Achievements and Leadership.
+========================================================================= */
+#education .education-shell,
+#experience .experience-shell,
+#achievements .achievement-shell,
+#leadership .leadership-shell,
+.education-shell,
+.experience-shell,
+.achievement-shell,
+.leadership-shell{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  border-radius:0!important;
+  clip-path:none!important;
+  overflow:visible!important;
+  isolation:auto!important;
+}
+
+/* Legacy pseudo-elements must not repaint the removed shell surface. */
+#education .education-shell::before,
+#education .education-shell::after,
+#experience .experience-shell::before,
+#experience .experience-shell::after,
+#achievements .achievement-shell::before,
+#achievements .achievement-shell::after,
+#leadership .leadership-shell::before,
+#leadership .leadership-shell::after,
+.education-shell::before,
+.education-shell::after,
+.experience-shell::before,
+.experience-shell::after,
+.achievement-shell::before,
+.achievement-shell::after,
+.leadership-shell::before,
+.leadership-shell::after{
+  display:none!important;
+  content:none!important;
+}
+
+/* Keep the section grids transparent too; only actual content cards get
+   frosted surfaces. */
+#education .education-grid,
+#experience .experience-grid,
+#achievements .achievement-grid,
+#leadership .leadership-list{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+/* The Leadership list is itself a layout container, never a gray panel. */
+#leadership .leadership-list{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+
+/* The large achievement/leadership shell should not clip its child cards. */
+#achievements .achievement-shell,
+#leadership .leadership-shell{
+  clip-path:none!important;
+  overflow:visible!important;
+}
+
+/* Remove the old section-wide rounded-frame rules. */
+#achievements .achievement-shell,
+#leadership .leadership-shell,
+#contact .contact-shell{
+  border-radius:0!important;
+}
