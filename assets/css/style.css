@@ -4428,3 +4428,245 @@ html.liquid-glass-ready .certificate-card{
     font-size:7px!important;
   }
 }
+
+
+/* ========================================================================
+   CONTACT 3.0 — single optical surface / editorial contact rail
+   The WebGL canvas is the only panel surface. The root stays transparent
+   so the old outer-outline + inner-glass "double box" cannot form.
+========================================================================= */
+html.liquid-glass-ready .contact-shell{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr)!important;
+  align-items:end!important;
+  gap:clamp(44px,7vw,110px)!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  padding:clamp(42px,5.2vw,74px)!important;
+  min-height:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+  isolation:isolate!important;
+}
+
+html.liquid-glass-ready .contact-copy{
+  position:relative!important;
+  z-index:2!important;
+}
+
+html.liquid-glass-ready .contact-shell h2{
+  max-width:760px!important;
+  margin:15px 0 24px!important;
+  font-size:clamp(4rem,6.7vw,6.9rem)!important;
+  line-height:.88!important;
+  letter-spacing:-.075em!important;
+}
+
+html.liquid-glass-ready .contact-shell > .contact-copy > p:last-child{
+  max-width:560px!important;
+  margin:0!important;
+  color:rgba(211,219,232,.66)!important;
+  font-size:clamp(14px,1.2vw,17px)!important;
+  line-height:1.6!important;
+}
+
+html.liquid-glass-ready .contact-links{
+  position:relative!important;
+  z-index:2!important;
+  display:block!important;
+  min-width:0!important;
+  align-self:end!important;
+}
+
+html.liquid-glass-ready .contact-links-label{
+  margin:0 0 13px!important;
+  color:rgba(190,201,219,.48)!important;
+  font-size:9px!important;
+  letter-spacing:.20em!important;
+}
+
+html.liquid-glass-ready .contact-email{
+  min-height:66px!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:16px!important;
+  box-sizing:border-box!important;
+  padding:0 0 17px!important;
+  margin:0 0 2px!important;
+  border:0!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#f3f5fa!important;
+  text-decoration:none!important;
+  box-shadow:none!important;
+  transition:border-color .2s ease,transform .2s ease!important;
+}
+
+html.liquid-glass-ready .contact-email > span:first-child{
+  color:rgba(215,255,63,.74)!important;
+  font:700 9px/1 "Space Grotesk",sans-serif!important;
+  letter-spacing:.16em!important;
+}
+
+html.liquid-glass-ready .contact-email strong{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  color:#eef2f8!important;
+  font:600 clamp(13px,1.25vw,17px)/1.2 "Space Grotesk",sans-serif!important;
+  letter-spacing:.01em!important;
+}
+
+html.liquid-glass-ready .contact-email > span:last-child{
+  color:rgba(215,255,63,.78)!important;
+  font-size:16px!important;
+  transition:transform .2s ease!important;
+}
+
+html.liquid-glass-ready .contact-email:hover{
+  border-bottom-color:rgba(215,255,63,.35)!important;
+  transform:translateX(3px)!important;
+}
+
+html.liquid-glass-ready .contact-email:hover > span:last-child{
+  transform:translate(3px,-3px)!important;
+}
+
+html.liquid-glass-ready .contact-link-grid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+}
+
+html.liquid-glass-ready .contact-link-grid a{
+  min-height:54px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  box-sizing:border-box!important;
+  padding:0!important;
+  border:0!important;
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:rgba(226,232,241,.78)!important;
+  text-decoration:none!important;
+  box-shadow:none!important;
+  font:650 10px/1 "Space Grotesk",sans-serif!important;
+  letter-spacing:.12em!important;
+  transition:color .2s ease,padding .2s ease,border-color .2s ease!important;
+}
+
+html.liquid-glass-ready .contact-link-grid a:last-child{
+  border-bottom:0!important;
+}
+
+html.liquid-glass-ready .contact-link-grid a span:last-child{
+  color:rgba(201,211,227,.44)!important;
+  font-size:14px!important;
+  letter-spacing:0!important;
+  transition:color .2s ease,transform .2s ease!important;
+}
+
+html.liquid-glass-ready .contact-link-grid a:hover{
+  padding-left:6px!important;
+  color:#f5f7fb!important;
+  border-bottom-color:rgba(255,255,255,.17)!important;
+}
+
+html.liquid-glass-ready .contact-link-grid a:hover span:last-child{
+  color:rgba(215,255,63,.84)!important;
+  transform:translate(3px,-3px)!important;
+}
+
+/* Keep the glass readable without a second rectangular CSS surface. */
+html.liquid-glass-ready .contact-shell > canvas{
+  border-radius:34px!important;
+}
+
+@media(max-width:900px){
+  html.liquid-glass-ready .contact-shell{
+    grid-template-columns:1fr!important;
+    gap:38px!important;
+  }
+
+  html.liquid-glass-ready .contact-shell h2{
+    font-size:clamp(4rem,10vw,6.2rem)!important;
+  }
+}
+
+@media(max-width:760px){
+  html.liquid-glass-ready .contact-shell{
+    grid-template-columns:1fr!important;
+    gap:30px!important;
+    padding:32px 24px!important;
+    border-radius:24px!important;
+  }
+
+  html.liquid-glass-ready .contact-shell h2{
+    max-width:100%!important;
+    margin:14px 0 18px!important;
+    font-size:clamp(3rem,13.5vw,5.1rem)!important;
+    line-height:.9!important;
+  }
+
+  html.liquid-glass-ready .contact-shell > .contact-copy > p:last-child{
+    font-size:14px!important;
+  }
+
+  html.liquid-glass-ready .contact-email{
+    min-height:62px!important;
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    gap:11px!important;
+  }
+
+  html.liquid-glass-ready .contact-email strong{
+    font-size:13px!important;
+  }
+
+  html.liquid-glass-ready .contact-link-grid a{
+    min-height:50px!important;
+  }
+}
+
+@media(max-width:480px){
+  html.liquid-glass-ready .contact-shell{
+    padding:28px 18px!important;
+    border-radius:22px!important;
+  }
+
+  html.liquid-glass-ready .contact-shell h2{
+    font-size:clamp(2.8rem,14.2vw,4.4rem)!important;
+  }
+
+  html.liquid-glass-ready .contact-email{
+    grid-template-columns:1fr auto!important;
+    grid-template-areas:
+      "label arrow"
+      "mail arrow"!important;
+    row-gap:7px!important;
+    padding-bottom:15px!important;
+  }
+
+  html.liquid-glass-ready .contact-email > span:first-child{
+    grid-area:label!important;
+  }
+
+  html.liquid-glass-ready .contact-email strong{
+    grid-area:mail!important;
+    white-space:normal!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+  }
+
+  html.liquid-glass-ready .contact-email > span:last-child{
+    grid-area:arrow!important;
+    grid-row:1 / span 2!important;
+  }
+}
