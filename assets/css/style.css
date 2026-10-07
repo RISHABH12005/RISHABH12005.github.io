@@ -4973,3 +4973,65 @@ html.liquid-glass-ready .certificate-card{
 #contact .contact-shell{
   border-radius:0!important;
 }
+
+
+/* ========================================================================
+   EDUCATION + EXPERIENCE — single frosted cards, no nested gray surface
+========================================================================= */
+#education .education-card,
+#education .profile-card,
+#experience .experience-card{
+  position:relative!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.012) 62%),
+    rgba(8,11,19,.24)!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:24px!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.065),
+    0 12px 34px rgba(0,0,0,.10)!important;
+  backdrop-filter:blur(14px) saturate(125%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(125%)!important;
+  overflow:hidden!important;
+  clip-path:none!important;
+}
+
+#education .education-card::before,
+#education .education-card::after,
+#education .profile-card::before,
+#education .profile-card::after,
+#experience .experience-card::before,
+#experience .experience-card::after,
+#education .education-card > canvas,
+#education .profile-card > canvas,
+#experience .experience-card > canvas{
+  display:none!important;
+  content:none!important;
+}
+
+#education .education-grid,
+#experience .experience-grid{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+#education .education-card:hover,
+#education .profile-card:hover,
+#experience .experience-card:hover{
+  border-color:rgba(255,255,255,.16)!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.068),rgba(255,255,255,.016) 62%),
+    rgba(8,11,19,.29)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 18px 42px rgba(0,0,0,.14)!important;
+}
+
+@media(max-width:760px){
+  #education .education-card,
+  #education .profile-card,
+  #experience .experience-card{
+    border-radius:20px!important;
+  }
+}
