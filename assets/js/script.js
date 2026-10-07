@@ -367,9 +367,12 @@ render('');
       el.dataset.config=JSON.stringify(cfg);
     };
 
-    document.querySelectorAll('.glass-panel,.glass-card').forEach(el=>{
-      const darkMode=el.matches('.education-shell,.achievement-shell,.leadership-shell,.contact-shell,.command-panel,.project-modal-card');
-      add(el,el.matches('.contact-shell')?contact:(darkMode?dark:frosted));
+    /* Main section shells stay transparent; only cards and interactive
+       overlays receive the WebGL glass treatment. This removes the large
+       gray panels while preserving the smaller glass UI surfaces. */
+    document.querySelectorAll('.glass-card,.command-panel,.project-modal-card').forEach(el=>{
+      const darkMode=el.matches('.command-panel,.project-modal-card');
+      add(el,darkMode?dark:frosted);
     });
 
     document.querySelectorAll('.glass-button,.glass-control').forEach(el=>{
