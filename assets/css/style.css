@@ -4695,3 +4695,61 @@ html.liquid-glass-ready .leadership-shell::before,
 html.liquid-glass-ready .contact-shell::before{
   display:none!important;
 }
+
+
+/* Certificate section: no large card surfaces.
+   Keep the credential content directly on the starfield. */
+.certificate-grid{
+  gap:clamp(48px,6vw,90px)!important;
+}
+
+.certificate-card,
+html.liquid-glass-ready .certificate-card{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:190px!important;
+  padding:12px 6px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  overflow:visible!important;
+}
+
+.certificate-card::before,
+.certificate-card::after{
+  display:none!important;
+}
+
+.certificate-card .card-index{
+  position:static!important;
+  margin-bottom:14px!important;
+}
+
+.certificate-card h3{
+  margin:14px 0 10px!important;
+}
+
+.certificate-card > p:last-of-type{
+  margin:0!important;
+}
+
+.certificate-card > a{
+  margin-top:16px!important;
+  color:var(--acid)!important;
+}
+
+@media(max-width:760px){
+  .certificate-grid{
+    gap:34px!important;
+  }
+
+  .certificate-card{
+    min-height:0!important;
+    padding:8px 0!important;
+  }
+}
