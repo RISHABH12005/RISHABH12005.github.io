@@ -5137,3 +5137,136 @@ html.liquid-glass-ready .certificate-card{
     border-radius:20px!important;
   }
 }
+
+
+/* ========================================================================
+   LEADERSHIP — FROSTED PANEL
+   One restrained frosted surface for the complete leadership block.
+   The outer shell is transparent; the panel itself carries the frost.
+========================================================================= */
+#leadership .leadership-shell{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr)!important;
+  align-items:stretch!important;
+  gap:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  padding:0!important;
+  margin-top:32px!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.012) 62%),
+    rgba(8,11,19,.24)!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:26px!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.065),
+    0 14px 40px rgba(0,0,0,.12)!important;
+  backdrop-filter:blur(14px) saturate(125%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(125%)!important;
+  overflow:hidden!important;
+  clip-path:none!important;
+}
+
+#leadership .leadership-shell::before,
+#leadership .leadership-shell::after,
+#leadership .leadership-shell > canvas{
+  display:none!important;
+  content:none!important;
+}
+
+#leadership .leadership-copy{
+  padding:48px clamp(28px,4vw,56px)!important;
+  border-right:1px solid rgba(255,255,255,.10)!important;
+}
+
+#leadership .leadership-copy h2{
+  margin:18px 0 22px!important;
+  max-width:650px!important;
+}
+
+#leadership .leadership-copy > p:last-child{
+  max-width:620px!important;
+  margin:0!important;
+  color:rgba(211,219,232,.72)!important;
+  line-height:1.65!important;
+}
+
+#leadership .leadership-list{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  padding:28px clamp(24px,3.5vw,48px)!important;
+  background:rgba(255,255,255,.012)!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+
+#leadership .leadership-list > div{
+  display:grid!important;
+  grid-template-columns:30px minmax(0,1fr)!important;
+  column-gap:14px!important;
+  padding:20px 0!important;
+  border-bottom:1px solid rgba(255,255,255,.09)!important;
+}
+
+#leadership .leadership-list > div > b{
+  color:var(--acid)!important;
+  font:700 11px/1.4 "Space Grotesk",sans-serif!important;
+}
+
+#leadership .leadership-list > div > strong{
+  color:#f3f5fa!important;
+  font-size:15px!important;
+}
+
+#leadership .leadership-list > div > span{
+  grid-column:2!important;
+  margin-top:9px!important;
+  color:rgba(190,201,219,.70)!important;
+  line-height:1.5!important;
+}
+
+#leadership .leadership-list > a{
+  width:max-content!important;
+  margin-top:22px!important;
+  color:#eef2f8!important;
+  text-decoration:none!important;
+  transition:color .2s ease,transform .2s ease!important;
+}
+
+#leadership .leadership-list > a:hover{
+  color:var(--acid)!important;
+  transform:translateX(4px)!important;
+}
+
+@media(max-width:900px){
+  #leadership .leadership-shell{
+    grid-template-columns:1fr!important;
+  }
+
+  #leadership .leadership-copy{
+    border-right:0!important;
+    border-bottom:1px solid rgba(255,255,255,.10)!important;
+  }
+}
+
+@media(max-width:760px){
+  #leadership .leadership-shell{
+    border-radius:20px!important;
+  }
+
+  #leadership .leadership-copy{
+    padding:32px 24px!important;
+  }
+
+  #leadership .leadership-list{
+    padding:18px 24px 26px!important;
+  }
+
+  #leadership .leadership-list > div{
+    padding:17px 0!important;
+  }
+}
