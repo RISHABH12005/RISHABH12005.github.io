@@ -334,6 +334,12 @@ render('');
     tintStrength:.012,brightness:-.16,shadowOpacity:.34,shadowSpread:10,
     shadowOffsetY:2,floating:false,button:true,bevelMode:0
   };
+  const contact={
+    blurAmount:.15,refraction:.62,chromAberration:.012,edgeHighlight:.055,
+    specular:.05,fresnel:.72,distortion:.001,opacity:.50,saturation:-.02,
+    tintStrength:.006,brightness:-.26,shadowOpacity:.16,shadowSpread:5,
+    shadowOffsetY:2,floating:false,button:false,bevelMode:0,cornerRadius:34,zRadius:18
+  };
   const dome={
     blurAmount:.10,refraction:1.12,chromAberration:.018,edgeHighlight:.16,
     specular:.20,fresnel:1.10,distortion:.003,opacity:.70,saturation:.015,
@@ -363,7 +369,7 @@ render('');
 
     document.querySelectorAll('.glass-panel,.glass-card').forEach(el=>{
       const darkMode=el.matches('.education-shell,.achievement-shell,.leadership-shell,.contact-shell,.command-panel,.project-modal-card');
-      add(el,darkMode?dark:frosted);
+      add(el,el.matches('.contact-shell')?contact:(darkMode?dark:frosted));
     });
 
     document.querySelectorAll('.glass-button,.glass-control').forEach(el=>{
