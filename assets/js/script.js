@@ -95,6 +95,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 
 const mount=document.querySelector('#scene');
 if(mount){
+ /* CSS gradients provide enough depth on touch and reduced-motion devices.
+    Avoid creating a canvas and animation loop where it cannot add useful
+    interaction, especially on mobile GPUs. */
+ if(isTouch||prefersReduced) {
+   mount.classList.add('scene-css-only');
+ } else {
  const canvas=document.createElement('canvas');
  canvas.className='star-canvas';
  mount.append(canvas);
@@ -104,14 +110,14 @@ if(mount){
  const rand=(a,b)=>a+Math.random()*(b-a);
 
  const resize=()=>{
-   dpr=Math.min(devicePixelRatio||1,1.6);
+   dpr=Math.min(devicePixelRatio||1,1.25);
    w=innerWidth;h=innerHeight;
    canvas.width=w*dpr;canvas.height=h*dpr;
    ctx.setTransform(dpr,0,0,dpr,0,0);
    stars.length=0;dust.length=0;nebula.length=0;
    const area=w*h;
-   const starCount=isTouch?180:Math.min(1050,Math.max(480,Math.floor(area/1700)));
-   const dustCount=isTouch?70:Math.min(260,Math.max(90,Math.floor(area/8500)));
+   const starCount=isTouch?120:Math.min(700,Math.max(320,Math.floor(area/2600)));
+   const dustCount=isTouch?45:Math.min(150,Math.max(60,Math.floor(area/14000)));
 
    for(let i=0;i<starCount;i++){
      stars.push({
@@ -204,7 +210,7 @@ if(mount){
      ctx.fillStyle='rgba(220,229,255,'+a+')';
      ctx.arc(x,y,radius,0,Math.PI*2);
      ctx.fill();
-     if(s.z>.78&&radius>0.65&&!prefersReduced){
+     if(s.z>.9&&radius>0.8&&!prefersReduced){
        const glow=ctx.createRadialGradient(x,y,0,x,y,radius*4);
        glow.addColorStop(0,'rgba(240,245,255,'+(a*.16)+')');
        glow.addColorStop(1,'rgba(240,245,255,0)');
@@ -245,7 +251,7 @@ if(mount){
 
  const frame=t=>{
    requestAnimationFrame(frame);
-   if(!visible||t-last<(isTouch?42:26))return;
+   if(!visible||t-last<50)return;
    last=t;
    ctx.clearRect(0,0,w,h);
    drawNebula(t);
@@ -256,11 +262,18 @@ if(mount){
    drawMeteors();
  };
  addEventListener('resize',resize,{passive:true});
+ let pointerRaf=0;
+ let pointerEvent=null;
  addEventListener('pointermove',e=>{
-   pointer.x=e.clientX/innerWidth-.5;
-   pointer.y=e.clientY/innerHeight-.5;
-   document.documentElement.style.setProperty('--bg-parallax-x',(pointer.x*12).toFixed(2)+'px');
-   document.documentElement.style.setProperty('--bg-parallax-y',(pointer.y*8).toFixed(2)+'px');
+   pointerEvent=e;
+   if(pointerRaf)return;
+   pointerRaf=requestAnimationFrame(()=>{
+     pointer.x=pointerEvent.clientX/innerWidth-.5;
+     pointer.y=pointerEvent.clientY/innerHeight-.5;
+     document.documentElement.style.setProperty('--bg-parallax-x',(pointer.x*12).toFixed(2)+'px');
+     document.documentElement.style.setProperty('--bg-parallax-y',(pointer.y*8).toFixed(2)+'px');
+     pointerRaf=0;
+   });
  },{passive:true});
  addEventListener('scroll',()=>{
    if(prefersReduced)return;
@@ -269,6 +282,7 @@ if(mount){
  },{passive:true});
  document.addEventListener('visibilitychange',()=>visible=!document.hidden);
  resize();requestAnimationFrame(frame);
+ }
 }
 
 if(!prefersReduced&&!isTouch)document.querySelectorAll('.glass-card,.glass-panel').forEach(card=>card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%')},{passive:true}));
@@ -313,6 +327,11 @@ render('');
 ========================================================================= */
 (async()=>{
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const touch=matchMedia('(pointer: coarse)').matches;
+  /* CSS glass is the stable production path. The WebGL enhancement created
+     one canvas per glass group, which added unnecessary GPU pressure and
+     delayed idle work on lower-powered devices. */
+  const enableWebGL=false;
   const instances=[];
   /* Final materials are applied BEFORE init so the first WebGL frame already
      uses the final optical settings. No post-load mutation or visual jump. */
@@ -347,13 +366,24 @@ render('');
     shadowOffsetY:2,floating:false,button:false,bevelMode:1
   };
 
+  /* CSS glass is the immediate default. WebGL is intentionally skipped on
+     touch devices and delayed on desktop so it cannot compete with first
+     paint, scrolling, or the interactive content. */
+  if(!enableWebGL||reduce||touch){
+    document.querySelector('#mobile-glass-root')?.classList.add('mobile-css-glass');
+    return;
+  }
+
   try{
     /* Let first paint, layout and interaction settle before creating WebGL
        contexts. The page is already usable through the CSS glass fallback. */
     await new Promise(resolve=>{
       const run=()=>requestAnimationFrame(()=>requestAnimationFrame(resolve));
-      if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:900});
-      else setTimeout(run,350);
+      const schedule=()=>{
+        if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:900});
+        else setTimeout(run,120);
+      };
+      setTimeout(schedule,1400);
     });
     const {LiquidGlass}=await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js');
     const groups=new Map();
@@ -407,8 +437,6 @@ render('');
     if(mobileRoot) mobileRoot.classList.add('mobile-css-glass');
 
     window.__liquidGlassInstances=instances;
-    document.documentElement.classList.remove('liquid-glass-fallback');
-    document.documentElement.classList.add('liquid-glass-ready');
     document.documentElement.classList.remove('liquid-glass-fallback');
     document.documentElement.classList.add('liquid-glass-ready');
 

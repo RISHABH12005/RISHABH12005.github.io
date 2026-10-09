@@ -55,4 +55,117 @@
       },{passive:true});
     });
   }
+
+  document.querySelectorAll('.experience-toggle').forEach(toggle=>{
+    toggle.addEventListener('click',()=>{
+      const card=toggle.closest('.experience-card');
+      const impact=card?.querySelector('.experience-impact');
+      if(!card||!impact)return;
+      const expanded=toggle.getAttribute('aria-expanded')==='true';
+      toggle.setAttribute('aria-expanded',String(!expanded));
+      impact.setAttribute('aria-hidden',String(expanded));
+      card.classList.toggle('is-expanded',!expanded);
+    });
+  });
+
+  document.querySelectorAll('.section-kicker').forEach(kicker=>{
+    kicker.addEventListener('pointermove',event=>{
+      const rect=kicker.getBoundingClientRect();
+      kicker.style.setProperty('--kicker-x',`${((event.clientX-rect.left)/rect.width*100).toFixed(1)}%`);
+      kicker.style.setProperty('--kicker-y',`${((event.clientY-rect.top)/rect.height*100).toFixed(1)}%`);
+    },{passive:true});
+    kicker.addEventListener('pointerleave',()=>{
+      kicker.style.removeProperty('--kicker-x');
+      kicker.style.removeProperty('--kicker-y');
+    },{passive:true});
+  });
+
+  if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('#projects .project-media').forEach(media=>{
+      media.addEventListener('pointermove',e=>{
+        const r=media.getBoundingClientRect();
+        media.style.setProperty('--preview-x',`${((e.clientX-r.left)/r.width*100).toFixed(1)}%`);
+        media.style.setProperty('--preview-y',`${((e.clientY-r.top)/r.height*100).toFixed(1)}%`);
+      },{passive:true});
+      media.addEventListener('pointerleave',()=>{
+        media.style.removeProperty('--preview-x');
+        media.style.removeProperty('--preview-y');
+      },{passive:true});
+    });
+  }
+
+  if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    const innerCards=document.querySelectorAll(
+      '#education .education-card, #education .profile-card, ' +
+      '#experience .experience-card, #achievements .achievement-item, ' +
+      '#leadership .leadership-list > div, #skills .skill-card, ' +
+      '#certificates .certificate-card'
+    );
+    innerCards.forEach(card=>{
+      card.classList.add('interactive-inner-card');
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width;
+        const y=(e.clientY-r.top)/r.height;
+        const rx=((.5-y)*1.5).toFixed(2);
+        const ry=((x-.5)*1.5).toFixed(2);
+        card.style.setProperty('--inner-x',`${(x*100).toFixed(1)}%`);
+        card.style.setProperty('--inner-y',`${(y*100).toFixed(1)}%`);
+        card.style.transform=`translate3d(0,-3px,0) perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      },{passive:true});
+      card.addEventListener('pointerleave',()=>{
+        card.style.removeProperty('--inner-x');
+        card.style.removeProperty('--inner-y');
+        card.style.removeProperty('transform');
+      },{passive:true});
+    });
+  }
+
+  if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('#projects .project-content').forEach(content=>{
+      content.classList.add('interactive-project-content');
+      content.addEventListener('pointermove',e=>{
+        const r=content.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width;
+        const y=(e.clientY-r.top)/r.height;
+        const rx=((.5-y)*1.1).toFixed(2);
+        const ry=((x-.5)*1.1).toFixed(2);
+        content.style.setProperty('--content-x',`${(x*100).toFixed(1)}%`);
+        content.style.setProperty('--content-y',`${(y*100).toFixed(1)}%`);
+        content.style.transform=`perspective(1100px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      },{passive:true});
+      content.addEventListener('pointerleave',()=>{
+        content.style.removeProperty('--content-x');
+        content.style.removeProperty('--content-y');
+        content.style.removeProperty('transform');
+      },{passive:true});
+    });
+  }
+
+  if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    const achievementShell=document.querySelector('#achievements .achievement-shell');
+    if(achievementShell){
+      achievementShell.addEventListener('pointermove',e=>{
+        const r=achievementShell.getBoundingClientRect();
+        achievementShell.style.setProperty('--achievement-x',`${((e.clientX-r.left)/r.width*100).toFixed(1)}%`);
+        achievementShell.style.setProperty('--achievement-y',`${((e.clientY-r.top)/r.height*100).toFixed(1)}%`);
+      },{passive:true});
+      achievementShell.addEventListener('pointerleave',()=>{
+        achievementShell.style.removeProperty('--achievement-x');
+        achievementShell.style.removeProperty('--achievement-y');
+      },{passive:true});
+    }
+  }
+
+  if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    const mobilePanel=document.querySelector('#mobile-glass-nav');
+    const menuButton=document.querySelector('.mobile-glass-root .menu-toggle');
+    const track=(element,prefix,e)=>{
+      const r=element.getBoundingClientRect();
+      element.style.setProperty(`--${prefix}-x`,`${((e.clientX-r.left)/r.width*100).toFixed(1)}%`);
+      element.style.setProperty(`--${prefix}-y`,`${((e.clientY-r.top)/r.height*100).toFixed(1)}%`);
+    };
+    mobilePanel?.addEventListener('pointermove',e=>track(mobilePanel,'mobile',e),{passive:true});
+    menuButton?.addEventListener('pointermove',e=>track(menuButton,'menu',e),{passive:true});
+  }
 })();
