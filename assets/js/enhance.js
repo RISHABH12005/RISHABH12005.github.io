@@ -57,6 +57,11 @@
   }
 
   document.querySelectorAll('.experience-toggle').forEach(toggle=>{
+    toggle.addEventListener('pointermove',event=>{
+      const rect=toggle.getBoundingClientRect();
+      toggle.style.setProperty('--switch-x',`${((event.clientX-rect.left)/rect.width*100).toFixed(1)}%`);
+      toggle.style.setProperty('--switch-y',`${((event.clientY-rect.top)/rect.height*100).toFixed(1)}%`);
+    },{passive:true});
     toggle.addEventListener('click',()=>{
       const card=toggle.closest('.experience-card');
       const impact=card?.querySelector('.experience-impact');
@@ -66,6 +71,25 @@
       impact.setAttribute('aria-hidden',String(expanded));
       card.classList.toggle('is-expanded',!expanded);
     });
+
+    document.querySelectorAll('.contact-email,.contact-link-grid a,.project-link,.demo-links a,.glass-button').forEach(action=>{
+      action.addEventListener('pointermove',event=>{
+        const rect=action.getBoundingClientRect();
+        action.style.setProperty('--action-x',`${((event.clientX-rect.left)/rect.width*100).toFixed(1)}%`);
+        action.style.setProperty('--action-y',`${((event.clientY-rect.top)/rect.height*100).toFixed(1)}%`);
+      },{passive:true});
+      action.addEventListener('pointerleave',()=>{
+        action.style.removeProperty('--action-x');
+        action.style.removeProperty('--action-y');
+      },{passive:true});
+    });
+
+    const primaryNav=document.querySelector('#primary-nav');
+    primaryNav?.addEventListener('pointermove',event=>{
+      const rect=primaryNav.getBoundingClientRect();
+      primaryNav.style.setProperty('--nav-x',`${((event.clientX-rect.left)/rect.width*100).toFixed(1)}%`);
+      primaryNav.style.setProperty('--nav-y',`${((event.clientY-rect.top)/rect.height*100).toFixed(1)}%`);
+    },{passive:true});
   });
 
   document.querySelectorAll('.section-kicker').forEach(kicker=>{

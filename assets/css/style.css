@@ -6478,7 +6478,7 @@ html.liquid-glass-ready #contact .contact-link-grid a .contact-icon{
     transition:transform .25s cubic-bezier(.16,1,.3,1),
                border-color .25s ease,
                box-shadow .25s ease!important;
-    will-change:auto!important;
+    will-change:transform!important;
   }
 
   .interactive-inner-card::after{
@@ -6494,7 +6494,6 @@ html.liquid-glass-ready #contact .contact-link-grid a .contact-icon{
 
   .interactive-inner-card:hover,
   .interactive-inner-card:focus-within{
-    will-change:transform!important;
     border-color:rgba(215,255,63,.24)!important;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,.1),
@@ -6707,6 +6706,125 @@ html.liquid-glass-ready #contact .contact-link-grid a .contact-icon{
 
   #projects .project-card .project-content{
     border-radius:0 0 22px 22px!important;
+  }
+}
+
+/* Final interaction polish: soft light follows the pointer while movement
+   stays small enough to remain calm and responsive. */
+@media (hover:hover) and (pointer:fine){
+  .site-header{
+    --nav-x:50%;
+    --nav-y:50%;
+    transition:border-color .35s ease,box-shadow .45s ease;
+    background:
+      radial-gradient(circle at var(--nav-x) var(--nav-y),rgba(215,255,63,.08),transparent 30%),
+      rgba(8,12,24,.42);
+  }
+
+  .site-header:hover{
+    border-color:rgba(215,255,63,.28);
+    box-shadow:
+      0 18px 70px rgba(0,0,0,.25),
+      0 0 34px rgba(215,255,63,.08),
+      inset 0 1px 0 rgba(255,255,255,.14);
+  }
+
+  .site-header nav .nav-slider{
+    background:
+      linear-gradient(120deg,rgba(215,255,63,.14),rgba(255,255,255,.10));
+    border-color:rgba(215,255,63,.34);
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.2),
+      0 0 18px rgba(215,255,63,.18),
+      0 6px 24px rgba(0,0,0,.16);
+  }
+
+  .site-header nav a:hover,
+  .site-header nav a:focus-visible{
+    color:var(--acid)!important;
+  }
+
+  .experience-toggle{
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  .experience-toggle::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:radial-gradient(circle at var(--switch-x,50%) var(--switch-y,50%),rgba(215,255,63,.18),transparent 42%);
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+
+  .experience-toggle:hover::before,
+  .experience-toggle:focus-visible::before{
+    opacity:1;
+  }
+
+  .experience-toggle span{
+    position:relative;
+    background:rgba(215,255,63,.04);
+    box-shadow:inset 0 0 0 1px rgba(215,255,63,.04);
+  }
+
+  .experience-card.is-expanded .experience-toggle{
+    color:var(--acid);
+    border-color:rgba(215,255,63,.42);
+    box-shadow:0 0 24px rgba(215,255,63,.09);
+  }
+
+  .contact-email,
+  .contact-link-grid a,
+  .project-link,
+  .demo-links a,
+  .glass-button{
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  .contact-email::after,
+  .contact-link-grid a::after,
+  .project-link::after,
+  .demo-links a::after,
+  .glass-button::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:radial-gradient(circle at var(--action-x,50%) var(--action-y,50%),rgba(215,255,63,.16),transparent 38%);
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+
+  .contact-email:hover::after,
+  .contact-email:focus-visible::after,
+  .contact-link-grid a:hover::after,
+  .contact-link-grid a:focus-visible::after,
+  .project-link:hover::after,
+  .project-link:focus-visible::after,
+  .demo-links a:hover::after,
+  .demo-links a:focus-visible::after,
+  .glass-button:hover::after,
+  .glass-button:focus-visible::after{
+    opacity:1;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .site-header,
+  .site-header nav .nav-slider,
+  .experience-toggle::before,
+  .contact-email::after,
+  .contact-link-grid a::after,
+  .project-link::after,
+  .demo-links a::after,
+  .glass-button::after{
+    transition:none!important;
   }
 }
 
