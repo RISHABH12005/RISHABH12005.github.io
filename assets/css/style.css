@@ -2665,6 +2665,72 @@ body.command-open,body.project-open{overflow:hidden!important}
 }
 
 @media (hover:hover) and (pointer:fine){
+  #leadership .leadership-list > div{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    transition:
+      transform .32s cubic-bezier(.22,1,.36,1),
+      border-color .28s ease,
+      background-color .28s ease,
+      box-shadow .32s ease;
+  }
+
+  #leadership .leadership-list > div::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:
+      radial-gradient(
+        circle at var(--inner-x,50%) var(--inner-y,50%),
+        rgba(215,255,63,.16),
+        rgba(215,255,63,.04) 22%,
+        transparent 58%
+      );
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+
+  #leadership .leadership-list > div:hover,
+  #leadership .leadership-list > div:focus-within{
+    border-bottom-color:rgba(215,255,63,.32)!important;
+    background-color:rgba(215,255,63,.025);
+    box-shadow:0 12px 28px rgba(0,0,0,.14),0 0 22px rgba(215,255,63,.07);
+  }
+
+  #leadership .leadership-list > div:hover::before,
+  #leadership .leadership-list > div:focus-within::before{
+    opacity:1;
+  }
+
+  #leadership .leadership-list > div > b{
+    transition:
+      color .25s ease,
+      text-shadow .25s ease,
+      transform .3s cubic-bezier(.22,1,.36,1);
+  }
+
+  #leadership .leadership-list > div:hover > b,
+  #leadership .leadership-list > div:focus-within > b{
+    color:#e7ff85!important;
+    text-shadow:0 0 14px rgba(215,255,63,.45);
+    transform:translateX(3px);
+  }
+
+  #leadership .leadership-list > div > strong{
+    transition:color .25s ease,transform .3s cubic-bezier(.22,1,.36,1);
+  }
+
+  #leadership .leadership-list > div:hover > strong,
+  #leadership .leadership-list > div:focus-within > strong{
+    color:#fbfff0!important;
+    transform:translateX(2px);
+  }
+}
+
+@media (hover:hover) and (pointer:fine){
   .site-header nav .nav-slider{
     transition:
       left .56s cubic-bezier(.22,1,.36,1),
