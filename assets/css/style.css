@@ -2664,6 +2664,39 @@ body.command-open,body.project-open{overflow:hidden!important}
   }
 }
 
+@media (hover:hover) and (pointer:fine){
+  .site-header nav .nav-slider{
+    transition:
+      left .42s cubic-bezier(.16,1,.3,1),
+      top .42s cubic-bezier(.16,1,.3,1),
+      width .42s cubic-bezier(.16,1,.3,1),
+      height .42s cubic-bezier(.16,1,.3,1),
+      box-shadow .3s ease,
+      background .3s ease;
+  }
+
+  .site-header nav a{
+    transform:translate3d(0,0,0) scale(1);
+    transition:
+      color .25s ease,
+      opacity .25s ease,
+      transform .35s cubic-bezier(.16,1,.3,1)!important;
+  }
+
+  .site-header nav a:hover,
+  .site-header nav a:focus-visible,
+  .site-header nav a.is-active{
+    transform:translate3d(0,-1px,0) scale(1.035);
+  }
+
+  .site-header nav:hover .nav-slider{
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.24),
+      0 8px 26px rgba(0,0,0,.2),
+      0 0 24px rgba(215,255,63,.14);
+  }
+}
+
 /* Let each content card size to its own copy instead of stretching to the
    tallest sibling in the grid. */
 #education .education-grid,
