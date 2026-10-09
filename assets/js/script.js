@@ -74,11 +74,10 @@ addEventListener('keydown',e=>{
   if(!nav||!slider||!links.length)return;
   const move=(link)=>{
     if(!link||matchMedia('(max-width:760px)').matches)return;
-    const nr=nav.getBoundingClientRect(),r=link.getBoundingClientRect();
-    nav.style.setProperty('--slider-left',(r.left-nr.left)+'px');
-    nav.style.setProperty('--slider-top',(r.top-nr.top)+'px');
-    nav.style.setProperty('--slider-width',r.width+'px');
-    nav.style.setProperty('--slider-height',r.height+'px');
+    nav.style.setProperty('--slider-left',link.offsetLeft+'px');
+    nav.style.setProperty('--slider-top',link.offsetTop+'px');
+    nav.style.setProperty('--slider-width',link.offsetWidth+'px');
+    nav.style.setProperty('--slider-height',link.offsetHeight+'px');
   };
   const active=()=>move(links.find(x=>x.classList.contains('is-active'))||links[0]);
   links.forEach(link=>{

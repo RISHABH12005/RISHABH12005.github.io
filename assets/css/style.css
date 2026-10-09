@@ -2667,12 +2667,13 @@ body.command-open,body.project-open{overflow:hidden!important}
 @media (hover:hover) and (pointer:fine){
   .site-header nav .nav-slider{
     transition:
-      left .42s cubic-bezier(.16,1,.3,1),
-      top .42s cubic-bezier(.16,1,.3,1),
-      width .42s cubic-bezier(.16,1,.3,1),
-      height .42s cubic-bezier(.16,1,.3,1),
+      left .56s cubic-bezier(.22,1,.36,1),
+      top .56s cubic-bezier(.22,1,.36,1),
+      width .56s cubic-bezier(.22,1,.36,1),
+      height .56s cubic-bezier(.22,1,.36,1),
       box-shadow .3s ease,
       background .3s ease;
+    will-change:left,top,width,height;
   }
 
   .site-header nav a{
