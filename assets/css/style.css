@@ -2733,27 +2733,27 @@ body.command-open,body.project-open{overflow:hidden!important}
 @media (hover:hover) and (pointer:fine){
   .site-header nav .nav-slider{
     transition:
-      left .82s cubic-bezier(.22,1,.36,1),
-      top .82s cubic-bezier(.22,1,.36,1),
-      width .82s cubic-bezier(.22,1,.36,1),
-      height .82s cubic-bezier(.22,1,.36,1),
-      box-shadow .55s ease,
-      background .55s ease;
+      left 1.05s cubic-bezier(.22,.61,.36,1),
+      top 1.05s cubic-bezier(.22,.61,.36,1),
+      width 1.05s cubic-bezier(.22,.61,.36,1),
+      height 1.05s cubic-bezier(.22,.61,.36,1),
+      box-shadow .75s ease,
+      background .75s ease;
     will-change:left,top,width,height;
   }
 
   .site-header nav a{
     transform:translate3d(0,0,0) scale(1);
     transition:
-      color .5s ease,
-      opacity .5s ease,
-      transform .58s cubic-bezier(.22,1,.36,1)!important;
+      color .72s ease,
+      opacity .72s ease,
+      transform .78s cubic-bezier(.22,.61,.36,1)!important;
   }
 
   .site-header nav a:hover,
   .site-header nav a:focus-visible,
   .site-header nav a.is-active{
-    transform:translate3d(0,-1px,0) scale(1.035);
+    transform:translate3d(0,-1px,0) scale(1.02);
   }
 
   .site-header nav:hover .nav-slider{
