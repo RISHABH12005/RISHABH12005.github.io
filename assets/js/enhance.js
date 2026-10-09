@@ -119,6 +119,22 @@
   }
 
   if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('#projects .project-card').forEach(card=>{
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width;
+        const y=(e.clientY-r.top)/r.height;
+        card.style.setProperty('--project-x',`${(x*100).toFixed(1)}%`);
+        card.style.setProperty('--project-y',`${(y*100).toFixed(1)}%`);
+      },{passive:true});
+      card.addEventListener('pointerleave',()=>{
+        card.style.removeProperty('--project-x');
+        card.style.removeProperty('--project-y');
+      },{passive:true});
+    });
+  }
+
+  if(!reduced && matchMedia('(hover:hover) and (pointer:fine)').matches){
     const innerCards=document.querySelectorAll(
       '#education .education-card, #education .profile-card, ' +
       '#experience .experience-card, #achievements .achievement-item, ' +

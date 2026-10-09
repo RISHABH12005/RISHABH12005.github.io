@@ -6986,6 +6986,59 @@ html.liquid-glass-ready #contact .contact-link-grid a .contact-icon{
   box-shadow:0 0 10px rgba(215,255,63,.07)!important;
 }
 
+#projects .project-card{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  transition:
+    transform .55s cubic-bezier(.22,.7,.25,1),
+    border-color .55s ease,
+    box-shadow .55s ease!important;
+}
+
+#projects .project-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:radial-gradient(
+    circle at var(--project-x,50%) var(--project-y,50%),
+    rgba(215,255,63,.11),
+    transparent 30%
+  );
+  opacity:0;
+  transition:opacity .55s ease;
+}
+
+#projects .project-card > *{
+  position:relative;
+  z-index:1;
+}
+
+#projects .project-card:hover,
+#projects .project-card:focus-within{
+  transform:translateY(-7px)!important;
+  border-color:rgba(215,255,63,.25)!important;
+  box-shadow:
+    0 22px 50px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.1)!important;
+}
+
+#projects .project-card:hover::before,
+#projects .project-card:focus-within::before{
+  opacity:1;
+}
+
+#projects .project-card:hover .project-media img,
+#projects .project-card:focus-within .project-media img{
+  transform:scale(1.035)!important;
+}
+
+#projects .project-media img{
+  transition:transform .75s cubic-bezier(.22,.7,.25,1)!important;
+}
+
 #achievements .achievement-item:hover,
 #achievements .achievement-item:focus-within{
   box-shadow:0 10px 24px rgba(0,0,0,.12)!important;
@@ -7211,6 +7264,17 @@ html.liquid-glass-ready #contact .contact-link-grid a .contact-icon{
 }
 
 @media(prefers-reduced-motion:reduce){
+  #projects .project-card,
+  #projects .project-card::before,
+  #projects .project-media img{
+    transition:none!important;
+  }
+
+  #projects .project-card:hover,
+  #projects .project-card:focus-within{
+    transform:none!important;
+  }
+
   #experience .tags span,
   #experience .demo-links a,
   #experience .project-link,
