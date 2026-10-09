@@ -117,12 +117,12 @@ html.liquid-glass-ready .glass-card:hover::after{
     box-shadow .45s ease,
     filter .35s ease!important;
   transform:translate3d(0,0,0);
-  will-change:transform;
 }
 
 @media (hover:hover) and (pointer:fine){
   .glass-card:hover{
     transform:translate3d(0,-5px,0);
+    will-change:transform;
     border-color:rgba(190,210,255,.19)!important;
     box-shadow:0 28px 70px rgba(0,0,0,.34)!important;
   }
