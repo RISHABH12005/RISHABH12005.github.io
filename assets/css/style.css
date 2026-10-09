@@ -4233,7 +4233,7 @@ html.liquid-glass-ready .glass-card::before{
     box-sizing:border-box!important;
     padding:24px 20px 20px!important;
     margin:0!important;
-    transform:translate(-50%,-46%) scale(.94)!important;
+    transform:translate(-50%,-50%) scale(.94)!important;
     transform-origin:center!important;
     z-index:3!important;
     border:1px solid rgba(255,255,255,.14)!important;
@@ -4274,6 +4274,7 @@ html.liquid-glass-ready .glass-card::before{
 
   .mobile-glass-root .mobile-nav-kicker{
     margin:0 4px 14px!important;
+    text-align:center!important;
     color:rgba(191,201,219,.58)!important;
     font:700 9px/1.2 "Space Grotesk",sans-serif!important;
     letter-spacing:.20em!important;
@@ -4282,7 +4283,7 @@ html.liquid-glass-ready .glass-card::before{
   .mobile-glass-root .mobile-nav-links{
     display:grid!important;
     width:100%!important;
-    justify-items:stretch!important;
+    justify-items:center!important;
     gap:7px!important;
   }
 
@@ -4319,6 +4320,12 @@ html.liquid-glass-ready .glass-card::before{
       transform .28s cubic-bezier(.2,.8,.25,1),
       background .18s ease,
       border-color .18s ease!important;
+  }
+
+  .mobile-glass-root .mobile-nav-panel > *{
+    width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
   }
 
   .mobile-glass-root .mobile-glass-link > span{
