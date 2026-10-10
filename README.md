@@ -1,66 +1,87 @@
-# Rishabh Jain — Portfolio
+# RISHABH12005.github.io
 
-**Computer Science & Engineering student at Jaypee University of Engineering & Technology (JUET), Guna.**
+Source repository for the static website hosted at [rishabh12005.me](https://rishabh12005.me).
 
-My portfolio highlights my work across software engineering, embedded systems, robotics, IoT, networking, and open-source engineering.
+## Overview
 
-## Live Website
+This repository contains a responsive static website built with HTML, CSS, and JavaScript. It includes custom styling, responsive layouts, navigation, animations, and interactive sections. This README documents the repository and how to run and deploy the site; it is not a personal portfolio summary.
 
-**[Visit rishabh12005.me](https://rishabh12005.me)**
+## Repository Structure
 
-## About
+```text
+.
+├── assets/       # CSS, JavaScript, images, and other static assets
+├── index.html    # Main page and website content
+├── _config.yml   # Site metadata and URL configuration
+├── CNAME         # Custom-domain configuration
+├── vercel.json   # Vercel static deployment configuration
+├── LICENSE       # License terms
+└── README.md     # Repository documentation
+```
 
-I enjoy building practical systems where software meets hardware, and learning through implementation, debugging, and iteration. My experience includes Python, C++, Linux, Git, Docker, networking, Raspberry Pi, ESP32, MQTT, robotics, and open-source EDA tooling.
+## Built With
 
-## Experience
+- HTML5
+- CSS3
+- JavaScript
+- Google Fonts (Inter and Space Grotesk)
+- Git and GitHub
+- Vercel / GitHub Pages configuration
 
-### Software Developer Intern & Fellow — FOSSEE eSim, IIT Bombay
-*February–August 2026 · Hybrid*
+## Run Locally
 
-- Integrated OpenROAD with eSim using Python.
-- Worked on netlist-to-Verilog conversion and connecting the RTL-to-GDSII physical-design flow.
-- Enhanced the PyQt-based GUI and workflow experience.
+No dependency installation or build step is required for this static site.
 
-**Demos:** [OpenROAD Demo 1](https://www.youtube.com/watch?v=lgw_GTDunyA) · [OpenROAD Demo 2](https://youtu.be/Oz-eo4NvPnQ)
+### Open the file directly
 
-### Android Developer Intern — Teksoft Labs Private Limited
-*June–July 2025 · Remote*
+```powershell
+git clone https://github.com/RISHABH12005/RISHABH12005.github.io.git
+cd RISHABH12005.github.io
+start .\index.html
+```
 
-- Developed an Android task-management application using Kotlin.
-- Worked with Firebase Authentication, Cloud Firestore, Git, JIRA, and Material Design.
+### Run a local HTTP server
 
-## Selected Projects
+With Python installed:
 
-| Project | Description | Links |
-|---|---|---|
-| Bharat AI-SoC | Offline, privacy-preserving Hindi voice assistant for Raspberry Pi using Vosk ASR, rule-based NLP, and eSpeak-NG. | [Repository](https://github.com/RISHABH12005/Bharat-AI-SoC) · [Demo](https://youtu.be/U36KKQYhnZU) |
-| Intrusion Detection System | ESP32-C5 security prototype using RFID, MQTT, Telegram alerts, and Wi-Fi client monitoring. | [Repository](https://github.com/RISHABH12005/Minor-II) · [Demo](https://youtu.be/7MgyB5kLQ8M) |
-| Industrial Inspection Robot | Raspberry Pi-based robotics project focused on industrial inspection and monitoring. | [Repository](https://github.com/RISHABH12005/Minor-I) · [Demo](https://youtu.be/C9t8dvpeLmY) |
-| Livestock Monitoring System | Monitoring prototype using Raspberry Pi 4B, Sense HAT, BrickPi, motors, ultrasonic sensors, and a camera. | [Repository](https://github.com/RISHABH12005/LMS) · [Demo](https://youtu.be/3OHgyslehkU) |
-| AI Driven Surveillance Drone | Drone project involving Pixhawk, companion computing, MAVLink, and telemetry. | [Repository](https://github.com/RISHABH12005/Major-I) |
+```powershell
+python -m http.server 8000
+```
 
-## Achievements
+Or with Node.js:
 
-- **Winner — Ideathon (2025)**, JUET.
-- **1st Runner-Up — Hacksagon (2025)**, ABV-IIITM / IEEE MP.
-- **Finalist — SBI College Youth Ideathon (2025)**.
-- **Finalist — Bharat AI-SoC Student Challenge (2026)**.
+```powershell
+npx --yes http-server -p 8000
+```
 
-## Leadership
+Then visit http://localhost:8000. Press Ctrl+C in the terminal to stop the server.
 
-- Joint Secretary, **RoSPinoT** (Robotics and IoT Club), JUET.
-- Contributed to technical events, workshops, student collaboration, and hackathon coordination through the Development & Innovation Center.
+## Deployment
 
-## Technology Interests
+### Vercel
 
-`Python` · `C++` · `Linux` · `Git` · `Docker` · `Networking` · `Raspberry Pi` · `ESP32` · `MQTT` · `Kotlin` · `Firebase` · `OpenROAD` · `eSim`
+The repository includes `vercel.json` for static deployment, with the repository root as the output directory.
 
-## Explore More
+1. Import this GitHub repository into Vercel.
+2. Confirm the project is configured as a static site and the output directory is the repository root.
+3. Deploy the project and configure a custom domain if needed.
 
-- **Portfolio:** [rishabh12005.me](https://rishabh12005.me)
-- **GitHub:** [github.com/RISHABH12005](https://github.com/RISHABH12005)
-- **LinkedIn:** [linkedin.com/in/RISHABH12005](https://www.linkedin.com/in/RISHABH12005/)
+### GitHub Pages
+
+The repository also contains `CNAME` and `_config.yml` for GitHub Pages-related configuration. Check the repository's Settings > Pages to confirm the publishing source and custom-domain settings.
+
+## Customize
+
+- Edit page content in `index.html`.
+- Update styles in `assets/css/`.
+- Update client-side behavior in `assets/js/`.
+- Review `_config.yml`, `CNAME`, and `vercel.json` when changing hosting or domain settings.
+
+## License
+
+See [LICENSE](LICENSE) for license terms.
 
 ---
 
-This repository contains the source for my personal portfolio website. It uses HTML, CSS, JavaScript, and GitHub Pages/Vercel-related deployment configuration.
+Repository: [RISHABH12005/RISHABH12005.github.io](https://github.com/RISHABH12005/RISHABH12005.github.io)  
+Live site: [rishabh12005.me](https://rishabh12005.me)
